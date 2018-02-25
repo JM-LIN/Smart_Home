@@ -4,7 +4,7 @@
   * @author  STMicroelectronics
   * @version V1.0
   * @date    2013-xx-xx
-  * @brief   tim3输出四路pwm bsp
+  * @brief   tim1输出四路pwm bsp
   ******************************************************************************
   * @attention
   *
@@ -28,23 +28,27 @@ uint8_t OpenWave[] = {0,1,2,3,4,5,5,6,7,8,9,9,
 	242,248,254,255};
 
  /**
-  * @brief  配置TIM3复用输出PWM时用到的I/O
+  * @brief  配置TIM1复用输出PWM时用到的I/O
   * @param  无
   * @retval 无
   */
-static void TIMx_GPIO_Config(void) 
+static void TIM1_GPIO_Config(void) 
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	/* GPIOA clock enable */
-	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA, ENABLE );
+	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOE, ENABLE );
 
-	/* 配置呼吸灯用到的PA0引脚 */
-	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_0 ;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;		    // 复用推挽输出
+    /* 配置呼吸灯用到的引脚 */
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;		    // 复用推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-
-	GPIO_Init( GPIOA, &GPIO_InitStructure );
+    
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 ;             // PE9
+	GPIO_Init( GPIOE, &GPIO_InitStructure );
+    GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_11 ;            // PE11
+	GPIO_Init( GPIOE, &GPIO_InitStructure );
+    GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_13 ;            // PE13
+	GPIO_Init( GPIOE, &GPIO_InitStructure );
 }
 
 
@@ -60,8 +64,8 @@ static void NVIC_Config_PWM(void)
 	/* Configure one bit for preemption priority */
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-	/* 配置TIM2_IRQ中断为中断源 */
-	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+	/* 配置TIM1_CC_IRQn中断为中断源 */
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_CC_IRQn;          // TIM1_UP_IRQn
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -69,7 +73,7 @@ static void NVIC_Config_PWM(void)
 }
 
 /**
-  * @brief  配置TIM3输出的PWM信号的模式，如周期、极性
+  * @brief  配置TIM1输出的PWM信号的模式，如周期、极性
   * @param  无
   * @retval 无
   */
@@ -85,20 +89,20 @@ static void NVIC_Config_PWM(void)
 /*    _______    ______     _____      ____       ___        __         _
  * |_|       |__|      |___|     |____|    |_____|   |______|  |_______| |________|
  */
-static void TIMx_Mode_Config(void)
+static void TIM1_Mode_Config(void)
 {
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef  TIM_OCInitStructure;																				
 
 	/* 设置TIM2CLK 时钟为72MHZ */				
-	RCC_APB1PeriphClockCmd ( RCC_APB1Periph_TIM2, ENABLE );						//使能TIM2时钟
+	RCC_APB1PeriphClockCmd ( RCC_APB2Periph_TIM1, ENABLE );						//使能TIM1时钟
 
 	/* 基本定时器配置 */		 
 	TIM_TimeBaseStructure.TIM_Period = 35;       							  	//当定时器从0计数到255，即为266次，为一个定时周期
 	TIM_TimeBaseStructure.TIM_Prescaler = 1999;	    							//设置预分频：
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1 ;					//设置时钟分频系数：不分频(这里用不到)
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  				//向上计数模式
-	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
 
 	/* PWM模式配置 */
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;	    					//配置为PWM模式1
@@ -106,18 +110,22 @@ static void TIMx_Mode_Config(void)
 	TIM_OCInitStructure.TIM_Pulse = 0;										  	//设置初始PWM脉冲宽度为0	
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low;  	  				//当定时器计数值小于CCR1_Val时为低电平
 
-	TIM_OC1Init( TIM2, &TIM_OCInitStructure );	 								//使能通道1
+	TIM_OC1Init( TIM1, &TIM_OCInitStructure );	 								//使能通道1
+    TIM_OC2Init( TIM1, &TIM_OCInitStructure );	 								//使能通道2
+    TIM_OC3Init( TIM1, &TIM_OCInitStructure );	 								//使能通道3
 
-	TIM_OC1PreloadConfig( TIM2, TIM_OCPreload_Enable );							//使能预装载	
+	TIM_OC1PreloadConfig( TIM1, TIM_OCPreload_Enable );							//使能预装载	
+    TIM_OC2PreloadConfig( TIM1, TIM_OCPreload_Enable );
+    TIM_OC3PreloadConfig( TIM1, TIM_OCPreload_Enable );
 
-	TIM_ARRPreloadConfig(TIM2, ENABLE);			 								//能TIM2重载寄存器ARR	
+	TIM_ARRPreloadConfig(TIM1, ENABLE);			 								//能TIM1重载寄存器ARR	
 	
-	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);									//使能update中断
+	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);									//使能update中断
 		
 	NVIC_Config_PWM();															//配置中断优先级	
 
-	/* TIM2 disble counter */
-	TIM_Cmd(TIM2, ENABLE);                   									//关闭定时器2
+	/* TIM1 disble counter */
+	TIM_Cmd(TIM1, ENABLE);                   									//关闭定时器1
 }
 
 /**
@@ -128,8 +136,8 @@ static void TIMx_Mode_Config(void)
   */
 void Breathing_Light_Init(void)
 {
-	TIMx_GPIO_Config();
-	TIMx_Mode_Config();	
+	TIM1_GPIO_Config();
+	TIM1_Mode_Config();	
 }
 
 

@@ -283,12 +283,12 @@ void USART3_IRQHandler(void)															// 用于PC机通信
   * @param  None
   * @retval None
   */
-void TIM2_IRQHandler(void)			
+void TIM1_CC_IRQHandler(void)		// TIM1_UP_IRQHandler	
 {
 	static uint16_t pwm_index = 0;									// 用于PWM查表
 	static uint8_t period_cnt = 0;									// 用于计算周期数
 	
-	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)									//TIM_IT_Update
+	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)									//TIM_IT_Update
  	{			
 		switch(Pwm_led_status)
 		{
@@ -299,12 +299,16 @@ void TIM2_IRQHandler(void)
 				{									
 					if(pwm_index < Brightness_Level)	
 					{
-						TIM2->CCR1 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
+						TIM1->CCR1 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
+						TIM1->CCR2 = OpenWave[pwm_index];
+						TIM1->CCR3 = OpenWave[pwm_index];
 						pwm_index++;											// 标志PWM表的下一个元素
 					}																	
 					else if(pwm_index >= Brightness_Level)
 					{
-						TIM2->CCR1 = OpenWave[Brightness_Level];
+						TIM1->CCR1 = OpenWave[Brightness_Level];
+						TIM1->CCR2 = OpenWave[Brightness_Level];
+						TIM1->CCR3 = OpenWave[Brightness_Level];
 					}   
 					period_cnt=0;												// 重置周期计数标志
 				}
@@ -315,12 +319,16 @@ void TIM2_IRQHandler(void)
 				period_cnt++;					
 				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
 				{							
-					TIM2->CCR1 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
+					TIM1->CCR1 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
+					TIM1->CCR2 = OpenWave[pwm_index];
+					TIM1->CCR3 = OpenWave[pwm_index];
 					if(pwm_index > 0)								
 						pwm_index--;											// 标志PWM表的下一个元素
 					else
 					{
-						TIM2->CCR1 = 0;
+						TIM1->CCR1 = 0;
+						TIM1->CCR2 = 0;
+						TIM1->CCR3 = 0;
 					}   
 					period_cnt=0;												// 重置周期计数标志
 				}
@@ -329,16 +337,61 @@ void TIM2_IRQHandler(void)
 			default:
 				break;
 		}
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);									//必须要清除中断标志位
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);									//必须要清除中断标志位
 	}
 }
 
 /**
-  * @brief  This function handles PPP interrupt request.
+  * @brief  按键中断
   * @param  None
   * @retval None
   */
+void EXTI0_IRQHandler (void)															// KEY1
+{							
+	if(EXTI_GetITStatus(EXTI_Line0) != RESET) 											// 确保是否产生了EXTI Line中断
+	{																							
+		ZigBee_Usart((unsigned char*)"So1");
+//		Door_flag = !Door_flag;
+//		Light_ON_flag = !Light_ON_flag;
+		EXTI_ClearITPendingBit(EXTI_Line0);     										// 清除中断标志位
+	}  										
+}
 
+void EXTI4_IRQHandler (void)															// KEY2
+{							
+	if(EXTI_GetITStatus(EXTI_Line4) != RESET) 											// 确保是否产生了EXTI Line中断
+	{	
+		ZigBee_Usart((unsigned char*)"So2");
+//		Light_OFF_flag = !Light_OFF_flag;
+//		Read_Flash_ID();
+		Humidi_TOGGLE;
+		Fan_TOGGLE;
+		EXTI_ClearITPendingBit(EXTI_Line4);     										// 清除中断标志位
+	}  										
+}
+
+void EXTI1_IRQHandler (void)															// KEY3
+{							
+	if(EXTI_GetITStatus(EXTI_Line1) != RESET) 											// 确保是否产生了EXTI Line中断
+	{																	
+		Power1_OFF;
+		Power2_OFF;
+		 
+		OLED_RST();																		// OLED刷新		
+		EXTI_ClearITPendingBit(EXTI_Line1);     										// 清除中断标志位
+	}  										
+}										
+	
+void EXTI3_IRQHandler (void)															// KEY4
+{							
+	if(EXTI_GetITStatus(EXTI_Line3) != RESET) 											// 确保是否产生了EXTI Line中断
+	{	
+		Power1_ON;																		// Zigbee Coordinator供电
+		Power2_ON;																		// Zigbee End_Device1、2供电
+//		add();																			// 添加卡号	
+		EXTI_ClearITPendingBit(EXTI_Line3);     										// 清除中断标志位
+	}  										
+}
 
 
 

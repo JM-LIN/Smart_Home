@@ -47,7 +47,7 @@ static void ZigBee_Power_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initstructure;
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOC,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF | RCC_APB2Periph_GPIOC,ENABLE);
 	
 	GPIO_Initstructure.GPIO_Mode  = GPIO_Mode_Out_PP;
 	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_1;
@@ -68,10 +68,10 @@ static void ZigBee_Power_Init(void)
 	GPIO_ResetBits(GPIOC,GPIO_Pin_2);						// Humidification
 	
 	GPIO_Initstructure.GPIO_Mode  = GPIO_Mode_Out_PP;
-	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_6;
+	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_5;
 	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOC,&GPIO_Initstructure);
-	GPIO_ResetBits(GPIOC,GPIO_Pin_6);						// Fan
+	GPIO_Init(GPIOF,&GPIO_Initstructure);
+	GPIO_ResetBits(GPIOF,GPIO_Pin_5);						// Fan
 }
 
 static void Misc_Init(void)     // 杂项类设备初始化
