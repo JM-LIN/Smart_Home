@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -547,6 +547,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\User\main.h</FilePath>
             </File>
+            <File>
+              <FileName>bsp_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp_init.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -576,6 +581,11 @@
               <FileName>wifi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Driver\WIFI\wifi.c</FilePath>
+            </File>
+            <File>
+              <FileName>SysTick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\SysTick\SysTick.c</FilePath>
             </File>
           </Files>
         </Group>
