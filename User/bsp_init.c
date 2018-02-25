@@ -8,6 +8,9 @@
 * Function Define Section               
 ************************************************************************/
 
+
+
+
 static void LED_Init(void)
 {
 	GPIO_InitTypeDef GPIO_Initstructure;
@@ -31,13 +34,13 @@ static void Beep_Init(void)									// 蜂鸣器
 {
 	GPIO_InitTypeDef GPIO_Initstructure;
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
 	
 	GPIO_Initstructure.GPIO_Mode  = GPIO_Mode_Out_PP;
-	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_2;
+	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_7;
 	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB,&GPIO_Initstructure);
-	GPIO_ResetBits(GPIOB,GPIO_Pin_2);							
+	GPIO_Init(GPIOC,&GPIO_Initstructure);
+	GPIO_ResetBits(GPIOC,GPIO_Pin_7);							
 }
 
 static void ZigBee_Power_Init(void)
@@ -64,11 +67,11 @@ static void ZigBee_Power_Init(void)
 	GPIO_Init(GPIOC,&GPIO_Initstructure);
 	GPIO_ResetBits(GPIOC,GPIO_Pin_2);						// Humidification
 	
-//	GPIO_Initstructure.GPIO_Mode  = GPIO_Mode_Out_PP;
-//	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_10;
-//	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
-//	GPIO_Init(GPIOB,&GPIO_Initstructure);
-//	GPIO_ResetBits(GPIOB,GPIO_Pin_10);						// Fan
+	GPIO_Initstructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+	GPIO_Initstructure.GPIO_Pin   = GPIO_Pin_6;
+	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC,&GPIO_Initstructure);
+	GPIO_ResetBits(GPIOC,GPIO_Pin_6);						// Fan
 }
 
 static void Misc_Init(void)     // 杂项类设备初始化
@@ -76,6 +79,8 @@ static void Misc_Init(void)     // 杂项类设备初始化
     ZigBee_Power_Init();
     Beep_Init();
     LED_Init();
+	Breathing_Light_Init();		// 呼吸灯
+    Key_Init();
 }
 
 void BSP_Init(void)
@@ -94,8 +99,10 @@ void BSP_Init(void)
     WiFi_Init(STA_AP);
     
     
+    
     LCD_CLS();
 	LCD_P8x16Str(24,2,(unsigned char*)"Init done!");
 	delay_ms (1000);
+    
     
 }

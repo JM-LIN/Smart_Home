@@ -28,17 +28,17 @@
 
 
 /********************************** 用户需要设置的参数**********************************/
-#define     User_ESP8266_ApSsid           "Smart_Phone" //要连接的热点的名称，即WIFI名称
-#define     User_ESP8266_ApPwd            "123321556abc" //要连接的热点的密钥
-#define     User_ESP8266_TcpServer_IP     "144.168.61.37" //要连接的服务器的 IP，即电脑的IP
-#define     User_ESP8266_TcpServer_Port    "12346"  //要连接的服务器的端口
+#define     User_ESP8266_ApSsid           "Smart_Phone" 	//要连接的热点的名称，即WIFI名称
+#define     User_ESP8266_ApPwd            "123321556abc" 	//要连接的热点的密钥
+#define     User_ESP8266_TcpServer_IP     "144.168.61.37" 	//要连接的服务器的 IP，即电脑的IP
+#define     User_ESP8266_TcpServer_Port   "12346"  			//要连接的服务器的端口
 #define     TURE 		1
 #define     FALSE 		0
        
 #define     ESP8266_CH_HIGH_LEVEL()             GPIO_SetBits( GPIOA, GPIO_Pin_0 )
 #define     ESP8266_CH_LOW_LEVEL()              GPIO_ResetBits( GPIOA, GPIO_Pin_0 )      
-#define     ESP8266_RST_HIGH_LEVEL()            GPIO_SetBits( GPIOA, GPIO_Pin_1 )
-#define     ESP8266_RST_LOW_LEVEL()             GPIO_ResetBits( GPIOA, GPIO_Pin_1 )
+#define     ESP8266_RST_HIGH_LEVEL()            GPIO_SetBits( GPIOC, GPIO_Pin_9 )
+#define     ESP8266_RST_LOW_LEVEL()             GPIO_ResetBits( GPIOC, GPIO_Pin_9 )
 
 #define     RX_BUF_MAX_LEN                      1024                
 

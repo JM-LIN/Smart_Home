@@ -14,6 +14,7 @@
 #include "WIFI_BufferPool.h"
 #include "ZigBee_BufferPool.h"
 #include "OLED.h"
+#include "exti.h"
 
 /************************************************************************
 * Prototype Declare Section     

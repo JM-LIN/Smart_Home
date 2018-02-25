@@ -126,7 +126,7 @@ static void TIMx_Mode_Config(void)
   * @param  нч
   * @retval нч
   */
-void TIM2_Breathing_Init(void)
+void Breathing_Light_Init(void)
 {
 	TIMx_GPIO_Config();
 	TIMx_Mode_Config();	

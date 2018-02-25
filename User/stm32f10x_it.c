@@ -56,6 +56,12 @@ extern volatile unsigned char ZigBee_flowsize;
 extern volatile unsigned char ZigBee_buffer[ZigBee_Flow_Size_Max];
 /* End of ZigBee Variable */
 
+/* Start of Breathing light Variable */
+volatile unsigned int Pwm_led_status = 0;				// 呼吸灯状态
+unsigned int Brightness_Level = 145;			// 呼吸灯亮度等级  0~145
+extern uint8_t OpenWave[];
+/* End of Breathing light Variable */
+
 /* Private function prototypes -----------------------------------------------*/
 extern void TimingDelay_Decrement(void);                            // SysTick系统定时
 
@@ -272,10 +278,66 @@ void USART3_IRQHandler(void)															// 用于PC机通信
 	USART_ClearFlag(USART3,USART_FLAG_TC);												// 清除中断标志.
 }	
 
+/**
+  * @brief  呼吸灯
+  * @param  None
+  * @retval None
+  */
+void TIM2_IRQHandler(void)			
+{
+	static uint16_t pwm_index = 0;									// 用于PWM查表
+	static uint8_t period_cnt = 0;									// 用于计算周期数
+	
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)									//TIM_IT_Update
+ 	{			
+		switch(Pwm_led_status)
+		{
+			case 1 :
+			{
+				period_cnt++;					
+				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{									
+					if(pwm_index < Brightness_Level)	
+					{
+						TIM2->CCR1 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
+						pwm_index++;											// 标志PWM表的下一个元素
+					}																	
+					else if(pwm_index >= Brightness_Level)
+					{
+						TIM2->CCR1 = OpenWave[Brightness_Level];
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+			}
+			case 0 :
+			{
+				period_cnt++;					
+				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{							
+					TIM2->CCR1 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
+					if(pwm_index > 0)								
+						pwm_index--;											// 标志PWM表的下一个元素
+					else
+					{
+						TIM2->CCR1 = 0;
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+			}
+			default:
+				break;
+		}
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);									//必须要清除中断标志位
+	}
+}
 
-
-
-
+/**
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
 
 
 

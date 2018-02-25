@@ -103,7 +103,6 @@ void WIFI_BPWriteData(unsigned char data)
 		
 		if(_buffer[0] == 'L' && _buffer[1] == 'i' && _buffer[3] == 'h' )			// ÕÕÃ÷ÃüÁî
 		{
-			
 			if(i == 0)
 				Light_ON_flag = !Light_ON_flag;	
 			if(i == 1)
@@ -112,7 +111,6 @@ void WIFI_BPWriteData(unsigned char data)
 			if(i>=2)
 				i = 0;		
 		}
-		
 		
 		if(_buffer[0] == 'R' && _buffer[1] == 'e' && _buffer[3] == 't' )			// ÖØÆôÃüÁî
 		{
