@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Sun Feb 25 17:37:01 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Sat Mar 10 17:12:25 2018
 <BR><P>
 <H3>Maximum Stack Usage =        376 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -332,6 +332,7 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Config
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Config
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Config
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WiFi_Init
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Init
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZigBee_Power_Init
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Beep_Init
@@ -356,6 +357,7 @@ Global Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WrCmd
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WrDat
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WiFi_Init
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZigBee_Power_Init
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Init
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_RST
@@ -366,6 +368,7 @@ Global Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WrCmd
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WrDat
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WiFi_Init
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZigBee_Power_Init
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Beep_Init
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_RST
@@ -449,6 +452,7 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_Config
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_Config
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_Config
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WiFi_Init
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Key_Init
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZigBee_Power_Init
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Beep_Init
@@ -868,7 +872,7 @@ Global Symbols
 
 <P><STRONG><a name="[186]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, stm32f10x_usart.o(.text), UNUSED)
 
-<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, main.o(.text))
+<P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 376<LI>Call Chain = main &rArr; BSP_Init &rArr; WiFi_Init &rArr; ESP8266_Link_Server &rArr; ESP8266_Cmd &rArr; USART_printf &rArr; itoa
 </UL>
 <BR>[Calls]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Init
@@ -948,7 +952,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[10]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
+<P><STRONG><a name="[10]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = EXTI0_IRQHandler &rArr; USART_printf &rArr; itoa
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_printf
@@ -957,7 +961,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[14]"></a>EXTI4_IRQHandler</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
+<P><STRONG><a name="[14]"></a>EXTI4_IRQHandler</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = EXTI4_IRQHandler &rArr; USART_printf &rArr; itoa
 </UL>
 <BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_printf
@@ -966,25 +970,27 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[11]"></a>EXTI1_IRQHandler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = EXTI1_IRQHandler &rArr; OLED_RST &rArr; LCD_P6x8Str &rArr; LCD_Set_Pos &rArr; LCD_WrCmd
+<P><STRONG><a name="[11]"></a>EXTI1_IRQHandler</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = EXTI1_IRQHandler &rArr; USART_printf &rArr; itoa
 </UL>
-<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_RST
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_printf
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_RST
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetITStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[13]"></a>EXTI3_IRQHandler</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EXTI3_IRQHandler
+<P><STRONG><a name="[13]"></a>EXTI3_IRQHandler</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, stm32f10x_it.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = EXTI3_IRQHandler &rArr; USART_printf &rArr; itoa
 </UL>
-<BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_printf
+<LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearITPendingBit
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetITStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[69]"></a>BSP_Init</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, bsp_init.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 368<LI>Call Chain = BSP_Init &rArr; WiFi_Init &rArr; ESP8266_Link_Server &rArr; ESP8266_Cmd &rArr; USART_printf &rArr; itoa
+<P><STRONG><a name="[69]"></a>BSP_Init</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, bsp_init.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 376<LI>Call Chain = BSP_Init &rArr; WiFi_Init &rArr; ESP8266_Link_Server &rArr; ESP8266_Cmd &rArr; USART_printf &rArr; itoa
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ZigBee_BufferPool_Init
@@ -1039,6 +1045,8 @@ Global Symbols
 <LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_ExitUnvarnishSend
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Cmd
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WIFI_BPWriteData
+<LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI3_IRQHandler
+<LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI1_IRQHandler
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI4_IRQHandler
 <LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI0_IRQHandler
 </UL>
@@ -1552,14 +1560,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WiFi_Init
 </UL>
 
-<P><STRONG><a name="[89]"></a>WiFi_Init</STRONG> (Thumb, 434 bytes, Stack size 8 bytes, wifi.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 360<LI>Call Chain = WiFi_Init &rArr; ESP8266_Link_Server &rArr; ESP8266_Cmd &rArr; USART_printf &rArr; itoa
+<P><STRONG><a name="[89]"></a>WiFi_Init</STRONG> (Thumb, 496 bytes, Stack size 16 bytes, wifi.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 368<LI>Call Chain = WiFi_Init &rArr; ESP8266_Link_Server &rArr; ESP8266_Cmd &rArr; USART_printf &rArr; itoa
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Link_Server
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_UnvarnishSend
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Cmd
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_P6x8Str
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BSP_Init
 </UL>
@@ -1585,16 +1597,16 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 </UL>
 
-<P><STRONG><a name="[db]"></a>ESP8266_Net_Mode_Choose</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, wifi.o(.text), UNUSED)
+<P><STRONG><a name="[db]"></a>ESP8266_Net_Mode_Choose</STRONG> (Thumb, 548 bytes, Stack size 8 bytes, wifi.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Cmd
 </UL>
 
-<P><STRONG><a name="[dc]"></a>ESP8266_JoinAP</STRONG> (Thumb, 38 bytes, Stack size 136 bytes, wifi.o(.text), UNUSED)
+<P><STRONG><a name="[dc]"></a>ESP8266_JoinAP</STRONG> (Thumb, 40 bytes, Stack size 136 bytes, wifi.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Cmd
 </UL>
 
-<P><STRONG><a name="[dd]"></a>ESP8266_BuildAP</STRONG> (Thumb, 552 bytes, Stack size 144 bytes, wifi.o(.text), UNUSED)
+<P><STRONG><a name="[dd]"></a>ESP8266_BuildAP</STRONG> (Thumb, 44 bytes, Stack size 144 bytes, wifi.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ESP8266_Cmd
 </UL>

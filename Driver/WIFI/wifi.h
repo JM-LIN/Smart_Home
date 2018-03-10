@@ -28,10 +28,10 @@
 
 
 /********************************** 用户需要设置的参数**********************************/
-#define     User_ESP8266_ApSsid           "Smart_Phone" 	//要连接的热点的名称，即WIFI名称
+#define     User_ESP8266_ApSsid           "Amiy" 	        //要连接的热点的名称，即WIFI名称
 #define     User_ESP8266_ApPwd            "123321556abc" 	//要连接的热点的密钥
-#define     User_ESP8266_TcpServer_IP     "144.168.61.37" 	//要连接的服务器的 IP，即电脑的IP
-#define     User_ESP8266_TcpServer_Port   "12346"  			//要连接的服务器的端口
+#define     User_ESP8266_TcpServer_IP     "207.246.97.145" 	//要连接的服务器的 IP，即电脑的IP
+#define     User_ESP8266_TcpServer_Port   "33333"  			//要连接的服务器的端口
 #define     TURE 		1
 #define     FALSE 		0
        

@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -586,6 +586,26 @@
               <FileName>SysTick.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Driver\SysTick\SysTick.c</FilePath>
+            </File>
+            <File>
+              <FileName>exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\KEY\exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>Breathing_Light.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\PWM\Breathing_Light.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Doc</GroupName>
+          <Files>
+            <File>
+              <FileName>Readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Doc\Readme.txt</FilePath>
             </File>
           </Files>
         </Group>

@@ -269,7 +269,7 @@ void USART3_IRQHandler(void)															// 用于PC机通信
 	volatile uint8_t ch;							
 								
 	if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)							
-	{ 								
+	{ 				 				
 		//ch = USART1->DR;							
 		ch = USART_ReceiveData(USART3);							
 //		USART_SendData(USART2, ch);   													// 将接收到的数据分别送到ZigBee、ESP8266中
@@ -346,46 +346,51 @@ void TIM1_CC_IRQHandler(void)		// TIM1_UP_IRQHandler
   * @param  None
   * @retval None
   */
-void EXTI0_IRQHandler (void)															// KEY1
+void EXTI0_IRQHandler (void)															// KEY2
 {							
 	if(EXTI_GetITStatus(EXTI_Line0) != RESET) 											// 确保是否产生了EXTI Line中断
 	{																							
 		ZigBee_Usart((unsigned char*)"So1");
 //		Door_flag = !Door_flag;
 //		Light_ON_flag = !Light_ON_flag;
+        Pwm_led_status = 1;
+        PC_Usart((unsigned char*)"key2 test\n");
 		EXTI_ClearITPendingBit(EXTI_Line0);     										// 清除中断标志位
 	}  										
 }
 
-void EXTI4_IRQHandler (void)															// KEY2
+void EXTI4_IRQHandler (void)															// KEY3
 {							
 	if(EXTI_GetITStatus(EXTI_Line4) != RESET) 											// 确保是否产生了EXTI Line中断
 	{	
 		ZigBee_Usart((unsigned char*)"So2");
+        Pwm_led_status = 0;
 //		Light_OFF_flag = !Light_OFF_flag;
 //		Read_Flash_ID();
+        PC_Usart((unsigned char*)"key3 test\n");
 		Humidi_TOGGLE;
 		Fan_TOGGLE;
 		EXTI_ClearITPendingBit(EXTI_Line4);     										// 清除中断标志位
 	}  										
 }
 
-void EXTI1_IRQHandler (void)															// KEY3
+void EXTI1_IRQHandler (void)															// KEY4
 {							
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) 											// 确保是否产生了EXTI Line中断
 	{																	
 		Power1_OFF;
 		Power2_OFF;
-		 
+		PC_Usart((unsigned char*)"key4 test\n");
 		OLED_RST();																		// OLED刷新		
 		EXTI_ClearITPendingBit(EXTI_Line1);     										// 清除中断标志位
 	}  										
 }										
 	
-void EXTI3_IRQHandler (void)															// KEY4
+void EXTI3_IRQHandler (void)															// KEY5
 {							
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET) 											// 确保是否产生了EXTI Line中断
 	{	
+        PC_Usart((unsigned char*)"key5 test\n");
 		Power1_ON;																		// Zigbee Coordinator供电
 		Power2_ON;																		// Zigbee End_Device1、2供电
 //		add();																			// 添加卡号	

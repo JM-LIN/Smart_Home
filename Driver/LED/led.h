@@ -62,6 +62,10 @@
 #define Power2_OFF		digitalLo(GPIOC,GPIO_Pin_0)
 #define Power2_ON		digitalHi(GPIOC,GPIO_Pin_0)
 
+#define WIFI_TOGGLE	    digitalToggle(GPIOC,GPIO_Pin_9)
+#define WIFI_OFF		digitalLo(GPIOC,GPIO_Pin_9)
+#define WIFI_ON		    digitalHi(GPIOC,GPIO_Pin_9)
+
 #define Humidi_TOGGLE	digitalToggle(GPIOC,GPIO_Pin_2)
 #define Humidi_OFF		digitalLo(GPIOC,GPIO_Pin_2)
 #define Humidi_ON		digitalHi(GPIOC,GPIO_Pin_2)
@@ -74,9 +78,7 @@
 #define Beep_OFF		digitalHi(GPIOB,GPIO_Pin_2)
 #define Beep_ON			digitalLo(GPIOB,GPIO_Pin_2)
 
-void LED_Init(void);
-void ZigBee_Power_Init(void);
-void Beep_Init(void);
+
 
 #endif
 

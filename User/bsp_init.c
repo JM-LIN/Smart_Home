@@ -103,6 +103,6 @@ void BSP_Init(void)
     LCD_CLS();
 	LCD_P8x16Str(24,2,(unsigned char*)"Init done!");
 	delay_ms (1000);
-    
+    LCD_CLS();
     
 }

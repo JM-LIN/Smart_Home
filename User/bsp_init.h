@@ -20,6 +20,7 @@
 * Prototype Declare Section     
 ************************************************************************/
 extern void BSP_Init(void);
+extern void Breathing_Light_Init(void);
 
 
 #endif

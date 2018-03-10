@@ -2,6 +2,7 @@
 #include "wifi.h"
 
 
+
 /************************************************************************
 * Global Variable Declare Section   
 ************************************************************************/
@@ -19,7 +20,17 @@ struct  STRUCT_USARTx_Fram strEsp8266_Fram_Record = { 0 };
 
 void WiFi_Init(ENUM_Net_ModeTypeDef mode)							//ESP_8266初始化
 {																	// mode : AP ; STA ; STA_AP
-	
+	GPIO_InitTypeDef GPIO_InitStructure;	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+
+	GPIO_InitStructure.GPIO_Pin		= GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Speed	= GPIO_Speed_50MHz;	
+	GPIO_InitStructure.GPIO_Mode	= GPIO_Mode_Out_PP;
+	GPIO_Init(GPIOC,&GPIO_InitStructure);
+    
+    ESP8266_RST_LOW_LEVEL();
+    delay_ms (100);
+    ESP8266_RST_HIGH_LEVEL();
 //	while(!ESP8266_Cmd ( "AT+RESTORE", "OK", NULL, 1000 ));
 	switch(mode)
 	{
@@ -28,14 +39,14 @@ void WiFi_Init(ENUM_Net_ModeTypeDef mode)							//ESP_8266初始化
 			/******************************/
 			while(!ESP8266_Cmd ( "AT+CWMODE=1", "OK", NULL, 1000 ));
 			while(!ESP8266_Cmd ( "AT+RST", "OK", NULL, 2500 ));
-			while(!ESP8266_Cmd ( "AT+CWJAP=\"420sys\",\"420dzcxsys\"", "OK", NULL, 10000 ));
+			while(!ESP8266_Cmd ( "AT+CWJAP=\"Amiy\",\"123321556abc\"", "OK", NULL, 10000 ));
 			delay_ms (1800);
 			delay_ms (1800);
 			delay_ms (1800);
 			delay_ms (1800);
 			delay_ms (1800);
 			while(!ESP8266_Cmd ( "AT+CIPMUX=0", "OK", NULL, 1000 ));
-			while(!ESP8266_Cmd ( "AT+CIPSTART=0,\"TCP\",\"144.168.61.37\",12346", "OK", NULL, 1000 ));
+			while(!ESP8266_Cmd ( "AT+CIPSTART=0,\"TCP\",\"207.246.97.145\",33333", "OK", NULL, 1000 ));
 			while(!ESP8266_Cmd ( "AT+CWMODE=1", "OK", NULL, 1000 ));
 			/******************************/
 			break;
