@@ -1,11 +1,11 @@
 #include "opp.h"
 #include "usart.h"
 #include "wifi.h"
-#include "delay.h"
+#include "Systick.h"
 #include "rc522.h"
 #include "flash.h"
 #include "time.h"
-#include "BufferPool.h"
+#include "WIFI_BufferPool.h"
 
 u32 FLASH_SIZE_opp = 16*1024*1024;//flash的总空间大小
 uint8_t ResetNumber[4] = {0x00,0x00,0x00,0x00};//重置卡号
@@ -43,7 +43,7 @@ void get(void)
 			W25QXX_Read(&Rx1_Buffer_get[2], FLASH_SIZE_opp - week + day(i) + 2 ,sizeof(Rx1_Buffer_get[2]));  //人数
 			delay_ms (350);
 			ESP8266_Cmd ("AT+CIPSEND=0,3",NULL,NULL,1000);   delay_us(255); delay_us(255);delay_us(255); delay_us(255);
-			ESP8266_SendString(DISABLE,(char*)Rx1_Buffer_get,3,0);   delay_us(255); delay_us(255);delay_us(255); delay_us(255);
+			ESP8266_SendString(DISABLE,(unsigned char*)Rx1_Buffer_get,3,0);   delay_us(255); delay_us(255);delay_us(255); delay_us(255);
 			delay_ms (250);
 			for(j=0;j<Rx1_Buffer_get[2];j++)      //通过已知人数判断发送多少个卡号
 			{
@@ -56,7 +56,7 @@ void get(void)
 			BuildATOrder (num);									
 			delay_ms (350);
 			ESP8266_Cmd (ATOrder,NULL,NULL,1000);   delay_us(255); delay_us(255);delay_us(255); delay_us(255);
-			ESP8266_SendString(DISABLE,(char*)Rx2_Buffer_get,num,0);	 delay_us(255); delay_us(255);delay_us(255); delay_ms(1500);		
+			ESP8266_SendString(DISABLE,(unsigned char*)Rx2_Buffer_get,num,0);	 delay_us(255); delay_us(255);delay_us(255); delay_ms(1500);		
 		}										
 	}
 //	PC_Usart ((unsigned char*)"发送结束\r");
@@ -91,7 +91,7 @@ void del(uint8_t ch3[4])
 		}		 
 	}
 	W25QXX_Write(&temp2,FLASH_SIZE_opp - 1000,sizeof(temp2));//写回人数
-	SetFlowSize(3);     //重置溢出值
+	WIFI_SetFlowSize(3);     //重置溢出值
 
 //	PC_Usart ((unsigned char*)"\r");
 	W25QXX_Read(&temp2,FLASH_SIZE_opp - 1000,sizeof(temp2));
@@ -113,11 +113,11 @@ void add(void)
 	uint8_t temp1;
 	uint8_t i;
 
-//	PC_Usart((unsigned char*)"测试模式\r");
+	PC_Usart((unsigned char*)"测试模式\r");
 
 	/*       //读卡//       */
 	while (MI_OK!=PcdRequest(0x52, Card_Type)); //一直循环直到读到卡   
-//	PC_Usart ((unsigned char*)"读到卡");
+	PC_Usart ((unsigned char*)"读到卡");
 	status1 = PcdAnticoll(ID);//防冲撞
 	status1 = PcdSelect(ID);  //选卡
 	PcdHalt();
@@ -126,7 +126,7 @@ void add(void)
 	if(status1==MI_OK)//選卡成功
 	{
 		W25QXX_Read(&temp1,FLASH_SIZE_opp - 1000,sizeof(temp1));//读出人数
-//		PC_Usart ((unsigned char*)"%d\r",temp1);				
+		PC_Usart ((unsigned char*)"%d\r",temp1);				
 		for(i = temp1;i<temp1+1;i++)   //写入
 		{
 			W25QXX_Write((u8*)ID,FLASH_SIZE_opp - 40000 + temp1*4 , 4);
@@ -138,8 +138,8 @@ void add(void)
 
 			/*       //发送//       */
 	ESP8266_Cmd ("AT+CIPSEND=0,4",NULL,NULL,1000);   delay_us(255); delay_us(255);  //发送数据前必要的指令
-	ESP8266_SendString (DISABLE,(char*)ID,4,0);     //发送数据
-//	PC_Usart ((unsigned char*)"发送结束\r");				
+	ESP8266_SendString (DISABLE,(unsigned char*)ID,4,0);     //发送数据
+	PC_Usart ((unsigned char*)"发送结束\r");				
 }
 
 

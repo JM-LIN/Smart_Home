@@ -1,17 +1,12 @@
 #ifndef __FLASH_H
 #define __FLASH_H			    
-#include "sys.h" 
+#include "stm32f10x.h"
+#include "led.h"
 
 
 
 	  
 //W25X系列/Q系列芯片列表	   
-//W25Q80  ID  0XEF13
-//W25Q16  ID  0XEF14
-//W25Q32  ID  0XEF15
-//W25Q64  ID  0XEF16	
-//W25Q128 ID  0XEF17	
-
 #define W25Q80 	0XEF13 	
 #define W25Q16 	0XEF14
 #define W25Q32 	0XEF15
@@ -20,7 +15,9 @@
 
 extern u16 W25QXX_TYPE;					//定义W25QXX芯片型号		   
 
-#define	W25QXX_CS 		PBout(12)  		//W25QXX的片选信号
+//#define	W25QXX_CS 		PBout(12)  		//W25QXX的片选信号
+#define W25QXX_CS_OFF()		    GPIO_SetBits(GPIOB,GPIO_Pin_12)
+#define W25QXX_CS_ON()			GPIO_ResetBits(GPIOB,GPIO_Pin_12)
 				 
 ////////////////////////////////////////////////////////////////////////////
 

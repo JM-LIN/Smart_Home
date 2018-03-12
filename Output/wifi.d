@@ -33,4 +33,6 @@
 ..\..\output\wifi.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\wifi.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\wifi.o: ..\..\Driver\SysTick\SysTick.h
+..\..\output\wifi.o: ..\..\Driver\USART\usart.h
+..\..\output\wifi.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\..\output\wifi.o: ..\..\Driver\OLED\OLED.h

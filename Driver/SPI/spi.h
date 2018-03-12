@@ -1,7 +1,7 @@
 #ifndef __SPI_H_
 #define __SPI_H_
 
-#include "sys.h"
+#include "stm32f10x.h"
 
 /////CS - SDA---------PB12
 /////SCK     ---------PB13

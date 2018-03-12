@@ -67,28 +67,28 @@ void Key_Init(void)
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB,GPIO_PinSource0); 
 	EXTI_InitStructure.EXTI_Line = EXTI_Line0;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising; 			// 上升沿中断
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 			// 上下升沿中断
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure); 
 	
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOC, GPIO_PinSource4); 
 	EXTI_InitStructure.EXTI_Line = EXTI_Line4;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising; 			// 上升沿中断
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 			// 上下升沿中断
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure); 
 		
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource1); 
 	EXTI_InitStructure.EXTI_Line = EXTI_Line1;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising; 			// 上升沿中断
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 			// 上下升沿中断
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure); 
 	
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOC, GPIO_PinSource3); 
 	EXTI_InitStructure.EXTI_Line = EXTI_Line3;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising; 			// 上升沿中断
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 			// 上下升沿中断
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure); 
 }

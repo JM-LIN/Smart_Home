@@ -43,3 +43,9 @@
 ..\..\output\main.o: ..\..\Driver\LED\led.h
 ..\..\output\main.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\main.o: ..\..\Driver\KEY\exti.h
+..\..\output\main.o: ..\..\Driver\PWM\PWM.h
+..\..\output\main.o: ..\..\Driver\RC522\rc522.h
+..\..\output\main.o: ..\..\Driver\RC522\opp.h
+..\..\output\main.o: ..\..\User\card_records.h
+..\..\output\main.o: ..\..\Driver\FLASH\flash.h
+..\..\output\main.o: ..\..\Driver\RTC\rtc.h

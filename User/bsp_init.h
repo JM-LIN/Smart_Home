@@ -15,6 +15,9 @@
 #include "ZigBee_BufferPool.h"
 #include "OLED.h"
 #include "exti.h"
+#include "PWM.h"
+#include "rc522.h"
+#include "opp.h"
 
 /************************************************************************
 * Prototype Declare Section     
@@ -24,3 +27,4 @@ extern void Breathing_Light_Init(void);
 
 
 #endif
+

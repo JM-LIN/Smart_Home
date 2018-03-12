@@ -43,3 +43,9 @@
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\LED\led.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\KEY\exti.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\PWM\PWM.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\RC522\rc522.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\RC522\opp.h
+..\..\output\wifi_bufferpool.o: ..\..\User\card_records.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\FLASH\flash.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\RTC\rtc.h

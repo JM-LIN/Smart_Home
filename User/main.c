@@ -34,7 +34,7 @@ int main(void)
     
     while(1)
     {
-        ;
+        Swiping_Card();
     }
     
     return 0;

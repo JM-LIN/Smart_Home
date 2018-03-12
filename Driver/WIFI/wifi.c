@@ -575,7 +575,7 @@ bool ESP8266_SendString ( FunctionalState enumEnUnvarnishTx, unsigned char * pSt
 		
 		ESP8266_Cmd ( cStr, "> ", 0, 1000 );
 		
-		bRet = ESP8266_Cmd ( pStr, "SEND OK", 0, 1000 );
+		bRet = ESP8266_Cmd ( (char *)pStr, "SEND OK", 0, 1000 );
 		if(bRet)
 			LCD_P6x8Str(97,1,(unsigned char*)"S OK ");
 		else

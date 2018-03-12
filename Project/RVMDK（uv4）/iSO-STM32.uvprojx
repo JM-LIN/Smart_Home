@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM;..\..\Driver\FLASH;..\..\Driver\RC522;..\..\Driver\SPI;..\..\Driver\RTC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -517,20 +517,35 @@
               <FileType>1</FileType>
               <FilePath>..\..\Libraries\FWlib\src\stm32f10x_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_bkp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Libraries\FWlib\src\stm32f10x_bkp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Libraries\FWlib\src\stm32f10x_pwr.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>USER</GroupName>
           <Files>
             <File>
+              <FileName>stm32f10x_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\stm32f10x_conf.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_conf.h</FileName>
+              <FileName>main.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\User\stm32f10x_conf.h</FilePath>
+              <FilePath>..\..\User\main.h</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_it.c</FileName>
@@ -543,20 +558,25 @@
               <FilePath>..\..\User\stm32f10x_it.h</FilePath>
             </File>
             <File>
-              <FileName>main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\User\main.h</FilePath>
-            </File>
-            <File>
               <FileName>bsp_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\bsp_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>card_records.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\card_records.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>DRIVER</GroupName>
           <Files>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\LED\led.c</FilePath>
+            </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
@@ -596,6 +616,36 @@
               <FileName>Breathing_Light.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Driver\PWM\Breathing_Light.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\PWM\PWM.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\FLASH\flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\SPI\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc522.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\RC522\rc522.c</FilePath>
+            </File>
+            <File>
+              <FileName>opp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\RC522\opp.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\RTC\rtc.c</FilePath>
             </File>
           </Files>
         </Group>

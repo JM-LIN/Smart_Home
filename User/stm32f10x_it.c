@@ -31,6 +31,8 @@
 #include "wifi.h"
 #include "WIFI_BufferPool.h"
 #include "ZigBee_BufferPool.h"
+#include "opp.h"
+#include "card_records.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
@@ -342,6 +344,61 @@ void TIM1_CC_IRQHandler(void)		// TIM1_UP_IRQHandler
 }
 
 /**
+  * @brief  风扇
+  * @param  None
+  * @retval None
+  */
+void TIM4_IRQHandler(void)
+{
+	static uint16_t pwm_index = 0;									// 用于PWM查表
+	static uint8_t period_cnt = 0;									// 用于计算周期数
+	
+	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)									//TIM_IT_Update
+ 	{			
+		switch(Pwm_led_status)
+		{
+			case 1 :		
+				period_cnt++;					
+				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{									
+					if(pwm_index < Brightness_Level)	
+					{
+						TIM4->CCR2 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
+						pwm_index++;											// 标志PWM表的下一个元素
+					}
+																	
+					if(pwm_index >= Brightness_Level)
+					{
+						TIM4->CCR2 = OpenWave[Brightness_Level];
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+			
+			case 0 :
+				period_cnt++;					
+				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{							
+					TIM4->CCR2 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
+					if(pwm_index > 0)								
+						pwm_index--;											// 标志PWM表的下一个元素
+					else
+					{
+						TIM4->CCR2 = 0;
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+			
+			default:
+				break;
+		}
+		
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);									//必须要清除中断标志位
+	}
+}
+
+/**
   * @brief  按键中断
   * @param  None
   * @retval None
@@ -350,10 +407,13 @@ void EXTI0_IRQHandler (void)															// KEY2
 {							
 	if(EXTI_GetITStatus(EXTI_Line0) != RESET) 											// 确保是否产生了EXTI Line中断
 	{																							
-		ZigBee_Usart((unsigned char*)"So1");
+//		ZigBee_Usart((unsigned char*)"So1");
 //		Door_flag = !Door_flag;
 //		Light_ON_flag = !Light_ON_flag;
-        Pwm_led_status = 1;
+//        TIM_SetCompare4(TIM4,15);
+//         Pwm_led_status = 1;
+        add();																			// 添加卡号	
+        
         PC_Usart((unsigned char*)"key2 test\n");
 		EXTI_ClearITPendingBit(EXTI_Line0);     										// 清除中断标志位
 	}  										
@@ -363,13 +423,18 @@ void EXTI4_IRQHandler (void)															// KEY3
 {							
 	if(EXTI_GetITStatus(EXTI_Line4) != RESET) 											// 确保是否产生了EXTI Line中断
 	{	
-		ZigBee_Usart((unsigned char*)"So2");
-        Pwm_led_status = 0;
+//		ZigBee_Usart((unsigned char*)"So2");
+        
+//        TIM_SetCompare4(TIM4,7);
+        
+//        Pwm_led_status = 0;
 //		Light_OFF_flag = !Light_OFF_flag;
-//		Read_Flash_ID();
+		Read_Flash_ID();
+        
+//		Humidi_TOGGLE;
+//		Fan_TOGGLE;
+        
         PC_Usart((unsigned char*)"key3 test\n");
-		Humidi_TOGGLE;
-		Fan_TOGGLE;
 		EXTI_ClearITPendingBit(EXTI_Line4);     										// 清除中断标志位
 	}  										
 }
@@ -378,11 +443,14 @@ void EXTI1_IRQHandler (void)															// KEY4
 {							
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) 											// 确保是否产生了EXTI Line中断
 	{																	
-		Power1_OFF;
-		Power2_OFF;
-		PC_Usart((unsigned char*)"key4 test\n");
-		OLED_RST();																		// OLED刷新		
-		EXTI_ClearITPendingBit(EXTI_Line1);     										// 清除中断标志位
+//		Power1_OFF;
+//		Power2_OFF;
+		
+//		OLED_RST();																		// OLED刷新		
+//		Del_card_ID();       											// 清空全部卡号
+        
+        PC_Usart((unsigned char*)"key4 test\n");
+        EXTI_ClearITPendingBit(EXTI_Line1);     										// 清除中断标志位
 	}  										
 }										
 	
@@ -390,11 +458,14 @@ void EXTI3_IRQHandler (void)															// KEY5
 {							
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET) 											// 确保是否产生了EXTI Line中断
 	{	
+        
+//		Power1_ON;																		// Zigbee Coordinator供电
+//		Power2_ON;																		// Zigbee End_Device1、2供电
+		
+		
+        
         PC_Usart((unsigned char*)"key5 test\n");
-		Power1_ON;																		// Zigbee Coordinator供电
-		Power2_ON;																		// Zigbee End_Device1、2供电
-//		add();																			// 添加卡号	
-		EXTI_ClearITPendingBit(EXTI_Line3);     										// 清除中断标志位
+        EXTI_ClearITPendingBit(EXTI_Line3);     										// 清除中断标志位
 	}  										
 }
 

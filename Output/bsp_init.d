@@ -40,6 +40,12 @@
 ..\..\output\bsp_init.o: ..\..\Driver\USART\WIFI_BufferPool.h
 ..\..\output\bsp_init.o: ..\..\User\main.h
 ..\..\output\bsp_init.o: ..\..\User\bsp_init.h
+..\..\output\bsp_init.o: ..\..\User\card_records.h
+..\..\output\bsp_init.o: ..\..\Driver\RC522\rc522.h
+..\..\output\bsp_init.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\bsp_init.o: ..\..\Driver\LED\led.h
+..\..\output\bsp_init.o: ..\..\Driver\RTC\rtc.h
 ..\..\output\bsp_init.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\bsp_init.o: ..\..\Driver\KEY\exti.h
+..\..\output\bsp_init.o: ..\..\Driver\PWM\PWM.h
+..\..\output\bsp_init.o: ..\..\Driver\RC522\opp.h

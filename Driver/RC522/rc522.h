@@ -1,6 +1,6 @@
 #ifndef __RC522_H
 #define __RC522_H
-#include "sys.h"
+#include "stm32f10x.h"
 
 #define uchar unsigned char
 #define uint unsigned int  

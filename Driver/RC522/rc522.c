@@ -1,7 +1,6 @@
-#include "sys.h"
 #include "rc522.h"
 #include "spi.h"
-#include "delay.h" 
+#include "Systick.h" 
 #include <string.h>
 #include "usart.h"
 
@@ -23,10 +22,10 @@ void InitRc522(void)
 	char temp;
 	SPI1_Init();
 	M500PcdConfigISOType( 'A' );
-	temp  =	PcdReset();        //功能：复位RC522
-	PcdAntennaOff();   //关闭天线
+	temp  =	PcdReset();         //功能：复位RC522
+	PcdAntennaOff();            //关闭天线
 	delay_ms(2);
-	PcdAntennaOn();    //开启天线
+	PcdAntennaOn();             //开启天线
 }
 
 

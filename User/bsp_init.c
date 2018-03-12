@@ -81,6 +81,9 @@ static void Misc_Init(void)     // 杂项类设备初始化
     LED_Init();
 	Breathing_Light_Init();		// 呼吸灯
     Key_Init();
+    
+    Servo_Door_Init(199, 7199);									    // 门 PWM初始化周期为20ms，50HZ
+    Fan_Init(255, 1999);
 }
 
 void BSP_Init(void)
@@ -91,6 +94,13 @@ void BSP_Init(void)
     ZigBee_BufferPool_Init();    	    
     USART_Configuration();
        
+    InitRc522();													// 刷卡模块初始化
+    W25QXX_Init();													// Flash的W25Q128的初始化
+//	Del_card_ID();       											// 清空全部卡号													
+	Read_Flash_ID();												// 读人数
+  
+    
+    
     Misc_Init();
     
     OLED_Init();
