@@ -83,7 +83,7 @@ static void Misc_Init(void)     // 杂项类设备初始化
     
     Breathing_Light_Init();		                                    // 呼吸灯
     Servo_Door_Init(199, 7199);									    // 门 PWM初始化周期为20ms，50HZ
-//    Fan_Init(255, 1999);
+    Fan_Init(255, 1999);
 }
 
 void BSP_Init(void)
@@ -102,14 +102,11 @@ void BSP_Init(void)
 //	Del_card_ID();       											// 清空全部卡号													
 	Read_Flash_ID();												// 读人数
   
-      
-    
-    
-    
+
     OLED_Init();
     LCD_P8x16Str(0,0,(unsigned char*)"Initialization !");
     
-//    WiFi_Init(STA_AP);
+    WiFi_Init(STA_AP);
     
     
     

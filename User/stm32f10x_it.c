@@ -303,7 +303,7 @@ void TIM1_UP_IRQHandler(void)
 		
 			if( pwm_index >=  40)								//若PWM脉冲表已经输出完成一遍，重置PWM查表标志
 			{
-                PC_Usart((unsigned char*)"fuck\n\n");
+//                PC_Usart((unsigned char*)"fuck\n\n");
 				pwm_index=0;								
 			}
 			
@@ -373,7 +373,7 @@ void TIM1_UP_IRQHandler(void)
   * @param  None
   * @retval None
   */
-/*
+
 void TIM4_IRQHandler(void)
 {
 	static uint16_t pwm_index = 0;									// 用于PWM查表
@@ -423,7 +423,7 @@ void TIM4_IRQHandler(void)
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);									//必须要清除中断标志位
 	}
 }
-*/
+
 /**
   * @brief  按键中断
   * @param  None

@@ -75,7 +75,7 @@ void SPI2_Init(void)
 	
 	//PB口的使能
 	GPIO_InitTypeDef GPIO_InitStructure;//IO口结构体的定义
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE );
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE );
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2,ENABLE);
 	
 	

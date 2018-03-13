@@ -123,12 +123,12 @@ static void TIM1_Mode_Config(void)
 
 	TIM_ARRPreloadConfig(TIM1, ENABLE);			 								//能TIM1重载寄存器ARR	
 
-	/* TIM1 enble counter */
-	TIM_Cmd(TIM1, ENABLE);                   									//打开定时器1
-    
     TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);									//使能update中断
     NVIC_Config_PWM();															//配置中断优先级
-    TIM_CtrlPWMOutputs(TIM1, ENABLE);                                            // 使能PWM输出
+    TIM_CtrlPWMOutputs(TIM1, ENABLE);                                           // 使能PWM输出
+    
+    /* TIM1 enble counter */
+	TIM_Cmd(TIM1, ENABLE);                   									//打开定时器1
 }
 
 /**

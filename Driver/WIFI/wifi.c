@@ -31,6 +31,7 @@ void WiFi_Init(ENUM_Net_ModeTypeDef mode)							//ESP_8266≥ı ºªØ
     ESP8266_RST_LOW_LEVEL();
     delay_ms (100);
     ESP8266_RST_HIGH_LEVEL();
+    
 //	while(!ESP8266_Cmd ( "AT+RESTORE", "OK", NULL, 1000 ));
 	switch(mode)
 	{
