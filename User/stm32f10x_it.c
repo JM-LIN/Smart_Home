@@ -285,69 +285,95 @@ void USART3_IRQHandler(void)															// 用于PC机通信
   * @param  None
   * @retval None
   */
-void TIM1_CC_IRQHandler(void)		// TIM1_UP_IRQHandler	
+void TIM1_UP_IRQHandler(void)		
 {
+    static uint8_t pwm_index = 0;			//用于PWM查表
+	static uint8_t period_cnt = 0;		//用于计算周期数
+	
+	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)	//TIM_IT_Update
+ 	{			
+		period_cnt++;
+		if(period_cnt >= 10)										//若输出的周期数大于10，输出下一种脉冲宽的PWM波
+		{
+			
+			TIM1->CCR1 = OpenWave[pwm_index];	//根据PWM表修改定时器的比较寄存器值
+//            TIM1->CCR2 = OpenWave[pwm_index];
+//            TIM1->CCR3 = OpenWave[pwm_index];
+			pwm_index++;												//标志PWM表的下一个元素
+		
+			if( pwm_index >=  40)								//若PWM脉冲表已经输出完成一遍，重置PWM查表标志
+			{
+                PC_Usart((unsigned char*)"fuck\n\n");
+				pwm_index=0;								
+			}
+			
+			period_cnt=0;												//重置周期计数标志
+		}
+		TIM_ClearITPendingBit (TIM1, TIM_IT_Update);	//必须要清除中断标志位
+	}
+    /*
 	static uint16_t pwm_index = 0;									// 用于PWM查表
 	static uint8_t period_cnt = 0;									// 用于计算周期数
 	
 	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)									//TIM_IT_Update
  	{			
 		switch(Pwm_led_status)
-		{
+        {
 			case 1 :
-			{
 				period_cnt++;					
 				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
 				{									
 					if(pwm_index < Brightness_Level)	
 					{
 						TIM1->CCR1 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
-						TIM1->CCR2 = OpenWave[pwm_index];
-						TIM1->CCR3 = OpenWave[pwm_index];
+//						TIM1->CCR2 = OpenWave[pwm_index];
+//						TIM1->CCR3 = OpenWave[pwm_index];
 						pwm_index++;											// 标志PWM表的下一个元素
 					}																	
 					else if(pwm_index >= Brightness_Level)
 					{
 						TIM1->CCR1 = OpenWave[Brightness_Level];
-						TIM1->CCR2 = OpenWave[Brightness_Level];
-						TIM1->CCR3 = OpenWave[Brightness_Level];
+//						TIM1->CCR2 = OpenWave[Brightness_Level];
+//						TIM1->CCR3 = OpenWave[Brightness_Level];
 					}   
 					period_cnt=0;												// 重置周期计数标志
 				}
 				break;
-			}
+
 			case 0 :
-			{
 				period_cnt++;					
 				if(period_cnt >= 40)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
 				{							
 					TIM1->CCR1 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
-					TIM1->CCR2 = OpenWave[pwm_index];
-					TIM1->CCR3 = OpenWave[pwm_index];
+//					TIM1->CCR2 = OpenWave[pwm_index];
+//					TIM1->CCR3 = OpenWave[pwm_index];
 					if(pwm_index > 0)								
 						pwm_index--;											// 标志PWM表的下一个元素
 					else
 					{
 						TIM1->CCR1 = 0;
-						TIM1->CCR2 = 0;
-						TIM1->CCR3 = 0;
+//						TIM1->CCR2 = 0;
+//						TIM1->CCR3 = 0;
 					}   
 					period_cnt=0;												// 重置周期计数标志
 				}
 				break;
-			}
+
 			default:
 				break;
 		}
 		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);									//必须要清除中断标志位
 	}
+    */
 }
+
 
 /**
   * @brief  风扇
   * @param  None
   * @retval None
   */
+/*
 void TIM4_IRQHandler(void)
 {
 	static uint16_t pwm_index = 0;									// 用于PWM查表
@@ -397,7 +423,7 @@ void TIM4_IRQHandler(void)
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);									//必须要清除中断标志位
 	}
 }
-
+*/
 /**
   * @brief  按键中断
   * @param  None
@@ -412,7 +438,7 @@ void EXTI0_IRQHandler (void)															// KEY2
 //		Light_ON_flag = !Light_ON_flag;
 //        TIM_SetCompare4(TIM4,15);
 //         Pwm_led_status = 1;
-        add();																			// 添加卡号	
+//        add();																			// 添加卡号	
         
         PC_Usart((unsigned char*)"key2 test\n");
 		EXTI_ClearITPendingBit(EXTI_Line0);     										// 清除中断标志位
@@ -427,9 +453,9 @@ void EXTI4_IRQHandler (void)															// KEY3
         
 //        TIM_SetCompare4(TIM4,7);
         
-//        Pwm_led_status = 0;
+//       Pwm_led_status = 0;
 //		Light_OFF_flag = !Light_OFF_flag;
-		Read_Flash_ID();
+//		Read_Flash_ID();
         
 //		Humidi_TOGGLE;
 //		Fan_TOGGLE;
@@ -443,8 +469,8 @@ void EXTI1_IRQHandler (void)															// KEY4
 {							
 	if(EXTI_GetITStatus(EXTI_Line1) != RESET) 											// 确保是否产生了EXTI Line中断
 	{																	
-//		Power1_OFF;
-//		Power2_OFF;
+//		ZigBee1_OFF;
+//		ZigBee2_OFF;
 		
 //		OLED_RST();																		// OLED刷新		
 //		Del_card_ID();       											// 清空全部卡号
@@ -459,8 +485,8 @@ void EXTI3_IRQHandler (void)															// KEY5
 	if(EXTI_GetITStatus(EXTI_Line3) != RESET) 											// 确保是否产生了EXTI Line中断
 	{	
         
-//		Power1_ON;																		// Zigbee Coordinator供电
-//		Power2_ON;																		// Zigbee End_Device1、2供电
+//		ZigBee1_ON;																		// Zigbee Coordinator供电
+//		ZigBee2_ON;																		// Zigbee End_Device1、2供电
 		
 		
         

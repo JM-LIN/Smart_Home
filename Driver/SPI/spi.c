@@ -16,17 +16,13 @@
 ///////*RC522初始化**//////////
 void SPI1_Init(void)
 {
-	
-	
 	SPI_InitTypeDef SPI_InitStructure;
-	
 	
 	//PA  SPI1使能
 	GPIO_InitTypeDef GPIO_InitStructure;//IO口结构体的定义
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1,ENABLE);
-	
-	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_SPI1,ENABLE);
+//    GPIO_PinRemapConfig(GPIO_Remap_SPI1, DISABLE);                           // 定时器1完全重映射
+		
 
 	//PA5/6/7口结构体初始化分别为SCK、MOSI、MISO
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
@@ -79,7 +75,7 @@ void SPI2_Init(void)
 	
 	//PB口的使能
 	GPIO_InitTypeDef GPIO_InitStructure;//IO口结构体的定义
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE );
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,ENABLE );
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2,ENABLE);
 	
 	
@@ -90,7 +86,7 @@ void SPI2_Init(void)
 	GPIO_Init(GPIOB,&GPIO_InitStructure);
 	GPIO_SetBits(GPIOB,GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);
 
-    //PB12初始化SDA
+    //PB12初始化CS
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

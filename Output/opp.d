@@ -48,5 +48,6 @@
 ..\..\output\opp.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\opp.o: ..\..\Driver\KEY\exti.h
 ..\..\output\opp.o: ..\..\Driver\PWM\PWM.h
+..\..\output\opp.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\opp.o: ..\..\User\card_records.h
 ..\..\output\opp.o: ..\..\Driver\RTC\rtc.h

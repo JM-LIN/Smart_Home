@@ -102,8 +102,8 @@ void Swiping_Card(void)
                 LCD_P6x8Str(30,1,(unsigned char*)"ON ");						// 读卡成功									
                 TIM_SetCompare4(TIM4,15);										// 驱动舵机
                 delay_ms(1500);	
-                delay_ms(1500);
-                TIM_SetCompare4(TIM4,7);
+//                delay_ms(1500);
+//                TIM_SetCompare4(TIM4,7);
                 delay_ms(500);
 //                Door_flag = CLOSE;
             }
@@ -112,7 +112,8 @@ void Swiping_Card(void)
     else
     {
         LCD_P6x8Str(30,1,(unsigned char*)"OFF");
-        
+        TIM_SetCompare4(TIM4,7);
+        delay_ms(300);
     }					
 }
 

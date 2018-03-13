@@ -33,14 +33,13 @@ void Servo_Door_Init(u16 arr,u16 psc)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;                 //基本定时器的结构体
 	TIM_OCInitTypeDef  TIM_OCInitStructure;                         //通道结构体的设置
 	
-
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);	        //使能定时器2时钟
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
 	
 	
    //设置该引脚为复用输出功能,输出TIM4 CH4的PWM脉冲波形	GPIOB.9
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;                       //LED0
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;                 //复用推挽输出
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;                       // 
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;                //推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;           
 	GPIO_Init(GPIOB, &GPIO_InitStructure);                          //初始化GPIO
 
@@ -69,20 +68,21 @@ void Servo_Window_Init(u16 arr,u16 psc)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;                 //基本定时器的结构体
 	TIM_OCInitTypeDef  TIM_OCInitStructure;                         //通道结构体的设置
 	
-
+	GPIO_PinRemapConfig(GPIO_Remap_TIM4, ENABLE);                   // 定时器重映射
+    
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);	        //使能定时器2时钟
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD | RCC_APB2Periph_AFIO, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
 	
 	
    //设置该引脚为复用输出功能,输出TIM4 CH3的PWM脉冲波形	GPIOD.14
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;                       //LED0
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;                      //LED0
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;                 //复用推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;           
 	GPIO_Init(GPIOD, &GPIO_InitStructure);                          //初始化GPIO
 
    //初始化TIM4
 	TIM_TimeBaseStructure.TIM_Period = arr;                         //设置在下一个更新事件装入活动的自动重装载寄存器周期的值
-	TIM_TimeBaseStructure.TIM_Prescaler =psc;                       //设置用来作为TIMx时钟频率除数的预分频值 
+	TIM_TimeBaseStructure.TIM_Prescaler = psc;                      //设置用来作为TIMx时钟频率除数的预分频值 
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;                    //设置时钟分割:TDTS = Tck_tim
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;     //TIM向上计数模式
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);                 //根据TIM_TimeBaseInitStruct中指定的参数初始化TIMx的时间基数单位
@@ -105,9 +105,10 @@ void Fan_Init(u16 arr,u16 psc)                                      // (255,1999
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;                 //基本定时器的结构体
 	TIM_OCInitTypeDef  TIM_OCInitStructure;                         //通道结构体的设置
 	
-
+	GPIO_PinRemapConfig(GPIO_Remap_TIM4, ENABLE);                   // 定时器重映射
+    
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);	        //使能定时器2时钟
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD | RCC_APB2Periph_AFIO, ENABLE);           //使能GPIO外设和AFIO复用功能模块时钟
 	
 	
    //设置该引脚为复用输出功能,输出TIM4 CH2的PWM脉冲波形	GPIOD.13

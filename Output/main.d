@@ -44,6 +44,7 @@
 ..\..\output\main.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\main.o: ..\..\Driver\KEY\exti.h
 ..\..\output\main.o: ..\..\Driver\PWM\PWM.h
+..\..\output\main.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\main.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\main.o: ..\..\Driver\RC522\opp.h
 ..\..\output\main.o: ..\..\User\card_records.h

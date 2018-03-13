@@ -45,6 +45,7 @@
 ..\..\output\stm32f10x_it.o: ..\..\Driver\LED\led.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\KEY\exti.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\PWM\PWM.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RC522\opp.h
 ..\..\output\stm32f10x_it.o: ..\..\User\card_records.h

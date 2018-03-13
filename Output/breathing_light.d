@@ -1,4 +1,5 @@
 ..\..\output\breathing_light.o: ..\..\Driver\PWM\Breathing_Light.c
+..\..\output\breathing_light.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\breathing_light.o: ..\..\Libraries\CMSIS\stm32f10x.h
 ..\..\output\breathing_light.o: ..\..\Libraries\CMSIS\core_cm3.h
 ..\..\output\breathing_light.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdint.h

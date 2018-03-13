@@ -54,13 +54,17 @@
 #define LED2_OFF		digitalHi(GPIOC,GPIO_Pin_5)
 #define LED2_ON			digitalLo(GPIOC,GPIO_Pin_5)
 
-#define Power1_TOGGLE	digitalToggle(GPIOC,GPIO_Pin_1)
-#define Power1_OFF		digitalLo(GPIOC,GPIO_Pin_1)
-#define Power1_ON		digitalHi(GPIOC,GPIO_Pin_1)
+#define ZigBee1_OFF		digitalLo(GPIOC,GPIO_Pin_1)
+#define ZigBee1_ON		digitalHi(GPIOC,GPIO_Pin_1)
 
-#define Power2_TOGGLE	digitalToggle(GPIOC,GPIO_Pin_0)
-#define Power2_OFF		digitalLo(GPIOC,GPIO_Pin_0)
-#define Power2_ON		digitalHi(GPIOC,GPIO_Pin_0)
+#define ZigBee2_OFF		digitalLo(GPIOC,GPIO_Pin_0)
+#define ZigBee2_ON		digitalHi(GPIOC,GPIO_Pin_0)
+
+#define ZigBee3_OFF		digitalLo(GPIOC,GPIO_Pin_1)
+#define ZigBee3_ON		digitalHi(GPIOC,GPIO_Pin_1)
+
+#define ZigBee4_OFF		digitalLo(GPIOC,GPIO_Pin_0)
+#define ZigBee4_ON		digitalHi(GPIOC,GPIO_Pin_0)
 
 #define WIFI_TOGGLE	    digitalToggle(GPIOC,GPIO_Pin_9)
 #define WIFI_OFF		digitalLo(GPIOC,GPIO_Pin_9)

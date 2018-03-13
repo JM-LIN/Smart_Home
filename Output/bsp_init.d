@@ -48,4 +48,5 @@
 ..\..\output\bsp_init.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\bsp_init.o: ..\..\Driver\KEY\exti.h
 ..\..\output\bsp_init.o: ..\..\Driver\PWM\PWM.h
+..\..\output\bsp_init.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\bsp_init.o: ..\..\Driver\RC522\opp.h
