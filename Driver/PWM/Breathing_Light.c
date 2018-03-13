@@ -46,7 +46,6 @@ static void TIM1_GPIO_Config(void)
     
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_9 ;             // PE9
 	GPIO_Init( GPIOE, &GPIO_InitStructure );
-    
     GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_11 ;            // PE11
 	GPIO_Init( GPIOE, &GPIO_InitStructure );
     GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_13 ;            // PE13
@@ -97,7 +96,7 @@ static void TIM1_Mode_Config(void)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef  TIM_OCInitStructure;																				
 
-//    GPIO_PinRemapConfig(GPIO_FullRemap_TIM1, ENABLE);                           // 定时器1完全重映射
+    GPIO_PinRemapConfig(GPIO_FullRemap_TIM1, ENABLE);                           // 定时器1完全重映射
 	/* 设置TIM2CLK 时钟为72MHZ */				
 	RCC_APB2PeriphClockCmd ( RCC_APB2Periph_TIM1, ENABLE );						//使能TIM1时钟
 	

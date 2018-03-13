@@ -21,7 +21,7 @@ void SPI1_Init(void)
 	//PA  SPI1使能
 	GPIO_InitTypeDef GPIO_InitStructure;//IO口结构体的定义
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_SPI1,ENABLE);
-//    GPIO_PinRemapConfig(GPIO_Remap_SPI1, DISABLE);                           // 定时器1完全重映射
+    GPIO_PinRemapConfig(GPIO_Remap_SPI1, DISABLE);                           // 定时器1完全重映射
 		
 
 	//PA5/6/7口结构体初始化分别为SCK、MOSI、MISO

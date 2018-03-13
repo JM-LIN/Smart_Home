@@ -297,8 +297,8 @@ void TIM1_UP_IRQHandler(void)
 		{
 			
 			TIM1->CCR1 = OpenWave[pwm_index];	//根据PWM表修改定时器的比较寄存器值
-//            TIM1->CCR2 = OpenWave[pwm_index];
-//            TIM1->CCR3 = OpenWave[pwm_index];
+            TIM1->CCR2 = OpenWave[pwm_index];
+            TIM1->CCR3 = OpenWave[pwm_index];
 			pwm_index++;												//标志PWM表的下一个元素
 		
 			if( pwm_index >=  40)								//若PWM脉冲表已经输出完成一遍，重置PWM查表标志

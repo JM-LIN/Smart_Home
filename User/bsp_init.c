@@ -90,18 +90,19 @@ void BSP_Init(void)
 {
     SysTick_Init();             // 系统滴答时钟初始化
     
+    
     WIFI_BufferPool_Init();
     ZigBee_BufferPool_Init();    	    
     USART_Configuration();
     
-     
+    Misc_Init();
     
     InitRc522();													// 刷卡模块初始化
     W25QXX_Init();													// Flash的W25Q128的初始化
 //	Del_card_ID();       											// 清空全部卡号													
 	Read_Flash_ID();												// 读人数
   
-    Misc_Init();  
+      
     
     
     
