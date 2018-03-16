@@ -47,6 +47,9 @@
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\RC522\opp.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\wifi_bufferpool.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\wifi_bufferpool.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\wifi_bufferpool.o: ..\..\User\card_records.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\wifi_bufferpool.o: ..\..\Driver\RTC\rtc.h

@@ -81,9 +81,11 @@ static void Misc_Init(void)     // 杂项类设备初始化
     LED_Init();
     Key_Init();
     
-    Breathing_Light_Init();		                                    // 呼吸灯
-    Servo_Door_Init(199, 7199);									    // 门 PWM初始化周期为20ms，50HZ
-    Fan_Init(255, 1999);
+	
+    Breathing_Light_Init();		                            // 呼吸灯
+	Servo_Window_Init(199, 7199);			                // 窗帘舵机PWM初始化	
+    Servo_Door_Init(199, 7199);								// 门 PWM初始化周期为20ms，50HZ
+    Fan_Init(999, 0);                                       // 定时器计数1000次
 }
 
 void BSP_Init(void)
@@ -94,6 +96,8 @@ void BSP_Init(void)
     WIFI_BufferPool_Init();
     ZigBee_BufferPool_Init();    	    
     USART_Configuration();
+    
+    SYN7318_Reset_Init();           // 语音模块复位
     
     Misc_Init();
     
@@ -106,13 +110,16 @@ void BSP_Init(void)
     OLED_Init();
     LCD_P8x16Str(0,0,(unsigned char*)"Initialization !");
     
+#ifdef SIM7600
+    SIM7600_Init();
+#else
     WiFi_Init(STA_AP);
-    
+#endif
     
     
     LCD_CLS();
 	LCD_P8x16Str(24,2,(unsigned char*)"Init done!");
-	delay_ms (100);
+	delay_ms (1000);
     LCD_CLS();
     
 }

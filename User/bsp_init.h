@@ -19,6 +19,9 @@
 #include "Breathing_Light.h"
 #include "rc522.h"
 #include "opp.h"
+#include "SYN7318.h"
+#include "SIM7600.h"
+
 
 /************************************************************************
 * Prototype Declare Section     

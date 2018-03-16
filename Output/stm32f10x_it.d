@@ -30,12 +30,12 @@
 ..\..\output\stm32f10x_it.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\stm32f10x_it.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\USART\usart.h
+..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\WIFI\wifi.h
 ..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdbool.h
-..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\SysTick\SysTick.h
-..\..\output\stm32f10x_it.o: ..\..\Driver\USART\usart.h
-..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\OLED\OLED.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\USART\WIFI_BufferPool.h
 ..\..\output\stm32f10x_it.o: ..\..\User\main.h
@@ -48,6 +48,9 @@
 ..\..\output\stm32f10x_it.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RC522\opp.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\stm32f10x_it.o: ..\..\User\card_records.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RTC\rtc.h

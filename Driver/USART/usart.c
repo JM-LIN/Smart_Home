@@ -1,34 +1,19 @@
 #include "usart.h"	
 
 
-
-int fgetc(FILE *f)								// 重定向c库函数scanf到USART1
-{
-	while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET);	/* 等待串口1输入数据 */
-	return (int)USART_ReceiveData(USART3);
-}
-
-int fputc(int ch, FILE *f)						// 重定向c库函数printf到USART1
-{
-	USART_SendData(USART3, (uint8_t) ch);		/* 发送一个字节数据到USART1 */
-	while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET);			/* 等待发送完毕 */
-	return (ch);
-}
-
-int GetKey (void)  
-{ 
-    while (!(USART1->SR & USART_FLAG_RXNE));
-    return ((int)(USART1->DR & 0x1FF));
-}
-
 void USART_Configuration(void)						//串口1、2、3初始化
 {				
 	USART1_Config();    							// 用作与ESP8266通信
 	USART2_Config();								// 用作与ZigBee通信
-	USART3_Config();								// 用作与PC机通信
+    USART3_Config();                                // 用作与语音模块通信
+//    UART4_Config();
+	UART5_Config();								    // 用作与PC机通信
+    
 	USART1_NVIC_Configuration();
 	USART2_NVIC_Configuration();
-	USART3_NVIC_Configuration();
+//	USART3_NVIC_Configuration();
+//    UART4_NVIC_Configuration();
+    UART5_NVIC_Configuration();
 }
   
 /*
@@ -110,7 +95,7 @@ static void USART2_Config(void)
  * @param  无
  * @retval 无
  */
-static void USART3_Config(void)
+void USART3_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;      
 	USART_InitTypeDef USART_InitStructure;
@@ -118,11 +103,15 @@ static void USART3_Config(void)
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);   	/* config USART1 clock */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB , ENABLE);
 	
+	//串口复位
+	USART_DeInit(USART3);
+	
 	/* USART1 GPIO config */
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;					/* Configure USART3 Tx (PB.10) as alternate function push-pull */
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);    
+	GPIO_Init(GPIOB, &GPIO_InitStructure);  
+  
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;					/* Configure USART3 Rx (PB.11) as input floating */
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -137,9 +126,86 @@ static void USART3_Config(void)
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;					
 	USART_Init(USART3, &USART_InitStructure);
 	
-	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);	/* 使能串口3接收中断 */
-	USART_ClearFlag(USART3,USART_FLAG_TC);
+	//USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);	/* 使能串口3接收中断 */
+	//USART_ClearFlag(USART3,USART_FLAG_TC);
 	USART_Cmd(USART3, ENABLE);
+	USART_GetFlagStatus(USART3,USART_FLAG_TC);  //不加这句，发送字符串第一个字节会出现丢失
+}
+
+/*
+ * @brief  UART4 GPIO 配置,工作模式配置。115200 8-N-1
+ * @param  无
+ * @retval 无
+ */
+void UART4_Config(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;      
+	USART_InitTypeDef USART_InitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);   	/* config UART4 clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
+	
+	/* USART1 GPIO config */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;					/* Configure UART4 Tx (PC.10) as alternate function push-pull */
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);    
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;					/* Configure UART4 Rx (PC.11) as input floating */
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	
+	/* UART4 mode config */
+	USART_InitStructure.USART_BaudRate = 115200;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_No ;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;					
+	USART_Init(UART4, &USART_InitStructure);
+	
+	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);	            /* 使能串口4接收中断 */
+	USART_ClearFlag(UART4,USART_FLAG_TC);
+	USART_Cmd(UART4, ENABLE);
+//    USART_GetFlagStatus(UART4,USART_FLAG_TC);                 //不加这句，发送字符串第一个字节会出现丢失
+}
+
+/*
+ * @brief  UART5 GPIO 配置,工作模式配置。115200 8-N-1
+ * @param  无
+ * @retval 无
+ */
+void UART5_Config(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;      
+	USART_InitTypeDef USART_InitStructure;
+	
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);   	/* config UART5 clock */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD | RCC_APB2Periph_AFIO, ENABLE);
+	
+	/* USART1 GPIO config */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;					/* Configure UART5 Tx (PB.12) as alternate function push-pull */
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);    
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;					/* Configure UART5 Rx (PD.2) as input floating */
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+	
+	/* USART3 mode config */
+	USART_InitStructure.USART_BaudRate = 115200;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_No ;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;					
+	USART_Init(UART5, &USART_InitStructure);
+	
+	USART_ITConfig(UART5, USART_IT_RXNE, ENABLE);	        /* 使能串口5接收中断 */
+	USART_ClearFlag(UART5,USART_FLAG_TC);
+	USART_Cmd(UART5, ENABLE);
+//    USART_GetFlagStatus(UART5,USART_FLAG_TC);               //不加这句，发送字符串第一个字节会出现丢失
 }
 
 /*
@@ -179,12 +245,45 @@ static void USART2_NVIC_Configuration(void)
  * @brief  配置USART3接收中断
  * @retval 无
  */
+
 static void USART3_NVIC_Configuration(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure; 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);			/* Configure the NVIC Preemption Priority Bits */  
 	
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;	 
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			/* Enable the USARTy Interrupt */
+	NVIC_Init(&NVIC_InitStructure);
+}
+
+/*
+ * @brief  配置UART4接收中断
+ * @retval 无
+ */
+static void UART4_NVIC_Configuration(void)
+{
+	NVIC_InitTypeDef NVIC_InitStructure; 
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);			/* Configure the NVIC Preemption Priority Bits */  
+	
+	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;	 
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			/* Enable the USARTy Interrupt */
+	NVIC_Init(&NVIC_InitStructure);
+}
+
+/*
+ * @brief  配置UART5接收中断
+ * @retval 无
+ */
+static void UART5_NVIC_Configuration(void)
+{
+	NVIC_InitTypeDef NVIC_InitStructure; 
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);			/* Configure the NVIC Preemption Priority Bits */  
+	
+	NVIC_InitStructure.NVIC_IRQChannel = UART5_IRQn;	 
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			/* Enable the USARTy Interrupt */
@@ -374,3 +473,117 @@ void USART_printf( USART_TypeDef* USARTx, uint8_t *Data, ... )
 	}
 }
 
+
+int fgetc(FILE *f)								// 重定向c库函数scanf到USART1
+{
+	while (USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET);	/* 等待串口1输入数据 */
+	return (int)USART_ReceiveData(USART3);
+}
+
+int fputc(int ch, FILE *f)						// 重定向c库函数printf到USART1
+{
+	USART_SendData(USART3, (uint8_t) ch);		/* 发送一个字节数据到USART1 */
+	while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET);			/* 等待发送完毕 */
+	return (ch);
+}
+
+int GetKey (void)  
+{ 
+    while (!(USART1->SR & USART_FLAG_RXNE));
+    return ((int)(USART1->DR & 0x1FF));
+}
+
+/**************************************************************
+*函数名：UART_Put_Char----串口发送一个字节函数
+*参  数：Data----待发送的字节数据
+*简  例：UART_Put_Char('a');
+*        Delay(1000);
+**************************************************************/
+void UART_Put_Char(uint16_t Data)
+{
+	USART_SendData(USART3, Data);
+	while(USART_GetFlagStatus(USART3,USART_FLAG_TC) != SET); //等待数据发送完成
+}
+
+
+/**************************************************************
+*函数名：UART_Get_char----串口接收一个字节函数
+*参  数：无
+*简  例：uint16_t Receive_Data;
+*        Receive_Data = UART_Get_char();
+*	       UART_Put_Char(Receive_Data);  //把接收到的数据输出出来
+**************************************************************/
+uint16_t UART_Get_char(void)
+{
+	uint16_t Data;
+	while(USART_GetFlagStatus(USART3,USART_FLAG_RXNE) != SET); //等待接收寄存器满
+	Data = USART_ReceiveData(USART3);
+	return Data;
+}
+
+
+/**************************************************************
+*函数名：UART_Put_String----串口发送字符串函数
+*参  数：Pst：存放字符串的数组名
+*        Length：字符串长度
+*简  例：char Send[5] = {'a','b','c','d','e'};
+*        UART_Put_String(Send,5);
+**************************************************************/
+void UART_Put_String(char *Pst,uint16_t Length)
+{
+	uint16_t i;
+	for(i = 0; i < Length; i++)
+	{
+	  UART_Put_Char(Pst[i]);
+	}
+}
+
+
+/**************************************************************
+*函数名：UART_Get_String----串口接收字符串函数
+*参  数：Pst：存放接收到的字符串的数组名
+*        Length：字符串长度
+*简  例：unsigned char Receive[5] = {0};
+*        UART_Get_String(Receive,5);
+*	       UART_Put_String(Receive,5);//输出接收到的字符串 
+**************************************************************/
+void UART_Get_String(unsigned char *Pst,uint16_t Length)
+{
+	uint16_t i;
+	for(i = 0; i < Length; i++)
+	{
+	  Pst[i] = UART_Get_char();
+	}
+}
+
+/*****************  发送一个字符 **********************/
+static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
+{
+	/* 发送一个字节数据到USART1 */
+	USART_SendData(pUSARTx,ch);
+		
+	/* 等待发送完毕 */
+	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);	
+}
+/*****************  指定长度的发送字符串 **********************/
+void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
+{
+	unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(k < strlen);
+}
+
+/*****************  发送字符串 **********************/
+void Usart_SendString( USART_TypeDef * pUSARTx, uint8_t *str)
+{
+	unsigned int k=0;
+    do 
+    {
+        Usart_SendByte( pUSARTx, *(str + k) );
+        k++;
+    } while(*(str + k)!='\0');
+}
+/******************* (C) COPYRIGHT 2012 WildFire Team *****END OF FILE************/

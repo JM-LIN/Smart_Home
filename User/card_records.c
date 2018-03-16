@@ -101,7 +101,7 @@ void Swiping_Card(void)
                 PC_Usart((unsigned char*)"OK!\r\n");
                 LCD_P6x8Str(30,1,(unsigned char*)"ON ");						// 读卡成功									
                 TIM_SetCompare4(TIM4,15);										// 驱动舵机
-                delay_ms(1500);	
+//                delay_ms(1500);	
 //                delay_ms(1500);
 //                TIM_SetCompare4(TIM4,7);
                 delay_ms(500);

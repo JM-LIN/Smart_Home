@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM;..\..\Driver\FLASH;..\..\Driver\RC522;..\..\Driver\SPI;..\..\Driver\RTC</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM;..\..\Driver\FLASH;..\..\Driver\RC522;..\..\Driver\SPI;..\..\Driver\RTC;..\..\Driver\SYN7318;..\..\Driver\SIM7600</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -646,6 +646,16 @@
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Driver\RTC\rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>SYN7318.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\SYN7318\SYN7318.c</FilePath>
+            </File>
+            <File>
+              <FileName>sim7600.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\SIM7600\sim7600.c</FilePath>
             </File>
           </Files>
         </Group>

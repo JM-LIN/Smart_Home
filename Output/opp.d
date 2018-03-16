@@ -49,5 +49,8 @@
 ..\..\output\opp.o: ..\..\Driver\KEY\exti.h
 ..\..\output\opp.o: ..\..\Driver\PWM\PWM.h
 ..\..\output\opp.o: ..\..\Driver\PWM\Breathing_Light.h
+..\..\output\opp.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\opp.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\opp.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\opp.o: ..\..\User\card_records.h
 ..\..\output\opp.o: ..\..\Driver\RTC\rtc.h

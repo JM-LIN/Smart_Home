@@ -40,13 +40,8 @@
 #define     ESP8266_RST_HIGH_LEVEL()            GPIO_SetBits( GPIOC, GPIO_Pin_9 )
 #define     ESP8266_RST_LOW_LEVEL()             GPIO_ResetBits( GPIOC, GPIO_Pin_9 )
 
-#define     RX_BUF_MAX_LEN                      1024                
+#define     RX_BUF_MAX_LEN                      1024               //Èç¹ûÏë´®¿ÚÖÐ¶Ï½ÓÊÕ£¬Çë²»Òª×¢ÊÍÒÔÏÂºê¶¨Òå//×î´ó½ÓÊÕ»º´æ×Ö½ÚÊý
 
-//Èç¹ûÏë´®¿ÚÖÐ¶Ï½ÓÊÕ£¬Çë²»Òª×¢ÊÍÒÔÏÂºê¶¨Òå//×î´ó½ÓÊÕ»º´æ×Ö½ÚÊý
-#define     ESP8266_Usart_Prot 					USART1
-#define     ESP8266_Usart( fmt, ... )           USART_printf ( ESP8266_Usart_Prot, fmt, ##__VA_ARGS__ ) 
-#define     PC_Usart_Prot 						USART3
-#define     PC_Usart( fmt, ... )                USART_printf ( PC_Usart_Prot, fmt, ##__VA_ARGS__ ) 
 
 /************************************************************************
 * Struct Define Section             
@@ -96,6 +91,7 @@ extern struct  STRUCT_USARTx_Fram                                  //´®¿ÚÊý¾ÝÖ¡µ
 /************************************************************************
 * Prototype Declare Section         
 ************************************************************************/
+void                     WIFI_IRQHandler                     ( void );
 void 					 WiFi_Init							 (ENUM_Net_ModeTypeDef mode);
 void                     ESP8266_Init                        ( void );
 void                     ESP8266_Rst                         ( void );

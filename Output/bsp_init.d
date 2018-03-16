@@ -50,3 +50,6 @@
 ..\..\output\bsp_init.o: ..\..\Driver\PWM\PWM.h
 ..\..\output\bsp_init.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\bsp_init.o: ..\..\Driver\RC522\opp.h
+..\..\output\bsp_init.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\bsp_init.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\bsp_init.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h

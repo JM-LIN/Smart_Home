@@ -1,5 +1,6 @@
 
 #include "wifi.h"
+#include "WIFI_BufferPool.h"
 
 
 
@@ -14,8 +15,59 @@
 //static void                   ESP8266_USART_Config                ( void );
 //static void                   ESP8266_USART_NVIC_Configuration    ( void );
 
-
 struct  STRUCT_USARTx_Fram strEsp8266_Fram_Record = { 0 };
+
+/* Start of WIFI Variable */
+extern  __IO u8 CLI_ID;													
+extern volatile unsigned char flowsize;							    // 溢出大小																							
+extern volatile unsigned char wLoc;								    // 当前写入位置
+extern volatile unsigned char _buffer[Flow_Size_Max];			    // 缓冲池的缓冲区
+extern volatile uint8_t ucTcpClosedFlag;						    // ESP8266中Tcp关闭标志
+/* End of WIFI Variable */
+
+void WIFI_IRQHandler(void)
+{
+    static volatile int Esp8266_flag = 0;                                      // 溢出标记
+    volatile char data;							
+							
+	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)								// 读数据寄存器非空
+	{							
+		data = USART_ReceiveData(USART1); 												// 接收串口得到的数据
+		USART_SendData(USART3, data);					
+		
+/****************************************以下是接收ESP8266数据操作******************************/		
+		if ( strEsp8266_Fram_Record .InfBit .FramLength < ( RX_BUF_MAX_LEN - 1 ) )                       //预留1个字节写结束符
+			strEsp8266_Fram_Record .Data_RX_BUF [ strEsp8266_Fram_Record .InfBit .FramLength ++ ]  = data;		
+
+/****************************************以下是接收传感器数据操作******************************/		
+		if( data == 0x23 )																// 遇到'#'结束接收
+		{						// || BPCheckFlow()				
+			Esp8266_flag = 0;												
+			wLoc = 0;																	// 复位写入位置				
+//			flowflag = 0;
+		}						
+							
+		if (Esp8266_flag)    															// 若前面识别到了"：",则现在开始识别接收的数据
+		{					
+			WIFI_BPWriteData(data);															// 写入数据
+//			USART_SendData(USART3, ch);
+		}
+		if (data == 0x3a )   															// 从":"后面开始接收数据
+		{
+			Esp8266_flag = 1; 
+			wLoc = 0;
+			memset((void *)_buffer,'\0',sizeof(_buffer));
+		}	
+	}
+	
+	if ( USART_GetITStatus( USART1, USART_IT_IDLE ) == SET )                            //数据帧接收完毕
+	{
+		strEsp8266_Fram_Record .InfBit .FramFinishFlag = 1;		
+		data = USART_ReceiveData( USART1 );                                             //由软件序列清除中断标志位(先读USART_SR，然后读USART_DR)	
+		ucTcpClosedFlag = strstr ( strEsp8266_Fram_Record .Data_RX_BUF, "CLOSED" ) ? 1 : 0;		
+	} 	
+	USART_ClearFlag(USART1,USART_FLAG_TC);												// 清除中断标志.
+}
 
 
 void WiFi_Init(ENUM_Net_ModeTypeDef mode)							//ESP_8266初始化
@@ -169,7 +221,7 @@ bool ESP8266_Cmd ( char * cmd, char * reply1, char * reply2, u32 waittime )
 {    
 	strEsp8266_Fram_Record .InfBit .FramLength = 0;               	//从新开始接收新的数据包
 
-	ESP8266_Usart ( "%s\r\n", cmd );
+	ESP8266_Usart ( (unsigned char*)"%s\r\n", cmd );
 
 	if ( ( reply1 == 0 ) && ( reply2 == 0 ) )                      	//不需要接收数据
 		return true;
@@ -633,4 +685,5 @@ char * ESP8266_ReceiveString ( FunctionalState enumEnUnvarnishTx )
 	return pRecStr;
 	
 }
+
 
