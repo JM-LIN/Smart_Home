@@ -66,8 +66,8 @@ static char     *itoa                       (int value, char *string, int radix)
 int             fputc                       (int ch, FILE *f);
 int             fgetc                       (FILE *f);
 
-static void     Usart_SendByte              ( USART_TypeDef * pUSARTx, uint8_t ch );
-static uint8_t  USART_Receive_Byte          ( USART_TypeDef * pUSARTx );
+void            Usart_Send_Byte              ( USART_TypeDef * pUSARTx, uint8_t ch );
+uint8_t         Usart_Receive_Byte          ( USART_TypeDef * pUSARTx );
 void            Usart_SendStr_length        ( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
 void            Usart_ReceiveStr_length     ( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
 void            Usart_SendString            ( USART_TypeDef * pUSARTx, uint8_t *str );

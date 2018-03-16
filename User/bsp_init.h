@@ -21,6 +21,7 @@
 #include "opp.h"
 #include "SYN7318.h"
 #include "SIM7600.h"
+#include "fpmxx_modules.h"
 
 
 /************************************************************************

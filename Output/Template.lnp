@@ -39,6 +39,7 @@
 "..\..\output\syn7318.o"
 "..\..\output\sim7600.o"
 "..\..\output\timer.o"
+"..\..\output\fpmxx_modules.o"
 --library_type=microlib --strict --scatter "..\..\Output\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

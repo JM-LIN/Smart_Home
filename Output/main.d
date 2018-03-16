@@ -50,6 +50,7 @@
 ..\..\output\main.o: ..\..\Driver\SYN7318\SYN7318.h
 ..\..\output\main.o: ..\..\Driver\SIM7600\sim7600.h
 ..\..\output\main.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\main.o: ..\..\Driver\FingerPrint\fpmxx_modules.h
 ..\..\output\main.o: ..\..\User\card_records.h
 ..\..\output\main.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\main.o: ..\..\Driver\RTC\rtc.h

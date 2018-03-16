@@ -38,6 +38,7 @@ int main(void)
     {
         Swiping_Card();
         Voice_Control();
+        FPM_Running();
     }
     
     return 0;

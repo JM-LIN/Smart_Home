@@ -1,18 +1,19 @@
 #include "usart.h"	
 
 
+
 void USART_Configuration(void)						//串口1、2、3初始化
 {				
 	USART1_Config();    							// 用作与ESP8266通信
 	USART2_Config();								// 用作与ZigBee通信
     USART3_Config();                                // 用作与语音模块通信
-//    UART4_Config();
+    UART4_Config();
 	UART5_Config();								    // 用作与PC机通信
     
 	USART1_NVIC_Configuration();
 	USART2_NVIC_Configuration();
 //	USART3_NVIC_Configuration();
-//    UART4_NVIC_Configuration();
+    UART4_NVIC_Configuration();
     UART5_NVIC_Configuration();
 }
   
@@ -156,7 +157,7 @@ void UART4_Config(void)
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
 	/* UART4 mode config */
-	USART_InitStructure.USART_BaudRate = 115200;
+	USART_InitStructure.USART_BaudRate = 57600;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
 	USART_InitStructure.USART_Parity = USART_Parity_No ;
@@ -493,18 +494,8 @@ int GetKey (void)
     return ((int)(USART1->DR & 0x1FF));
 }
 
-/*****************  发送一个字符 **********************/
-static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
-{
-	/* 发送一个字节数据到USARTx */
-	USART_SendData(pUSARTx,ch);
-		
-	/* 等待发送完毕 */
-	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);	
-}
-
 /*****************  接收一个字符 **********************/
-uint8_t USART_Receive_Byte(USART_TypeDef* pUSARTx)
+uint8_t Usart_Receive_Byte(USART_TypeDef* pUSARTx)
 {
 	uint8_t ucTemp = 0;
     
@@ -520,9 +511,19 @@ void Usart_ReceiveStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t str
 	uint32_t k=0;
     do 
     {
-        *(str + k) = USART_Receive_Byte( pUSARTx );
+        *(str + k) = Usart_Receive_Byte( pUSARTx );
         k++;
     } while(k < strlen);
+}
+
+/*****************  发送一个字符 **********************/
+void Usart_Send_Byte( USART_TypeDef * pUSARTx, uint8_t ch )
+{
+	/* 发送一个字节数据到USARTx */
+	USART_SendData(pUSARTx,ch);
+		
+	/* 等待发送完毕 */
+	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);	
 }
 
 /*****************  指定长度的发送字符串 **********************/
@@ -531,7 +532,7 @@ void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen
 	unsigned int k=0;
     do 
     {
-        Usart_SendByte( pUSARTx, *(str + k) );
+        Usart_Send_Byte( pUSARTx, *(str + k) );
         k++;
     } while(k < strlen);
 }
@@ -542,7 +543,7 @@ void Usart_SendString( USART_TypeDef * pUSARTx, uint8_t *str)
 	unsigned int k=0;
     do 
     {
-        Usart_SendByte( pUSARTx, *(str + k) );
+        Usart_Send_Byte( pUSARTx, *(str + k) );
         k++;
     } while(*(str + k)!='\0');
 }

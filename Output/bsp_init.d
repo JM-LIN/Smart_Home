@@ -53,3 +53,4 @@
 ..\..\output\bsp_init.o: ..\..\Driver\SYN7318\SYN7318.h
 ..\..\output\bsp_init.o: ..\..\Driver\SIM7600\sim7600.h
 ..\..\output\bsp_init.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\bsp_init.o: ..\..\Driver\FingerPrint\fpmxx_modules.h

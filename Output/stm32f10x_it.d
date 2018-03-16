@@ -51,6 +51,7 @@
 ..\..\output\stm32f10x_it.o: ..\..\Driver\SYN7318\SYN7318.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\SIM7600\sim7600.h
 ..\..\output\stm32f10x_it.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\FingerPrint\fpmxx_modules.h
 ..\..\output\stm32f10x_it.o: ..\..\User\card_records.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RTC\rtc.h
