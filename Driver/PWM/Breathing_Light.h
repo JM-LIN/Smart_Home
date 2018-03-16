@@ -6,9 +6,10 @@
 #define CLOSE   0
 #define OPEN    1
 
-extern volatile unsigned int Pwm_led_status;				// ºôÎüµÆ×´Ì¬
+extern volatile uint8_t Pwm_led_status;				// ºôÎüµÆ×´Ì¬
 extern uint8_t OpenWave[];
 
 void Breathing_Light_Init(void);
+void Breathing_Light_IROHandler_Routine(void);
 
 #endif

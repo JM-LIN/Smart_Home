@@ -110,4 +110,68 @@ uint8_t Key_Scan(GPIO_TypeDef* GPIOx,uint16_t GPIO_Pin)
 	else
 		return KEY_OFF;
 }
+
+void EXTI0_IRQHandler_Routine (void)															// KEY2
+{							
+	if(EXTI_GetITStatus(EXTI_Line0) != RESET) 											// 确保是否产生了EXTI Line中断
+	{																							
+//		ZigBee_Usart((unsigned char*)"So1");
+//		Door_flag = !Door_flag;
+//		Light_ON_flag = !Light_ON_flag;
+//        TIM_SetCompare4(TIM4,15);
+//         Pwm_led_status = 1;
+//        add();																			// 添加卡号	
+        
+        PC_Usart((unsigned char*)"key2 test\n");
+		EXTI_ClearITPendingBit(EXTI_Line0);     										// 清除中断标志位
+	}  										
+}
+
+void EXTI4_IRQHandler_Routine (void)															// KEY3
+{							
+	if(EXTI_GetITStatus(EXTI_Line4) != RESET) 											// 确保是否产生了EXTI Line中断
+	{	
+//		ZigBee_Usart((unsigned char*)"So2");
+        
+//        TIM_SetCompare4(TIM4,7);
+        
+//       Pwm_led_status = 0;
+//		Light_OFF_flag = !Light_OFF_flag;
+//		Read_Flash_ID();
+        
+//		Humidi_TOGGLE;
+//		Fan_TOGGLE;
+        
+        PC_Usart((unsigned char*)"key3 test\n");
+		EXTI_ClearITPendingBit(EXTI_Line4);     										// 清除中断标志位
+	}  										
+}
+
+void EXTI1_IRQHandler_Routine (void)															// KEY4
+{							
+	if(EXTI_GetITStatus(EXTI_Line1) != RESET) 											// 确保是否产生了EXTI Line中断
+	{																	
+//		ZigBee1_OFF;
+//		ZigBee2_OFF;
+//		OLED_RST();																		// OLED刷新		
+//		Del_card_ID();       											// 清空全部卡号
+        
+        PC_Usart((unsigned char*)"key4 test\n");
+        EXTI_ClearITPendingBit(EXTI_Line1);     										// 清除中断标志位
+	}  										
+}	
+
+void EXTI3_IRQHandler_Routine (void)															// KEY5
+{							
+	if(EXTI_GetITStatus(EXTI_Line3) != RESET) 											// 确保是否产生了EXTI Line中断
+	{	
+        
+//		ZigBee1_ON;																		// Zigbee Coordinator供电
+//		ZigBee2_ON;																		// Zigbee End_Device1、2供电
+
+        PC_Usart((unsigned char*)"key5 test\n");
+        EXTI_ClearITPendingBit(EXTI_Line3);     										// 清除中断标志位
+	}  										
+}
+
 /*********************************************END OF FILE**********************/

@@ -54,3 +54,4 @@
 ..\..\output\stm32f10x_it.o: ..\..\User\card_records.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\FLASH\flash.h
 ..\..\output\stm32f10x_it.o: ..\..\Driver\RTC\rtc.h
+..\..\output\stm32f10x_it.o: ..\..\Driver\TIMER\timer.h

@@ -66,14 +66,11 @@ static char     *itoa                       (int value, char *string, int radix)
 int             fputc                       (int ch, FILE *f);
 int             fgetc                       (FILE *f);
 
-void UART_Put_Char(uint16_t Data);
-uint16_t UART_Get_char(void);
-void UART_Put_String(char *Pst,uint16_t Length);
-void UART_Get_String(unsigned char *Pst,uint16_t Length); 
-
-void UARTx_Config(void);
-void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
-void Usart_SendString( USART_TypeDef * pUSARTx, uint8_t *str);
+static void     Usart_SendByte              ( USART_TypeDef * pUSARTx, uint8_t ch );
+static uint8_t  USART_Receive_Byte          ( USART_TypeDef * pUSARTx );
+void            Usart_SendStr_length        ( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
+void            Usart_ReceiveStr_length     ( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen );
+void            Usart_SendString            ( USART_TypeDef * pUSARTx, uint8_t *str );
 
 #endif
 

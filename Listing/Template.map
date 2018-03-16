@@ -26,16 +26,13 @@ Section Cross References
     main.o(.text) refers to syn7318.o(.text) for Voice_Control
     stm32f10x_it.o(.text) refers to usart.o(.text) for USART_printf
     stm32f10x_it.o(.text) refers to systick.o(.text) for TimingDelay_Decrement
-    stm32f10x_it.o(.text) refers to sim7600.o(.text) for SIM7600_IRQHandler
+    stm32f10x_it.o(.text) refers to sim7600.o(.text) for SIM7600_IRQHandler_Routine
+    stm32f10x_it.o(.text) refers to zigbee_bufferpool.o(.text) for ZigBee_IRQHandler_Routine
     stm32f10x_it.o(.text) refers to stm32f10x_usart.o(.text) for USART_GetITStatus
-    stm32f10x_it.o(.text) refers to zigbee_bufferpool.o(.text) for ZigBee_BPWriteData
-    stm32f10x_it.o(.text) refers to memseta.o(.text) for __aeabi_memclr
+    stm32f10x_it.o(.text) refers to breathing_light.o(.text) for Breathing_Light_IROHandler_Routine
     stm32f10x_it.o(.text) refers to stm32f10x_tim.o(.text) for TIM_GetITStatus
-    stm32f10x_it.o(.text) refers to stm32f10x_exti.o(.text) for EXTI_GetITStatus
-    stm32f10x_it.o(.text) refers to stm32f10x_it.o(.data) for ZigBee_flag
-    stm32f10x_it.o(.text) refers to zigbee_bufferpool.o(.data) for ZigBee_wLoc
-    stm32f10x_it.o(.text) refers to zigbee_bufferpool.o(.bss) for ZigBee_buffer
-    stm32f10x_it.o(.text) refers to breathing_light.o(.data) for Pwm_led_status
+    stm32f10x_it.o(.text) refers to timer.o(.text) for TIM6_IRQHandler_Routine
+    stm32f10x_it.o(.text) refers to exti.o(.text) for EXTI0_IRQHandler_Routine
     bsp_init.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     bsp_init.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
     bsp_init.o(.text) refers to exti.o(.text) for Key_Init
@@ -77,7 +74,8 @@ Section Cross References
     oled.o(.text) refers to cdcmple.o(.text) for __aeabi_cdcmple
     oled.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     zigbee_bufferpool.o(.text) refers to oled.o(.text) for LCD_P6x8Str
-    zigbee_bufferpool.o(.text) refers to memseta.o(.text) for __aeabi_memset
+    zigbee_bufferpool.o(.text) refers to stm32f10x_usart.o(.text) for USART_GetITStatus
+    zigbee_bufferpool.o(.text) refers to memseta.o(.text) for __aeabi_memclr
     zigbee_bufferpool.o(.text) refers to zigbee_bufferpool.o(.data) for ZigBee_wLoc
     zigbee_bufferpool.o(.text) refers to zigbee_bufferpool.o(.bss) for ZigBee_buffer
     wifi_bufferpool.o(.text) refers to usart.o(.text) for USART_printf
@@ -103,10 +101,12 @@ Section Cross References
     exti.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     exti.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
     exti.o(.text) refers to stm32f10x_exti.o(.text) for EXTI_Init
+    exti.o(.text) refers to usart.o(.text) for USART_printf
     breathing_light.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     breathing_light.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
     breathing_light.o(.text) refers to misc.o(.text) for NVIC_PriorityGroupConfig
     breathing_light.o(.text) refers to stm32f10x_tim.o(.text) for TIM_TimeBaseInit
+    breathing_light.o(.text) refers to breathing_light.o(.data) for Pwm_led_status
     pwm.o(.text) refers to misc.o(.text) for NVIC_PriorityGroupConfig
     pwm.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB1PeriphClockCmd
     pwm.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
@@ -139,11 +139,11 @@ Section Cross References
     rtc.o(.text) refers to rtc.o(.data) for daycnt
     rtc.o(.text) refers to rtc.o(.bss) for calendar
     syn7318.o(.text) refers to strlen.o(.text) for strlen
-    syn7318.o(.text) refers to usart.o(.text) for UART_Put_String
+    syn7318.o(.text) refers to usart.o(.text) for Usart_SendStr_length
     syn7318.o(.text) refers to memseta.o(.text) for __aeabi_memclr4
     syn7318.o(.text) refers to stm32f10x_tim.o(.text) for TIM_Cmd
     syn7318.o(.text) refers to systick.o(.text) for delay_us
-    syn7318.o(.text) refers to sim7600.o(.text) for sim900a_call
+    syn7318.o(.text) refers to sim7600.o(.text) for SIM7600_Call
     syn7318.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB2PeriphClockCmd
     syn7318.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
     syn7318.o(.text) refers to syn7318.o(.data) for Back
@@ -159,6 +159,12 @@ Section Cross References
     sim7600.o(.text) refers to sim7600.o(.bss) for uart_buff
     sim7600.o(.text) refers to sim7600.o(.constdata) for port
     sim7600.o(.text) refers to sim7600.o(.conststring) for .conststring
+    sim7600.o(.text) refers to zigbee_bufferpool.o(.bss) for APP_buffer
+    timer.o(.text) refers to misc.o(.text) for NVIC_PriorityGroupConfig
+    timer.o(.text) refers to stm32f10x_rcc.o(.text) for RCC_APB1PeriphClockCmd
+    timer.o(.text) refers to stm32f10x_tim.o(.text) for TIM_TimeBaseInit
+    timer.o(.text) refers to sim7600.o(.text) for SIM7600_Data_Send
+    timer.o(.text) refers to timer.o(.data) for time6_num
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -476,33 +482,33 @@ Image Symbol Table
     ../clib/../cmprslib/zerorunl2.c          0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
@@ -515,8 +521,8 @@ Image Symbol Table
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  fepilogue.o ABSOLUTE
     ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
-    ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixi.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixi.o ABSOLUTE
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  ffixui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  fflti.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
@@ -534,6 +540,7 @@ Image Symbol Table
     ..\..\Driver\SPI\spi.c                   0x00000000   Number         0  spi.o ABSOLUTE
     ..\..\Driver\SYN7318\SYN7318.c           0x00000000   Number         0  syn7318.o ABSOLUTE
     ..\..\Driver\SysTick\SysTick.c           0x00000000   Number         0  systick.o ABSOLUTE
+    ..\..\Driver\TIMER\timer.c               0x00000000   Number         0  timer.o ABSOLUTE
     ..\..\Driver\USART\WIFI_BufferPool.c     0x00000000   Number         0  wifi_bufferpool.o ABSOLUTE
     ..\..\Driver\USART\ZigBee_BufferPool.c   0x00000000   Number         0  zigbee_bufferpool.o ABSOLUTE
     ..\..\Driver\USART\usart.c               0x00000000   Number         0  usart.o ABSOLUTE
@@ -594,87 +601,94 @@ Image Symbol Table
     .text                                    0x08001d68   Section        0  stm32f10x_usart.o(.text)
     .text                                    0x08002170   Section        0  main.o(.text)
     .text                                    0x08002198   Section        0  stm32f10x_it.o(.text)
-    .text                                    0x0800246c   Section        0  bsp_init.o(.text)
-    LED_Init                                 0x0800246d   Thumb Code    80  bsp_init.o(.text)
-    Beep_Init                                0x080024bd   Thumb Code    46  bsp_init.o(.text)
-    ZigBee_Power_Init                        0x080024eb   Thumb Code   148  bsp_init.o(.text)
-    Misc_Init                                0x0800257f   Thumb Code    54  bsp_init.o(.text)
-    .text                                    0x08002638   Section        0  card_records.o(.text)
-    .text                                    0x08004fd8   Section        0  usart.o(.text)
-    UART5_NVIC_Configuration                 0x08004fd9   Thumb Code    42  usart.o(.text)
-    USART2_NVIC_Configuration                0x08005003   Thumb Code    38  usart.o(.text)
-    USART1_NVIC_Configuration                0x08005029   Thumb Code    42  usart.o(.text)
-    UART5_Config                             0x08005053   Thumb Code   142  usart.o(.text)
-    USART2_Config                            0x0800516d   Thumb Code   142  usart.o(.text)
-    USART1_Config                            0x080051fb   Thumb Code   134  usart.o(.text)
-    UART4_Config                             0x080052a1   Thumb Code   146  usart.o(.text)
-    USART3_NVIC_Configuration                0x08005333   Thumb Code    42  usart.o(.text)
-    UART4_NVIC_Configuration                 0x0800535d   Thumb Code    42  usart.o(.text)
-    itoa                                     0x08005387   Thumb Code   312  usart.o(.text)
-    Usart_SendByte                           0x080056c7   Thumb Code    30  usart.o(.text)
-    .text                                    0x08005728   Section        0  oled.o(.text)
-    .text                                    0x08006794   Section        0  zigbee_bufferpool.o(.text)
-    ZigBee_BPCheckCancelCmd                  0x08006a3b   Thumb Code    24  zigbee_bufferpool.o(.text)
-    ZigBee_Data_Display_Init                 0x08006a59   Thumb Code   242  zigbee_bufferpool.o(.text)
-    .text                                    0x08006bcc   Section        0  wifi_bufferpool.o(.text)
-    .text                                    0x08006ea4   Section        0  systick.o(.text)
-    .text                                    0x08006f58   Section        0  exti.o(.text)
-    NVIC_Configuration                       0x08006f59   Thumb Code    76  exti.o(.text)
-    .text                                    0x080070b8   Section        0  breathing_light.o(.text)
-    TIM1_GPIO_Config                         0x080070b9   Thumb Code    82  breathing_light.o(.text)
-    NVIC_Config_PWM                          0x0800710b   Thumb Code    40  breathing_light.o(.text)
-    TIM1_Mode_Config                         0x08007133   Thumb Code   178  breathing_light.o(.text)
-    .text                                    0x080071fc   Section        0  pwm.o(.text)
-    NVIC_Config_PWM_TIM4                     0x080071fd   Thumb Code    42  pwm.o(.text)
-    .text                                    0x080073e4   Section        0  flash.o(.text)
-    .text                                    0x08007744   Section        0  spi.o(.text)
-    .text                                    0x0800795c   Section        0  rc522.o(.text)
-    .text                                    0x0800814c   Section        0  syn7318.o(.text)
-    .text                                    0x0800892c   Section        0  sim7600.o(.text)
-    SIM7600_Reset_Init                       0x08008c19   Thumb Code    66  sim7600.o(.text)
-    .text                                    0x08008f80   Section        0  memseta.o(.text)
-    .text                                    0x08008fa4   Section        0  strlen.o(.text)
-    .text                                    0x08008fb2   Section        0  fadd.o(.text)
-    .text                                    0x08009062   Section        0  fmul.o(.text)
-    .text                                    0x080090c6   Section        0  fflti.o(.text)
-    .text                                    0x080090d8   Section        0  ffixi.o(.text)
-    .text                                    0x0800910a   Section        0  ffixui.o(.text)
-    .text                                    0x08009132   Section        0  f2d.o(.text)
-    .text                                    0x08009158   Section       48  cdcmple.o(.text)
-    .text                                    0x08009188   Section        0  fepilogue.o(.text)
-    .text                                    0x08009188   Section        0  iusefp.o(.text)
-    .text                                    0x080091f8   Section       36  init.o(.text)
-    .text                                    0x0800921c   Section        0  __dczerorl2.o(.text)
-    i.__scatterload_copy                     0x08009272   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08009280   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08009282   Section       14  handlers.o(i.__scatterload_zeroinit)
-    .constdata                               0x08009290   Section     2072  oled.o(.constdata)
-    .constdata                               0x08009aa8   Section       33  sim7600.o(.constdata)
-    .conststring                             0x08009acc   Section      199  syn7318.o(.conststring)
-    .conststring                             0x08009b94   Section       67  sim7600.o(.conststring)
+    .text                                    0x080022f4   Section        0  bsp_init.o(.text)
+    LED_Init                                 0x080022f5   Thumb Code    80  bsp_init.o(.text)
+    Beep_Init                                0x08002345   Thumb Code    46  bsp_init.o(.text)
+    ZigBee_Power_Init                        0x08002373   Thumb Code   148  bsp_init.o(.text)
+    Misc_Init                                0x08002407   Thumb Code    54  bsp_init.o(.text)
+    .text                                    0x080024c0   Section        0  card_records.o(.text)
+    .text                                    0x08004e60   Section        0  usart.o(.text)
+    UART5_NVIC_Configuration                 0x08004e61   Thumb Code    42  usart.o(.text)
+    USART2_NVIC_Configuration                0x08004e8b   Thumb Code    38  usart.o(.text)
+    USART1_NVIC_Configuration                0x08004eb1   Thumb Code    42  usart.o(.text)
+    UART5_Config                             0x08004edb   Thumb Code   142  usart.o(.text)
+    USART2_Config                            0x08004ff5   Thumb Code   142  usart.o(.text)
+    USART1_Config                            0x08005083   Thumb Code   134  usart.o(.text)
+    UART4_Config                             0x08005129   Thumb Code   146  usart.o(.text)
+    USART3_NVIC_Configuration                0x080051bb   Thumb Code    42  usart.o(.text)
+    UART4_NVIC_Configuration                 0x080051e5   Thumb Code    42  usart.o(.text)
+    itoa                                     0x0800520f   Thumb Code   312  usart.o(.text)
+    Usart_SendByte                           0x080054e3   Thumb Code    30  usart.o(.text)
+    USART_Receive_Byte                       0x08005501   Thumb Code    32  usart.o(.text)
+    .text                                    0x08005584   Section        0  oled.o(.text)
+    .text                                    0x080065f0   Section        0  zigbee_bufferpool.o(.text)
+    ZigBee_BPCheckCancelCmd                  0x080068f5   Thumb Code    24  zigbee_bufferpool.o(.text)
+    ZigBee_Data_Display_Init                 0x08006913   Thumb Code   328  zigbee_bufferpool.o(.text)
+    .text                                    0x08006aa4   Section        0  wifi_bufferpool.o(.text)
+    .text                                    0x08006d7c   Section        0  systick.o(.text)
+    .text                                    0x08006e30   Section        0  exti.o(.text)
+    NVIC_Configuration                       0x08006e31   Thumb Code    76  exti.o(.text)
+    .text                                    0x0800702c   Section        0  breathing_light.o(.text)
+    TIM1_GPIO_Config                         0x0800702d   Thumb Code    82  breathing_light.o(.text)
+    NVIC_Config_PWM                          0x0800707f   Thumb Code    40  breathing_light.o(.text)
+    TIM1_Mode_Config                         0x080070a7   Thumb Code   178  breathing_light.o(.text)
+    .text                                    0x080072ac   Section        0  pwm.o(.text)
+    NVIC_Config_PWM_TIM4                     0x080072ad   Thumb Code    42  pwm.o(.text)
+    .text                                    0x08007494   Section        0  flash.o(.text)
+    .text                                    0x080077f4   Section        0  spi.o(.text)
+    .text                                    0x08007a0c   Section        0  rc522.o(.text)
+    .text                                    0x080081fc   Section        0  syn7318.o(.text)
+    .text                                    0x08008a1c   Section        0  sim7600.o(.text)
+    get_rebuff                               0x08008a1d   Thumb Code    12  sim7600.o(.text)
+    bufcheck                                 0x08008a29   Thumb Code    22  sim7600.o(.text)
+    clean_rebuff                             0x08008a71   Thumb Code    30  sim7600.o(.text)
+    SIM7600_Reset_Init                       0x08008d09   Thumb Code    66  sim7600.o(.text)
+    .text                                    0x080090c4   Section        0  timer.o(.text)
+    TIM6_NVIC_Configuration                  0x080090c5   Thumb Code    42  timer.o(.text)
+    .text                                    0x08009170   Section        0  memseta.o(.text)
+    .text                                    0x08009194   Section        0  strlen.o(.text)
+    .text                                    0x080091a2   Section        0  fadd.o(.text)
+    .text                                    0x08009252   Section        0  fmul.o(.text)
+    .text                                    0x080092b6   Section        0  fflti.o(.text)
+    .text                                    0x080092c8   Section        0  ffixi.o(.text)
+    .text                                    0x080092fa   Section        0  ffixui.o(.text)
+    .text                                    0x08009322   Section        0  f2d.o(.text)
+    .text                                    0x08009348   Section       48  cdcmple.o(.text)
+    .text                                    0x08009378   Section        0  fepilogue.o(.text)
+    .text                                    0x08009378   Section        0  iusefp.o(.text)
+    .text                                    0x080093e8   Section       36  init.o(.text)
+    .text                                    0x0800940c   Section        0  __dczerorl2.o(.text)
+    i.__scatterload_copy                     0x08009462   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08009470   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08009472   Section       14  handlers.o(i.__scatterload_zeroinit)
+    .constdata                               0x08009480   Section     2072  oled.o(.constdata)
+    .constdata                               0x08009c98   Section       33  sim7600.o(.constdata)
+    .conststring                             0x08009cbc   Section      199  syn7318.o(.conststring)
+    .conststring                             0x08009d84   Section       67  sim7600.o(.conststring)
     .data                                    0x20000000   Section       20  system_stm32f10x.o(.data)
     .data                                    0x20000014   Section       20  stm32f10x_rcc.o(.data)
     APBAHBPrescTable                         0x20000014   Data          16  stm32f10x_rcc.o(.data)
     ADCPrescTable                            0x20000024   Data           4  stm32f10x_rcc.o(.data)
-    .data                                    0x20000028   Section       11  stm32f10x_it.o(.data)
-    pwm_index                                0x20000030   Data           2  stm32f10x_it.o(.data)
-    period_cnt                               0x20000032   Data           1  stm32f10x_it.o(.data)
-    .data                                    0x20000034   Section       72  card_records.o(.data)
-    .data                                    0x2000007c   Section        5  zigbee_bufferpool.o(.data)
-    .data                                    0x20000084   Section       36  wifi_bufferpool.o(.data)
-    i                                        0x200000a4   Data           4  wifi_bufferpool.o(.data)
-    .data                                    0x200000a8   Section        4  systick.o(.data)
-    TimingDelay                              0x200000a8   Data           4  systick.o(.data)
-    .data                                    0x200000ac   Section      152  breathing_light.o(.data)
-    .data                                    0x20000144   Section        2  flash.o(.data)
-    .data                                    0x20000148   Section      234  syn7318.o(.data)
-    fan_speed                                0x20000230   Data           2  syn7318.o(.data)
-    .data                                    0x20000232   Section        1  sim7600.o(.data)
-    .bss                                     0x20000234   Section    10216  card_records.o(.bss)
-    .bss                                     0x20002a1c   Section      131  zigbee_bufferpool.o(.bss)
-    .bss                                     0x20002a9f   Section       24  wifi_bufferpool.o(.bss)
-    .bss                                     0x20002ab7   Section     4096  flash.o(.bss)
-    .bss                                     0x20003ab7   Section      255  sim7600.o(.bss)
+    .data                                    0x20000028   Section       72  card_records.o(.data)
+    .data                                    0x20000070   Section       12  zigbee_bufferpool.o(.data)
+    ZigBee_flag                              0x20000078   Data           4  zigbee_bufferpool.o(.data)
+    .data                                    0x2000007c   Section       36  wifi_bufferpool.o(.data)
+    i                                        0x2000009c   Data           4  wifi_bufferpool.o(.data)
+    .data                                    0x200000a0   Section        4  systick.o(.data)
+    TimingDelay                              0x200000a0   Data           4  systick.o(.data)
+    .data                                    0x200000a4   Section      151  breathing_light.o(.data)
+    pwm_index                                0x20000138   Data           2  breathing_light.o(.data)
+    period_cnt                               0x2000013a   Data           1  breathing_light.o(.data)
+    .data                                    0x2000013c   Section        2  flash.o(.data)
+    .data                                    0x20000140   Section      234  syn7318.o(.data)
+    fan_speed                                0x20000228   Data           2  syn7318.o(.data)
+    .data                                    0x2000022a   Section        1  sim7600.o(.data)
+    .data                                    0x2000022c   Section        4  timer.o(.data)
+    .bss                                     0x20000230   Section    10216  card_records.o(.bss)
+    .bss                                     0x20002a18   Section      131  zigbee_bufferpool.o(.bss)
+    .bss                                     0x20002a9b   Section       24  wifi_bufferpool.o(.bss)
+    .bss                                     0x20002ab3   Section     4096  flash.o(.bss)
+    .bss                                     0x20003ab3   Section      255  sim7600.o(.bss)
     STACK                                    0x20003bb8   Section     1024  startup_stm32f10x_hd.o(STACK)
 
     Global Symbols
@@ -780,7 +794,6 @@ Image Symbol Table
     TIM2_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     TIM3_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     TIM5_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
-    TIM6_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     TIM7_IRQHandler                          0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     TIM8_BRK_IRQHandler                      0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
     TIM8_CC_IRQHandler                       0x0800015f   Thumb Code     0  startup_stm32f10x_hd.o(.text)
@@ -999,303 +1012,307 @@ Image Symbol Table
     main                                     0x08002171   Thumb Code    34  main.o(.text)
     NMI_Handler                              0x08002199   Thumb Code     2  stm32f10x_it.o(.text)
     HardFault_Handler                        0x0800219b   Thumb Code    12  stm32f10x_it.o(.text)
-    MemManage_Handler                        0x080021a7   Thumb Code     4  stm32f10x_it.o(.text)
-    BusFault_Handler                         0x080021ab   Thumb Code     4  stm32f10x_it.o(.text)
-    UsageFault_Handler                       0x080021af   Thumb Code     4  stm32f10x_it.o(.text)
-    SVC_Handler                              0x080021b3   Thumb Code     2  stm32f10x_it.o(.text)
-    DebugMon_Handler                         0x080021b5   Thumb Code     2  stm32f10x_it.o(.text)
-    PendSV_Handler                           0x080021b7   Thumb Code     2  stm32f10x_it.o(.text)
-    SysTick_Handler                          0x080021b9   Thumb Code     8  stm32f10x_it.o(.text)
-    USART1_IRQHandler                        0x080021c1   Thumb Code     8  stm32f10x_it.o(.text)
-    USART2_IRQHandler                        0x080021c9   Thumb Code    94  stm32f10x_it.o(.text)
-    UART5_IRQHandler                         0x08002227   Thumb Code    44  stm32f10x_it.o(.text)
-    TIM1_UP_IRQHandler                       0x08002253   Thumb Code   294  stm32f10x_it.o(.text)
-    TIM4_IRQHandler                          0x08002379   Thumb Code    22  stm32f10x_it.o(.text)
-    EXTI0_IRQHandler                         0x0800238f   Thumb Code    26  stm32f10x_it.o(.text)
-    EXTI4_IRQHandler                         0x080023a9   Thumb Code    26  stm32f10x_it.o(.text)
-    EXTI1_IRQHandler                         0x080023c3   Thumb Code    26  stm32f10x_it.o(.text)
-    EXTI3_IRQHandler                         0x080023dd   Thumb Code    26  stm32f10x_it.o(.text)
-    BSP_Init                                 0x080025b5   Thumb Code    82  bsp_init.o(.text)
-    Swiping_Card                             0x08002639   Thumb Code   360  card_records.o(.text)
-    Add_Flash_ID                             0x080027a1   Thumb Code   284  card_records.o(.text)
-    Read_Flash_ID                            0x080028bd   Thumb Code   144  card_records.o(.text)
-    Add_Student_ID                           0x0800294d   Thumb Code   132  card_records.o(.text)
-    Del_card_ID                              0x080029d1   Thumb Code   216  card_records.o(.text)
-    Del_Card_Record                          0x08002aa9   Thumb Code   382  card_records.o(.text)
-    Read_Day_Stu_Id                          0x08002c27   Thumb Code  5094  card_records.o(.text)
-    Write_Day_Stu_Id                         0x0800400d   Thumb Code  4032  card_records.o(.text)
-    USART3_Config                            0x080050e1   Thumb Code   140  usart.o(.text)
-    USART_Configuration                      0x08005281   Thumb Code    32  usart.o(.text)
-    USART_printf                             0x080054bf   Thumb Code   328  usart.o(.text)
-    fgetc                                    0x08005607   Thumb Code    26  usart.o(.text)
-    fputc                                    0x08005621   Thumb Code    32  usart.o(.text)
-    GetKey                                   0x08005641   Thumb Code    26  usart.o(.text)
-    UART_Put_Char                            0x0800565b   Thumb Code    28  usart.o(.text)
-    UART_Get_char                            0x08005677   Thumb Code    28  usart.o(.text)
-    UART_Put_String                          0x08005693   Thumb Code    26  usart.o(.text)
-    UART_Get_String                          0x080056ad   Thumb Code    26  usart.o(.text)
-    Usart_SendStr_length                     0x080056e5   Thumb Code    32  usart.o(.text)
-    Usart_SendString                         0x08005705   Thumb Code    28  usart.o(.text)
-    LCD_WrDat                                0x08005729   Thumb Code    90  oled.o(.text)
-    LCD_WrCmd                                0x08005783   Thumb Code    82  oled.o(.text)
-    LCD_Set_Pos                              0x080057d5   Thumb Code    40  oled.o(.text)
-    LCD_Fill                                 0x080057fd   Thumb Code    58  oled.o(.text)
-    LCD_CLS                                  0x08005837   Thumb Code    56  oled.o(.text)
-    LCD_CLS_LINE                             0x0800586f   Thumb Code    46  oled.o(.text)
-    LCD_DLY_ms                               0x0800589d   Thumb Code    24  oled.o(.text)
-    adjust                                   0x080058b5   Thumb Code    12  oled.o(.text)
-    SetStartColumn                           0x080058c1   Thumb Code    44  oled.o(.text)
-    SetAddressingMode                        0x080058ed   Thumb Code    18  oled.o(.text)
-    SetColumnAddress                         0x080058ff   Thumb Code    26  oled.o(.text)
-    SetPageAddress                           0x08005919   Thumb Code    26  oled.o(.text)
-    SetStartLine                             0x08005933   Thumb Code    14  oled.o(.text)
-    SetContrastControl                       0x08005941   Thumb Code    18  oled.o(.text)
-    Set_Charge_Pump                          0x08005953   Thumb Code    20  oled.o(.text)
-    Set_Segment_Remap                        0x08005967   Thumb Code    14  oled.o(.text)
-    Set_Entire_Display                       0x08005975   Thumb Code    14  oled.o(.text)
-    Set_Inverse_Display                      0x08005983   Thumb Code    14  oled.o(.text)
-    Set_Multiplex_Ratio                      0x08005991   Thumb Code    18  oled.o(.text)
-    Set_Display_On_Off                       0x080059a3   Thumb Code    14  oled.o(.text)
-    SetStartPage                             0x080059b1   Thumb Code    14  oled.o(.text)
-    Set_Common_Remap                         0x080059bf   Thumb Code    14  oled.o(.text)
-    Set_Display_Offset                       0x080059cd   Thumb Code    18  oled.o(.text)
-    Set_Display_Clock                        0x080059df   Thumb Code    18  oled.o(.text)
-    Set_Precharge_Period                     0x080059f1   Thumb Code    18  oled.o(.text)
-    Set_Common_Config                        0x08005a03   Thumb Code    20  oled.o(.text)
-    Set_VCOMH                                0x08005a17   Thumb Code    18  oled.o(.text)
-    Set_NOP                                  0x08005a29   Thumb Code    10  oled.o(.text)
-    LCD_PutPixel                             0x08005a33   Thumb Code    72  oled.o(.text)
-    LCD_Rectangle                            0x08005a7b   Thumb Code   132  oled.o(.text)
-    LCD_P6x8Str                              0x08005aff   Thumb Code   102  oled.o(.text)
-    LCD_P8x16Str                             0x08005b65   Thumb Code   130  oled.o(.text)
-    LCD_P14x16Str                            0x08005be7   Thumb Code   182  oled.o(.text)
-    LCD_Print                                0x08005c9d   Thumb Code   100  oled.o(.text)
-    OLED_DrawBMP                             0x08005d01   Thumb Code   116  oled.o(.text)
-    LED_P6x8Char                             0x08005d75   Thumb Code    74  oled.o(.text)
-    LED_PrintValueC                          0x08005dbf   Thumb Code   126  oled.o(.text)
-    LED_PrintValueI                          0x08005e3d   Thumb Code   244  oled.o(.text)
-    LED_PrintValueFP                         0x08005f31   Thumb Code   300  oled.o(.text)
-    LED_PrintValueFP_my                      0x0800605d   Thumb Code   290  oled.o(.text)
-    LED_PrintValueF                          0x0800617f   Thumb Code   666  oled.o(.text)
-    LCD_show_temp                            0x08006419   Thumb Code   276  oled.o(.text)
-    LCD_show_Data                            0x0800652d   Thumb Code   202  oled.o(.text)
-    LCD_signal_num                           0x080065f7   Thumb Code    98  oled.o(.text)
-    LCD_Init                                 0x08006659   Thumb Code   180  oled.o(.text)
-    OLED_Init                                0x0800670d   Thumb Code     8  oled.o(.text)
-    OLED_Show                                0x08006715   Thumb Code    38  oled.o(.text)
-    OLED_RST                                 0x0800673b   Thumb Code    52  oled.o(.text)
-    ZigBee_Data_Display                      0x08006795   Thumb Code   594  zigbee_bufferpool.o(.text)
-    ZigBee_BPWriteData                       0x080069e7   Thumb Code    42  zigbee_bufferpool.o(.text)
-    ZigBee_BPReadData                        0x08006a11   Thumb Code    36  zigbee_bufferpool.o(.text)
-    ZigBee_BPCheckFlow                       0x08006a35   Thumb Code     6  zigbee_bufferpool.o(.text)
-    ZigBee_SetFlowSize                       0x08006a53   Thumb Code     6  zigbee_bufferpool.o(.text)
-    ZigBee_BufferPool_Init                   0x08006b4b   Thumb Code   130  zigbee_bufferpool.o(.text)
-    WIFI_SetFlowSize                         0x08006bcd   Thumb Code     6  wifi_bufferpool.o(.text)
-    WIFI_BufferPool_Init                     0x08006bd3   Thumb Code    48  wifi_bufferpool.o(.text)
-    WIFI_BPWriteData                         0x08006c03   Thumb Code   532  wifi_bufferpool.o(.text)
-    WIFI_BPReadData                          0x08006e17   Thumb Code    36  wifi_bufferpool.o(.text)
-    WIFI_BPCheckFlow                         0x08006e3b   Thumb Code     6  wifi_bufferpool.o(.text)
-    WIFI_BPCheckCancelCmd                    0x08006e41   Thumb Code    24  wifi_bufferpool.o(.text)
-    SysTick_Init                             0x08006ea5   Thumb Code   106  systick.o(.text)
-    delay_us                                 0x08006f0f   Thumb Code    36  systick.o(.text)
-    TimingDelay_Decrement                    0x08006f33   Thumb Code    18  systick.o(.text)
-    Key_Init                                 0x08006fa5   Thumb Code   222  exti.o(.text)
-    Key_Scan                                 0x08007083   Thumb Code    40  exti.o(.text)
-    Breathing_Light_Init                     0x080071e5   Thumb Code    12  breathing_light.o(.text)
-    Servo_Door_Init                          0x08007227   Thumb Code   136  pwm.o(.text)
-    Servo_Window_Init                        0x080072af   Thumb Code   136  pwm.o(.text)
-    Fan_Init                                 0x08007337   Thumb Code   160  pwm.o(.text)
-    W25QXX_ReadID                            0x080073e5   Thumb Code    70  flash.o(.text)
-    W25QXX_Init                              0x0800742b   Thumb Code    22  flash.o(.text)
-    W25QXX_ReadSR                            0x08007441   Thumb Code    42  flash.o(.text)
-    W25QXX_Write_SR                          0x0800746b   Thumb Code    38  flash.o(.text)
-    W25QXX_Write_Enable                      0x08007491   Thumb Code    30  flash.o(.text)
-    W25QXX_Write_Disable                     0x080074af   Thumb Code    30  flash.o(.text)
-    W25QXX_Read                              0x080074cd   Thumb Code    82  flash.o(.text)
-    W25QXX_Wait_Busy                         0x0800751f   Thumb Code    18  flash.o(.text)
-    W25QXX_Write_Page                        0x08007531   Thumb Code    88  flash.o(.text)
-    W25QXX_Write_NoCheck                     0x08007589   Thumb Code    70  flash.o(.text)
-    W25QXX_Erase_Sector                      0x080075cf   Thumb Code    68  flash.o(.text)
-    W25QXX_Write                             0x08007613   Thumb Code   180  flash.o(.text)
-    W25QXX_Erase_Chip                        0x080076c7   Thumb Code    42  flash.o(.text)
-    W25QXX_PowerDown                         0x080076f1   Thumb Code    36  flash.o(.text)
-    W25QXX_WAKEUP                            0x08007715   Thumb Code    36  flash.o(.text)
-    SPI1_Init                                0x08007745   Thumb Code   154  spi.o(.text)
-    SPI2_Init                                0x080077df   Thumb Code   180  spi.o(.text)
-    SPI1_ReadWriteByte                       0x08007893   Thumb Code    78  spi.o(.text)
-    SPI2_ReadWriteByte                       0x080078e1   Thumb Code    78  spi.o(.text)
-    SPI2_SetSpeed                            0x0800792f   Thumb Code    30  spi.o(.text)
-    WriteRawRC                               0x0800795d   Thumb Code    50  rc522.o(.text)
-    ReadRawRC                                0x0800798f   Thumb Code    58  rc522.o(.text)
-    SetBitMask                               0x080079c9   Thumb Code    28  rc522.o(.text)
-    PcdAntennaOn                             0x080079e5   Thumb Code    26  rc522.o(.text)
-    ClearBitMask                             0x080079ff   Thumb Code    28  rc522.o(.text)
-    PcdAntennaOff                            0x08007a1b   Thumb Code    12  rc522.o(.text)
-    PcdReset                                 0x08007a27   Thumb Code   126  rc522.o(.text)
-    M500PcdConfigISOType                     0x08007aa5   Thumb Code    80  rc522.o(.text)
-    InitRc522                                0x08007af5   Thumb Code    36  rc522.o(.text)
-    Reset_RC522                              0x08007b19   Thumb Code    24  rc522.o(.text)
-    PcdComMF522                              0x08007b31   Thumb Code   318  rc522.o(.text)
-    PcdRequest                               0x08007c6f   Thumb Code    86  rc522.o(.text)
-    PcdAnticoll                              0x08007cc5   Thumb Code   112  rc522.o(.text)
-    CalulateCRC                              0x08007d35   Thumb Code   122  rc522.o(.text)
-    PcdSelect                                0x08007daf   Thumb Code   116  rc522.o(.text)
-    PcdAuthState                             0x08007e23   Thumb Code   110  rc522.o(.text)
-    PcdRead                                  0x08007e91   Thumb Code    86  rc522.o(.text)
-    PcdWrite                                 0x08007ee7   Thumb Code   150  rc522.o(.text)
-    PcdHalt                                  0x08007f7d   Thumb Code    52  rc522.o(.text)
-    PcdValue                                 0x08007fb1   Thumb Code   208  rc522.o(.text)
-    PcdBakValue                              0x08008081   Thumb Code   202  rc522.o(.text)
-    SYN_TTS                                  0x0800814d   Thumb Code    62  syn7318.o(.text)
-    Three_One                                0x0800818b   Thumb Code   180  syn7318.o(.text)
-    Voice_Control                            0x0800823f   Thumb Code   552  syn7318.o(.text)
-    SYN7318_Reset_Init                       0x08008467   Thumb Code    60  syn7318.o(.text)
-    SYN_MP3                                  0x080084a3   Thumb Code    62  syn7318.o(.text)
-    Start_ASR                                0x080084e1   Thumb Code    90  syn7318.o(.text)
-    Dict_TTS                                 0x0800853b   Thumb Code    84  syn7318.o(.text)
-    Stop_ASR                                 0x0800858f   Thumb Code    36  syn7318.o(.text)
-    Start_WakeUp                             0x080085b3   Thumb Code   534  syn7318.o(.text)
-    Status_Query                             0x080087c9   Thumb Code    60  syn7318.o(.text)
-    SYN_Buffer_Save                          0x08008805   Thumb Code    62  syn7318.o(.text)
-    SYN_Buffer_TTS                           0x08008843   Thumb Code    50  syn7318.o(.text)
-    SYN_Play_Control                         0x08008875   Thumb Code    36  syn7318.o(.text)
-    SYN_VOL_Control                          0x08008899   Thumb Code    42  syn7318.o(.text)
-    Stop_WakeUp                              0x080088c3   Thumb Code    36  syn7318.o(.text)
-    Stop_Three_One                           0x080088e7   Thumb Code    36  syn7318.o(.text)
-    get_rebuff                               0x0800892d   Thumb Code    12  sim7600.o(.text)
-    bufcheck                                 0x08008939   Thumb Code    22  sim7600.o(.text)
-    sim900a_waitask                          0x0800894f   Thumb Code    50  sim7600.o(.text)
-    clean_rebuff                             0x08008981   Thumb Code    30  sim7600.o(.text)
-    sim900a_gprs_send                        0x0800899f   Thumb Code    90  sim7600.o(.text)
-    sim900a_cmd_check                        0x080089f9   Thumb Code    70  sim7600.o(.text)
-    server_connect_tcp                       0x08008a3f   Thumb Code   272  sim7600.o(.text)
-    server_connect                           0x08008b4f   Thumb Code    42  sim7600.o(.text)
-    sim900a_cmd                              0x08008b79   Thumb Code    48  sim7600.o(.text)
-    sim900a_init                             0x08008ba9   Thumb Code   112  sim7600.o(.text)
-    SIM7600_Init                             0x08008c5b   Thumb Code    32  sim7600.o(.text)
-    SIM7600_IRQHandler                       0x08008c7b   Thumb Code    58  sim7600.o(.text)
-    sim900a_call                             0x08008cb5   Thumb Code    20  sim7600.o(.text)
-    sim900a_sms                              0x08008cc9   Thumb Code   692  sim7600.o(.text)
-    __aeabi_memset                           0x08008f81   Thumb Code    14  memseta.o(.text)
-    __aeabi_memset4                          0x08008f81   Thumb Code     0  memseta.o(.text)
-    __aeabi_memset8                          0x08008f81   Thumb Code     0  memseta.o(.text)
-    __aeabi_memclr                           0x08008f8f   Thumb Code     4  memseta.o(.text)
-    __aeabi_memclr4                          0x08008f8f   Thumb Code     0  memseta.o(.text)
-    __aeabi_memclr8                          0x08008f8f   Thumb Code     0  memseta.o(.text)
-    _memset$wrapper                          0x08008f93   Thumb Code    18  memseta.o(.text)
-    strlen                                   0x08008fa5   Thumb Code    14  strlen.o(.text)
-    __aeabi_fadd                             0x08008fb3   Thumb Code   164  fadd.o(.text)
-    __aeabi_fsub                             0x08009057   Thumb Code     6  fadd.o(.text)
-    __aeabi_frsub                            0x0800905d   Thumb Code     6  fadd.o(.text)
-    __aeabi_fmul                             0x08009063   Thumb Code   100  fmul.o(.text)
-    __aeabi_i2f                              0x080090c7   Thumb Code    18  fflti.o(.text)
-    __aeabi_f2iz                             0x080090d9   Thumb Code    50  ffixi.o(.text)
-    __aeabi_f2uiz                            0x0800910b   Thumb Code    40  ffixui.o(.text)
-    __aeabi_f2d                              0x08009133   Thumb Code    38  f2d.o(.text)
-    __aeabi_cdcmpeq                          0x08009159   Thumb Code     0  cdcmple.o(.text)
-    __aeabi_cdcmple                          0x08009159   Thumb Code    48  cdcmple.o(.text)
-    __I$use$fp                               0x08009189   Thumb Code     0  iusefp.o(.text)
-    _float_round                             0x08009189   Thumb Code    18  fepilogue.o(.text)
-    _float_epilogue                          0x0800919b   Thumb Code    92  fepilogue.o(.text)
-    __scatterload                            0x080091f9   Thumb Code    28  init.o(.text)
-    __scatterload_rt2                        0x080091f9   Thumb Code     0  init.o(.text)
-    __decompress                             0x0800921d   Thumb Code     0  __dczerorl2.o(.text)
-    __decompress1                            0x0800921d   Thumb Code    86  __dczerorl2.o(.text)
-    __scatterload_copy                       0x08009273   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08009281   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08009283   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    F6x8                                     0x08009290   Data         552  oled.o(.constdata)
-    F8X16                                    0x080094b8   Data        1520  oled.o(.constdata)
-    num                                      0x08009aa8   Data          12  sim7600.o(.constdata)
-    ip                                       0x08009ab4   Data          15  sim7600.o(.constdata)
-    port                                     0x08009ac3   Data           6  sim7600.o(.constdata)
-    Region$$Table$$Base                      0x08009bd8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08009bf8   Number         0  anon$$obj.o(Region$$Table)
+    MemManage_Handler                        0x080021a7   Thumb Code    12  stm32f10x_it.o(.text)
+    BusFault_Handler                         0x080021b3   Thumb Code    12  stm32f10x_it.o(.text)
+    UsageFault_Handler                       0x080021bf   Thumb Code    12  stm32f10x_it.o(.text)
+    SVC_Handler                              0x080021cb   Thumb Code     2  stm32f10x_it.o(.text)
+    DebugMon_Handler                         0x080021cd   Thumb Code     2  stm32f10x_it.o(.text)
+    PendSV_Handler                           0x080021cf   Thumb Code     2  stm32f10x_it.o(.text)
+    SysTick_Handler                          0x080021d1   Thumb Code     8  stm32f10x_it.o(.text)
+    USART1_IRQHandler                        0x080021d9   Thumb Code     8  stm32f10x_it.o(.text)
+    USART2_IRQHandler                        0x080021e1   Thumb Code     8  stm32f10x_it.o(.text)
+    UART5_IRQHandler                         0x080021e9   Thumb Code    44  stm32f10x_it.o(.text)
+    TIM1_UP_IRQHandler                       0x08002215   Thumb Code     8  stm32f10x_it.o(.text)
+    TIM4_IRQHandler                          0x0800221d   Thumb Code    22  stm32f10x_it.o(.text)
+    TIM6_IRQHandler                          0x08002233   Thumb Code     8  stm32f10x_it.o(.text)
+    EXTI0_IRQHandler                         0x0800223b   Thumb Code     8  stm32f10x_it.o(.text)
+    EXTI4_IRQHandler                         0x08002243   Thumb Code     8  stm32f10x_it.o(.text)
+    EXTI1_IRQHandler                         0x0800224b   Thumb Code     8  stm32f10x_it.o(.text)
+    EXTI3_IRQHandler                         0x08002253   Thumb Code     8  stm32f10x_it.o(.text)
+    BSP_Init                                 0x0800243d   Thumb Code    82  bsp_init.o(.text)
+    Swiping_Card                             0x080024c1   Thumb Code   360  card_records.o(.text)
+    Add_Flash_ID                             0x08002629   Thumb Code   284  card_records.o(.text)
+    Read_Flash_ID                            0x08002745   Thumb Code   144  card_records.o(.text)
+    Add_Student_ID                           0x080027d5   Thumb Code   132  card_records.o(.text)
+    Del_card_ID                              0x08002859   Thumb Code   216  card_records.o(.text)
+    Del_Card_Record                          0x08002931   Thumb Code   382  card_records.o(.text)
+    Read_Day_Stu_Id                          0x08002aaf   Thumb Code  5094  card_records.o(.text)
+    Write_Day_Stu_Id                         0x08003e95   Thumb Code  4032  card_records.o(.text)
+    USART3_Config                            0x08004f69   Thumb Code   140  usart.o(.text)
+    USART_Configuration                      0x08005109   Thumb Code    32  usart.o(.text)
+    USART_printf                             0x08005347   Thumb Code   328  usart.o(.text)
+    fgetc                                    0x0800548f   Thumb Code    26  usart.o(.text)
+    fputc                                    0x080054a9   Thumb Code    32  usart.o(.text)
+    GetKey                                   0x080054c9   Thumb Code    26  usart.o(.text)
+    Usart_ReceiveStr_length                  0x08005521   Thumb Code    32  usart.o(.text)
+    Usart_SendStr_length                     0x08005541   Thumb Code    32  usart.o(.text)
+    Usart_SendString                         0x08005561   Thumb Code    28  usart.o(.text)
+    LCD_WrDat                                0x08005585   Thumb Code    90  oled.o(.text)
+    LCD_WrCmd                                0x080055df   Thumb Code    82  oled.o(.text)
+    LCD_Set_Pos                              0x08005631   Thumb Code    40  oled.o(.text)
+    LCD_Fill                                 0x08005659   Thumb Code    58  oled.o(.text)
+    LCD_CLS                                  0x08005693   Thumb Code    56  oled.o(.text)
+    LCD_CLS_LINE                             0x080056cb   Thumb Code    46  oled.o(.text)
+    LCD_DLY_ms                               0x080056f9   Thumb Code    24  oled.o(.text)
+    adjust                                   0x08005711   Thumb Code    12  oled.o(.text)
+    SetStartColumn                           0x0800571d   Thumb Code    44  oled.o(.text)
+    SetAddressingMode                        0x08005749   Thumb Code    18  oled.o(.text)
+    SetColumnAddress                         0x0800575b   Thumb Code    26  oled.o(.text)
+    SetPageAddress                           0x08005775   Thumb Code    26  oled.o(.text)
+    SetStartLine                             0x0800578f   Thumb Code    14  oled.o(.text)
+    SetContrastControl                       0x0800579d   Thumb Code    18  oled.o(.text)
+    Set_Charge_Pump                          0x080057af   Thumb Code    20  oled.o(.text)
+    Set_Segment_Remap                        0x080057c3   Thumb Code    14  oled.o(.text)
+    Set_Entire_Display                       0x080057d1   Thumb Code    14  oled.o(.text)
+    Set_Inverse_Display                      0x080057df   Thumb Code    14  oled.o(.text)
+    Set_Multiplex_Ratio                      0x080057ed   Thumb Code    18  oled.o(.text)
+    Set_Display_On_Off                       0x080057ff   Thumb Code    14  oled.o(.text)
+    SetStartPage                             0x0800580d   Thumb Code    14  oled.o(.text)
+    Set_Common_Remap                         0x0800581b   Thumb Code    14  oled.o(.text)
+    Set_Display_Offset                       0x08005829   Thumb Code    18  oled.o(.text)
+    Set_Display_Clock                        0x0800583b   Thumb Code    18  oled.o(.text)
+    Set_Precharge_Period                     0x0800584d   Thumb Code    18  oled.o(.text)
+    Set_Common_Config                        0x0800585f   Thumb Code    20  oled.o(.text)
+    Set_VCOMH                                0x08005873   Thumb Code    18  oled.o(.text)
+    Set_NOP                                  0x08005885   Thumb Code    10  oled.o(.text)
+    LCD_PutPixel                             0x0800588f   Thumb Code    72  oled.o(.text)
+    LCD_Rectangle                            0x080058d7   Thumb Code   132  oled.o(.text)
+    LCD_P6x8Str                              0x0800595b   Thumb Code   102  oled.o(.text)
+    LCD_P8x16Str                             0x080059c1   Thumb Code   130  oled.o(.text)
+    LCD_P14x16Str                            0x08005a43   Thumb Code   182  oled.o(.text)
+    LCD_Print                                0x08005af9   Thumb Code   100  oled.o(.text)
+    OLED_DrawBMP                             0x08005b5d   Thumb Code   116  oled.o(.text)
+    LED_P6x8Char                             0x08005bd1   Thumb Code    74  oled.o(.text)
+    LED_PrintValueC                          0x08005c1b   Thumb Code   126  oled.o(.text)
+    LED_PrintValueI                          0x08005c99   Thumb Code   244  oled.o(.text)
+    LED_PrintValueFP                         0x08005d8d   Thumb Code   300  oled.o(.text)
+    LED_PrintValueFP_my                      0x08005eb9   Thumb Code   290  oled.o(.text)
+    LED_PrintValueF                          0x08005fdb   Thumb Code   666  oled.o(.text)
+    LCD_show_temp                            0x08006275   Thumb Code   276  oled.o(.text)
+    LCD_show_Data                            0x08006389   Thumb Code   202  oled.o(.text)
+    LCD_signal_num                           0x08006453   Thumb Code    98  oled.o(.text)
+    LCD_Init                                 0x080064b5   Thumb Code   180  oled.o(.text)
+    OLED_Init                                0x08006569   Thumb Code     8  oled.o(.text)
+    OLED_Show                                0x08006571   Thumb Code    38  oled.o(.text)
+    OLED_RST                                 0x08006597   Thumb Code    52  oled.o(.text)
+    ZigBee_Data_Display                      0x080065f1   Thumb Code   594  zigbee_bufferpool.o(.text)
+    ZigBee_BPWriteData                       0x08006843   Thumb Code    42  zigbee_bufferpool.o(.text)
+    ZigBee_BPReadData                        0x0800686d   Thumb Code    36  zigbee_bufferpool.o(.text)
+    ZigBee_IRQHandler_Routine                0x08006891   Thumb Code    94  zigbee_bufferpool.o(.text)
+    ZigBee_BPCheckFlow                       0x080068ef   Thumb Code     6  zigbee_bufferpool.o(.text)
+    ZigBee_SetFlowSize                       0x0800690d   Thumb Code     6  zigbee_bufferpool.o(.text)
+    ZigBee_BufferPool_Init                   0x08006a5b   Thumb Code    52  zigbee_bufferpool.o(.text)
+    WIFI_SetFlowSize                         0x08006aa5   Thumb Code     6  wifi_bufferpool.o(.text)
+    WIFI_BufferPool_Init                     0x08006aab   Thumb Code    48  wifi_bufferpool.o(.text)
+    WIFI_BPWriteData                         0x08006adb   Thumb Code   532  wifi_bufferpool.o(.text)
+    WIFI_BPReadData                          0x08006cef   Thumb Code    36  wifi_bufferpool.o(.text)
+    WIFI_BPCheckFlow                         0x08006d13   Thumb Code     6  wifi_bufferpool.o(.text)
+    WIFI_BPCheckCancelCmd                    0x08006d19   Thumb Code    24  wifi_bufferpool.o(.text)
+    SysTick_Init                             0x08006d7d   Thumb Code   106  systick.o(.text)
+    delay_us                                 0x08006de7   Thumb Code    36  systick.o(.text)
+    TimingDelay_Decrement                    0x08006e0b   Thumb Code    18  systick.o(.text)
+    Key_Init                                 0x08006e7d   Thumb Code   222  exti.o(.text)
+    Key_Scan                                 0x08006f5b   Thumb Code    40  exti.o(.text)
+    EXTI0_IRQHandler_Routine                 0x08006f83   Thumb Code    26  exti.o(.text)
+    EXTI4_IRQHandler_Routine                 0x08006f9d   Thumb Code    26  exti.o(.text)
+    EXTI1_IRQHandler_Routine                 0x08006fb7   Thumb Code    26  exti.o(.text)
+    EXTI3_IRQHandler_Routine                 0x08006fd1   Thumb Code    26  exti.o(.text)
+    Breathing_Light_Init                     0x08007159   Thumb Code    12  breathing_light.o(.text)
+    Breathing_Light_IROHandler_Routine       0x08007165   Thumb Code   294  breathing_light.o(.text)
+    Servo_Door_Init                          0x080072d7   Thumb Code   136  pwm.o(.text)
+    Servo_Window_Init                        0x0800735f   Thumb Code   136  pwm.o(.text)
+    Fan_Init                                 0x080073e7   Thumb Code   160  pwm.o(.text)
+    W25QXX_ReadID                            0x08007495   Thumb Code    70  flash.o(.text)
+    W25QXX_Init                              0x080074db   Thumb Code    22  flash.o(.text)
+    W25QXX_ReadSR                            0x080074f1   Thumb Code    42  flash.o(.text)
+    W25QXX_Write_SR                          0x0800751b   Thumb Code    38  flash.o(.text)
+    W25QXX_Write_Enable                      0x08007541   Thumb Code    30  flash.o(.text)
+    W25QXX_Write_Disable                     0x0800755f   Thumb Code    30  flash.o(.text)
+    W25QXX_Read                              0x0800757d   Thumb Code    82  flash.o(.text)
+    W25QXX_Wait_Busy                         0x080075cf   Thumb Code    18  flash.o(.text)
+    W25QXX_Write_Page                        0x080075e1   Thumb Code    88  flash.o(.text)
+    W25QXX_Write_NoCheck                     0x08007639   Thumb Code    70  flash.o(.text)
+    W25QXX_Erase_Sector                      0x0800767f   Thumb Code    68  flash.o(.text)
+    W25QXX_Write                             0x080076c3   Thumb Code   180  flash.o(.text)
+    W25QXX_Erase_Chip                        0x08007777   Thumb Code    42  flash.o(.text)
+    W25QXX_PowerDown                         0x080077a1   Thumb Code    36  flash.o(.text)
+    W25QXX_WAKEUP                            0x080077c5   Thumb Code    36  flash.o(.text)
+    SPI1_Init                                0x080077f5   Thumb Code   154  spi.o(.text)
+    SPI2_Init                                0x0800788f   Thumb Code   180  spi.o(.text)
+    SPI1_ReadWriteByte                       0x08007943   Thumb Code    78  spi.o(.text)
+    SPI2_ReadWriteByte                       0x08007991   Thumb Code    78  spi.o(.text)
+    SPI2_SetSpeed                            0x080079df   Thumb Code    30  spi.o(.text)
+    WriteRawRC                               0x08007a0d   Thumb Code    50  rc522.o(.text)
+    ReadRawRC                                0x08007a3f   Thumb Code    58  rc522.o(.text)
+    SetBitMask                               0x08007a79   Thumb Code    28  rc522.o(.text)
+    PcdAntennaOn                             0x08007a95   Thumb Code    26  rc522.o(.text)
+    ClearBitMask                             0x08007aaf   Thumb Code    28  rc522.o(.text)
+    PcdAntennaOff                            0x08007acb   Thumb Code    12  rc522.o(.text)
+    PcdReset                                 0x08007ad7   Thumb Code   126  rc522.o(.text)
+    M500PcdConfigISOType                     0x08007b55   Thumb Code    80  rc522.o(.text)
+    InitRc522                                0x08007ba5   Thumb Code    36  rc522.o(.text)
+    Reset_RC522                              0x08007bc9   Thumb Code    24  rc522.o(.text)
+    PcdComMF522                              0x08007be1   Thumb Code   318  rc522.o(.text)
+    PcdRequest                               0x08007d1f   Thumb Code    86  rc522.o(.text)
+    PcdAnticoll                              0x08007d75   Thumb Code   112  rc522.o(.text)
+    CalulateCRC                              0x08007de5   Thumb Code   122  rc522.o(.text)
+    PcdSelect                                0x08007e5f   Thumb Code   116  rc522.o(.text)
+    PcdAuthState                             0x08007ed3   Thumb Code   110  rc522.o(.text)
+    PcdRead                                  0x08007f41   Thumb Code    86  rc522.o(.text)
+    PcdWrite                                 0x08007f97   Thumb Code   150  rc522.o(.text)
+    PcdHalt                                  0x0800802d   Thumb Code    52  rc522.o(.text)
+    PcdValue                                 0x08008061   Thumb Code   208  rc522.o(.text)
+    PcdBakValue                              0x08008131   Thumb Code   202  rc522.o(.text)
+    SYN_TTS                                  0x080081fd   Thumb Code    66  syn7318.o(.text)
+    Three_One                                0x0800823f   Thumb Code   188  syn7318.o(.text)
+    Voice_Control                            0x080082fb   Thumb Code   552  syn7318.o(.text)
+    SYN7318_Reset_Init                       0x08008523   Thumb Code    60  syn7318.o(.text)
+    SYN_MP3                                  0x0800855f   Thumb Code    66  syn7318.o(.text)
+    Start_ASR                                0x080085a1   Thumb Code    98  syn7318.o(.text)
+    Dict_TTS                                 0x08008603   Thumb Code   478  syn7318.o(.text)
+    Stop_ASR                                 0x080087e1   Thumb Code    38  syn7318.o(.text)
+    Start_WakeUp                             0x08008807   Thumb Code    86  syn7318.o(.text)
+    Status_Query                             0x0800885d   Thumb Code    66  syn7318.o(.text)
+    SYN_Buffer_Save                          0x0800889f   Thumb Code    66  syn7318.o(.text)
+    SYN_Buffer_TTS                           0x080088e1   Thumb Code    52  syn7318.o(.text)
+    SYN_Play_Control                         0x08008915   Thumb Code    38  syn7318.o(.text)
+    SYN_VOL_Control                          0x0800893b   Thumb Code    44  syn7318.o(.text)
+    Stop_WakeUp                              0x08008967   Thumb Code    38  syn7318.o(.text)
+    Stop_Three_One                           0x0800898d   Thumb Code    38  syn7318.o(.text)
+    SIM7600_Waitask                          0x08008a3f   Thumb Code    50  sim7600.o(.text)
+    SIM7600_GPRS_Send                        0x08008a8f   Thumb Code    90  sim7600.o(.text)
+    SIM7600_CMD_Check                        0x08008ae9   Thumb Code    70  sim7600.o(.text)
+    server_connect_tcp                       0x08008b2f   Thumb Code   272  sim7600.o(.text)
+    server_connect                           0x08008c3f   Thumb Code    42  sim7600.o(.text)
+    SIM7600_CMD                              0x08008c69   Thumb Code    48  sim7600.o(.text)
+    SIM7600_Config                           0x08008c99   Thumb Code   112  sim7600.o(.text)
+    SIM7600_Init                             0x08008d4b   Thumb Code    32  sim7600.o(.text)
+    SIM7600_IRQHandler_Routine               0x08008d6b   Thumb Code    48  sim7600.o(.text)
+    SIM7600_Data_Send                        0x08008d9b   Thumb Code    88  sim7600.o(.text)
+    SIM7600_Call                             0x08008df3   Thumb Code   522  sim7600.o(.text)
+    SIM7600_SMS                              0x08008ffd   Thumb Code   112  sim7600.o(.text)
+    TIM6_Configuration                       0x080090ef   Thumb Code    72  timer.o(.text)
+    TIM6_IRQHandler_Routine                  0x08009137   Thumb Code    48  timer.o(.text)
+    __aeabi_memset                           0x08009171   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x08009171   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x08009171   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x0800917f   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x0800917f   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x0800917f   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x08009183   Thumb Code    18  memseta.o(.text)
+    strlen                                   0x08009195   Thumb Code    14  strlen.o(.text)
+    __aeabi_fadd                             0x080091a3   Thumb Code   164  fadd.o(.text)
+    __aeabi_fsub                             0x08009247   Thumb Code     6  fadd.o(.text)
+    __aeabi_frsub                            0x0800924d   Thumb Code     6  fadd.o(.text)
+    __aeabi_fmul                             0x08009253   Thumb Code   100  fmul.o(.text)
+    __aeabi_i2f                              0x080092b7   Thumb Code    18  fflti.o(.text)
+    __aeabi_f2iz                             0x080092c9   Thumb Code    50  ffixi.o(.text)
+    __aeabi_f2uiz                            0x080092fb   Thumb Code    40  ffixui.o(.text)
+    __aeabi_f2d                              0x08009323   Thumb Code    38  f2d.o(.text)
+    __aeabi_cdcmpeq                          0x08009349   Thumb Code     0  cdcmple.o(.text)
+    __aeabi_cdcmple                          0x08009349   Thumb Code    48  cdcmple.o(.text)
+    __I$use$fp                               0x08009379   Thumb Code     0  iusefp.o(.text)
+    _float_round                             0x08009379   Thumb Code    18  fepilogue.o(.text)
+    _float_epilogue                          0x0800938b   Thumb Code    92  fepilogue.o(.text)
+    __scatterload                            0x080093e9   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x080093e9   Thumb Code     0  init.o(.text)
+    __decompress                             0x0800940d   Thumb Code     0  __dczerorl2.o(.text)
+    __decompress1                            0x0800940d   Thumb Code    86  __dczerorl2.o(.text)
+    __scatterload_copy                       0x08009463   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08009471   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08009473   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    F6x8                                     0x08009480   Data         552  oled.o(.constdata)
+    F8X16                                    0x080096a8   Data        1520  oled.o(.constdata)
+    num                                      0x08009c98   Data          12  sim7600.o(.constdata)
+    ip                                       0x08009ca4   Data          15  sim7600.o(.constdata)
+    port                                     0x08009cb3   Data           6  sim7600.o(.constdata)
+    Region$$Table$$Base                      0x08009dc8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08009de8   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f10x.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f10x.o(.data)
-    ZigBee_flag                              0x20000028   Data           4  stm32f10x_it.o(.data)
-    Brightness_Level                         0x2000002c   Data           4  stm32f10x_it.o(.data)
-    Card_Type_s                              0x20000034   Data           2  card_records.o(.data)
-    Card_ID                                  0x20000036   Data           4  card_records.o(.data)
-    KEY                                      0x2000003a   Data           6  card_records.o(.data)
-    cardType                                 0x20000040   Data           2  card_records.o(.data)
-    TEXT_Buffer                              0x20000042   Data           4  card_records.o(.data)
-    READ_Buffer                              0x20000046   Data           4  card_records.o(.data)
-    Stu_Card_Id                              0x2000004a   Data           4  card_records.o(.data)
-    Read_Stu_Card_Id                         0x2000004e   Data           4  card_records.o(.data)
-    CLI_ID                                   0x20000052   Data           1  card_records.o(.data)
-    KEY_SE                                   0x20000053   Data           1  card_records.o(.data)
-    mode_flag                                0x20000054   Data           1  card_records.o(.data)
-    time_Del                                 0x20000055   Data           1  card_records.o(.data)
-    temp                                     0x20000056   Data           1  card_records.o(.data)
-    temp1                                    0x20000057   Data           1  card_records.o(.data)
-    Del_temp                                 0x20000058   Data           1  card_records.o(.data)
-    Del_flag                                 0x20000059   Data           1  card_records.o(.data)
-    finish_flag                              0x2000005a   Data           1  card_records.o(.data)
-    status                                   0x2000005b   Data           1  card_records.o(.data)
-    time_flag                                0x2000005c   Data           1  card_records.o(.data)
-    same_id_day_flag                         0x2000005d   Data           1  card_records.o(.data)
-    check_ID_flag                            0x2000005e   Data           1  card_records.o(.data)
-    FLASH_SIZE                               0x20000060   Data           4  card_records.o(.data)
-    week1                                    0x20000064   Data           1  card_records.o(.data)
-    week2                                    0x20000065   Data           1  card_records.o(.data)
-    week3                                    0x20000066   Data           1  card_records.o(.data)
-    day1                                     0x20000067   Data           1  card_records.o(.data)
-    day2                                     0x20000068   Data           1  card_records.o(.data)
-    day3                                     0x20000069   Data           1  card_records.o(.data)
-    sec1                                     0x2000006a   Data           1  card_records.o(.data)
-    sec2                                     0x2000006b   Data           1  card_records.o(.data)
-    sec3                                     0x2000006c   Data           1  card_records.o(.data)
-    read_card_num                            0x2000006d   Data           1  card_records.o(.data)
-    Swiping_Time                             0x2000006e   Data           7  card_records.o(.data)
-    Read_Time                                0x20000075   Data           7  card_records.o(.data)
-    ZigBee_flowsize                          0x2000007c   Data           1  zigbee_bufferpool.o(.data)
-    ZigBee_flowflag                          0x2000007d   Data           1  zigbee_bufferpool.o(.data)
-    ZigBee_cancelflag                        0x2000007e   Data           1  zigbee_bufferpool.o(.data)
-    ZigBee_wLoc                              0x2000007f   Data           1  zigbee_bufferpool.o(.data)
-    Socket_Status                            0x20000080   Data           1  zigbee_bufferpool.o(.data)
-    Server_ID                                0x20000084   Data           4  wifi_bufferpool.o(.data)
-    flowsize                                 0x20000088   Data           1  wifi_bufferpool.o(.data)
-    flowflag                                 0x20000089   Data           1  wifi_bufferpool.o(.data)
-    cancelflag                               0x2000008a   Data           1  wifi_bufferpool.o(.data)
-    wLoc                                     0x2000008b   Data           1  wifi_bufferpool.o(.data)
-    Restart_flag                             0x2000008c   Data           1  wifi_bufferpool.o(.data)
-    Aeration_flag                            0x2000008d   Data           1  wifi_bufferpool.o(.data)
-    Light_ON_flag                            0x2000008e   Data           1  wifi_bufferpool.o(.data)
-    Light_OFF_flag                           0x2000008f   Data           1  wifi_bufferpool.o(.data)
-    Socket1_flag                             0x20000090   Data           1  wifi_bufferpool.o(.data)
-    Door_flag                                0x20000091   Data           1  wifi_bufferpool.o(.data)
-    Humidification_flag                      0x20000092   Data           1  wifi_bufferpool.o(.data)
-    Curtain_flag                             0x20000093   Data           1  wifi_bufferpool.o(.data)
-    Socket2_flag                             0x20000094   Data           1  wifi_bufferpool.o(.data)
-    Pattern_flag                             0x20000095   Data           1  wifi_bufferpool.o(.data)
-    Send_Data_time                           0x20000098   Data           4  wifi_bufferpool.o(.data)
-    Send_timeout                             0x2000009c   Data           4  wifi_bufferpool.o(.data)
-    ucTcpClosedFlag                          0x200000a0   Data           1  wifi_bufferpool.o(.data)
-    OpenWave                                 0x200000ac   Data         146  breathing_light.o(.data)
-    Pwm_led_status                           0x20000140   Data           4  breathing_light.o(.data)
-    W25QXX_TYPE                              0x20000144   Data           2  flash.o(.data)
-    Back                                     0x20000148   Data           4  syn7318.o(.data)
-    ASR                                      0x2000014c   Data           6  syn7318.o(.data)
-    S                                        0x20000152   Data           4  syn7318.o(.data)
-    D_MP3_1                                  0x20000156   Data          25  syn7318.o(.data)
-    D_MP3_2                                  0x2000016f   Data          23  syn7318.o(.data)
-    D_MP3_3                                  0x20000186   Data          21  syn7318.o(.data)
-    D_MP3_4                                  0x2000019b   Data          25  syn7318.o(.data)
-    TF_MP3_1                                 0x200001b4   Data          29  syn7318.o(.data)
-    Test                                     0x200001d1   Data           5  syn7318.o(.data)
-    Dict0                                    0x200001d8   Data          48  syn7318.o(.data)
-    DICT                                     0x20000208   Data          40  syn7318.o(.data)
-    uart_p                                   0x20000232   Data           1  sim7600.o(.data)
-    RFID                                     0x20000234   Data          16  card_records.o(.bss)
-    Student_ID                               0x20000244   Data        3400  card_records.o(.bss)
-    Del_Student_ID                           0x20000f8c   Data        3400  card_records.o(.bss)
-    Read_Day_Stu_ID                          0x20001cd4   Data        3400  card_records.o(.bss)
-    APP_buffer                               0x20002a1c   Data          99  zigbee_bufferpool.o(.bss)
-    ZigBee_buffer                            0x20002a7f   Data          32  zigbee_bufferpool.o(.bss)
-    _buffer                                  0x20002a9f   Data          24  wifi_bufferpool.o(.bss)
-    W25QXX_BUFFER                            0x20002ab7   Data        4096  flash.o(.bss)
-    uart_buff                                0x20003ab7   Data         255  sim7600.o(.bss)
+    Card_Type_s                              0x20000028   Data           2  card_records.o(.data)
+    Card_ID                                  0x2000002a   Data           4  card_records.o(.data)
+    KEY                                      0x2000002e   Data           6  card_records.o(.data)
+    cardType                                 0x20000034   Data           2  card_records.o(.data)
+    TEXT_Buffer                              0x20000036   Data           4  card_records.o(.data)
+    READ_Buffer                              0x2000003a   Data           4  card_records.o(.data)
+    Stu_Card_Id                              0x2000003e   Data           4  card_records.o(.data)
+    Read_Stu_Card_Id                         0x20000042   Data           4  card_records.o(.data)
+    CLI_ID                                   0x20000046   Data           1  card_records.o(.data)
+    KEY_SE                                   0x20000047   Data           1  card_records.o(.data)
+    mode_flag                                0x20000048   Data           1  card_records.o(.data)
+    time_Del                                 0x20000049   Data           1  card_records.o(.data)
+    temp                                     0x2000004a   Data           1  card_records.o(.data)
+    temp1                                    0x2000004b   Data           1  card_records.o(.data)
+    Del_temp                                 0x2000004c   Data           1  card_records.o(.data)
+    Del_flag                                 0x2000004d   Data           1  card_records.o(.data)
+    finish_flag                              0x2000004e   Data           1  card_records.o(.data)
+    status                                   0x2000004f   Data           1  card_records.o(.data)
+    time_flag                                0x20000050   Data           1  card_records.o(.data)
+    same_id_day_flag                         0x20000051   Data           1  card_records.o(.data)
+    check_ID_flag                            0x20000052   Data           1  card_records.o(.data)
+    FLASH_SIZE                               0x20000054   Data           4  card_records.o(.data)
+    week1                                    0x20000058   Data           1  card_records.o(.data)
+    week2                                    0x20000059   Data           1  card_records.o(.data)
+    week3                                    0x2000005a   Data           1  card_records.o(.data)
+    day1                                     0x2000005b   Data           1  card_records.o(.data)
+    day2                                     0x2000005c   Data           1  card_records.o(.data)
+    day3                                     0x2000005d   Data           1  card_records.o(.data)
+    sec1                                     0x2000005e   Data           1  card_records.o(.data)
+    sec2                                     0x2000005f   Data           1  card_records.o(.data)
+    sec3                                     0x20000060   Data           1  card_records.o(.data)
+    read_card_num                            0x20000061   Data           1  card_records.o(.data)
+    Swiping_Time                             0x20000062   Data           7  card_records.o(.data)
+    Read_Time                                0x20000069   Data           7  card_records.o(.data)
+    ZigBee_flowsize                          0x20000070   Data           1  zigbee_bufferpool.o(.data)
+    ZigBee_flowflag                          0x20000071   Data           1  zigbee_bufferpool.o(.data)
+    ZigBee_cancelflag                        0x20000072   Data           1  zigbee_bufferpool.o(.data)
+    ZigBee_wLoc                              0x20000073   Data           1  zigbee_bufferpool.o(.data)
+    Socket_Status                            0x20000074   Data           1  zigbee_bufferpool.o(.data)
+    Server_ID                                0x2000007c   Data           4  wifi_bufferpool.o(.data)
+    flowsize                                 0x20000080   Data           1  wifi_bufferpool.o(.data)
+    flowflag                                 0x20000081   Data           1  wifi_bufferpool.o(.data)
+    cancelflag                               0x20000082   Data           1  wifi_bufferpool.o(.data)
+    wLoc                                     0x20000083   Data           1  wifi_bufferpool.o(.data)
+    Restart_flag                             0x20000084   Data           1  wifi_bufferpool.o(.data)
+    Aeration_flag                            0x20000085   Data           1  wifi_bufferpool.o(.data)
+    Light_ON_flag                            0x20000086   Data           1  wifi_bufferpool.o(.data)
+    Light_OFF_flag                           0x20000087   Data           1  wifi_bufferpool.o(.data)
+    Socket1_flag                             0x20000088   Data           1  wifi_bufferpool.o(.data)
+    Door_flag                                0x20000089   Data           1  wifi_bufferpool.o(.data)
+    Humidification_flag                      0x2000008a   Data           1  wifi_bufferpool.o(.data)
+    Curtain_flag                             0x2000008b   Data           1  wifi_bufferpool.o(.data)
+    Socket2_flag                             0x2000008c   Data           1  wifi_bufferpool.o(.data)
+    Pattern_flag                             0x2000008d   Data           1  wifi_bufferpool.o(.data)
+    Send_Data_time                           0x20000090   Data           4  wifi_bufferpool.o(.data)
+    Send_timeout                             0x20000094   Data           4  wifi_bufferpool.o(.data)
+    ucTcpClosedFlag                          0x20000098   Data           1  wifi_bufferpool.o(.data)
+    OpenWave                                 0x200000a4   Data         146  breathing_light.o(.data)
+    Pwm_led_status                           0x20000136   Data           1  breathing_light.o(.data)
+    Brightness_Level                         0x20000137   Data           1  breathing_light.o(.data)
+    W25QXX_TYPE                              0x2000013c   Data           2  flash.o(.data)
+    Back                                     0x20000140   Data           4  syn7318.o(.data)
+    ASR                                      0x20000144   Data           6  syn7318.o(.data)
+    S                                        0x2000014a   Data           4  syn7318.o(.data)
+    D_MP3_1                                  0x2000014e   Data          25  syn7318.o(.data)
+    D_MP3_2                                  0x20000167   Data          23  syn7318.o(.data)
+    D_MP3_3                                  0x2000017e   Data          21  syn7318.o(.data)
+    D_MP3_4                                  0x20000193   Data          25  syn7318.o(.data)
+    TF_MP3_1                                 0x200001ac   Data          29  syn7318.o(.data)
+    Test                                     0x200001c9   Data           5  syn7318.o(.data)
+    Dict0                                    0x200001d0   Data          48  syn7318.o(.data)
+    DICT                                     0x20000200   Data          40  syn7318.o(.data)
+    uart_p                                   0x2000022a   Data           1  sim7600.o(.data)
+    time6_num                                0x2000022c   Data           4  timer.o(.data)
+    RFID                                     0x20000230   Data          16  card_records.o(.bss)
+    Student_ID                               0x20000240   Data        3400  card_records.o(.bss)
+    Del_Student_ID                           0x20000f88   Data        3400  card_records.o(.bss)
+    Read_Day_Stu_ID                          0x20001cd0   Data        3400  card_records.o(.bss)
+    APP_buffer                               0x20002a18   Data          99  zigbee_bufferpool.o(.bss)
+    ZigBee_buffer                            0x20002a7b   Data          32  zigbee_bufferpool.o(.bss)
+    _buffer                                  0x20002a9b   Data          24  wifi_bufferpool.o(.bss)
+    W25QXX_BUFFER                            0x20002ab3   Data        4096  flash.o(.bss)
+    uart_buff                                0x20003ab3   Data         255  sim7600.o(.bss)
     __initial_sp                             0x20003fb8   Data           0  startup_stm32f10x_hd.o(STACK)
 
 
@@ -1306,22 +1323,22 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00009e2c, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00009d38])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000a018, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00009f28])
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00009bf8, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00009de8, Max: 0x00080000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x00000130   Data   RO            3    RESET               startup_stm32f10x_hd.o
-    0x08000130   0x00000000   Code   RO          741  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000130   0x00000004   Code   RO         1025    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x08000134   0x00000004   Code   RO         1028    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000138   0x00000000   Code   RO         1030    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000138   0x00000000   Code   RO         1032    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000138   0x00000008   Code   RO         1033    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000140   0x00000000   Code   RO         1035    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000140   0x00000000   Code   RO         1037    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000140   0x00000004   Code   RO         1026    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000130   0x00000000   Code   RO          759  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000130   0x00000004   Code   RO         1043    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x08000134   0x00000004   Code   RO         1046    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000138   0x00000000   Code   RO         1048    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000138   0x00000000   Code   RO         1050    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000138   0x00000008   Code   RO         1051    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000140   0x00000000   Code   RO         1053    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000140   0x00000000   Code   RO         1055    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000140   0x00000004   Code   RO         1044    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x08000144   0x00000024   Code   RO            4    .text               startup_stm32f10x_hd.o
     0x08000168   0x000001e0   Code   RO           24    .text               system_stm32f10x.o
     0x08000348   0x000000dc   Code   RO          121    .text               misc.o
@@ -1333,48 +1350,49 @@ Memory Map of the image
     0x08001d66   0x00000002   PAD
     0x08001d68   0x00000408   Code   RO          271    .text               stm32f10x_usart.o
     0x08002170   0x00000028   Code   RO          307    .text               main.o
-    0x08002198   0x000002d4   Code   RO          398    .text               stm32f10x_it.o
-    0x0800246c   0x000001cc   Code   RO          427    .text               bsp_init.o
-    0x08002638   0x000029a0   Code   RO          439    .text               card_records.o
-    0x08004fd8   0x00000750   Code   RO          470    .text               usart.o
-    0x08005728   0x0000106c   Code   RO          489    .text               oled.o
-    0x08006794   0x00000438   Code   RO          504    .text               zigbee_bufferpool.o
-    0x08006bcc   0x000002d8   Code   RO          520    .text               wifi_bufferpool.o
-    0x08006ea4   0x000000b4   Code   RO          559    .text               systick.o
-    0x08006f58   0x00000160   Code   RO          577    .text               exti.o
-    0x080070b8   0x00000144   Code   RO          589    .text               breathing_light.o
-    0x080071fc   0x000001e8   Code   RO          607    .text               pwm.o
-    0x080073e4   0x00000360   Code   RO          619    .text               flash.o
-    0x08007744   0x00000218   Code   RO          641    .text               spi.o
-    0x0800795c   0x000007ee   Code   RO          653    .text               rc522.o
-    0x0800814a   0x00000002   PAD
-    0x0800814c   0x000007e0   Code   RO          703    .text               syn7318.o
-    0x0800892c   0x00000654   Code   RO          723    .text               sim7600.o
-    0x08008f80   0x00000024   Code   RO          744    .text               mc_w.l(memseta.o)
-    0x08008fa4   0x0000000e   Code   RO          748    .text               mc_w.l(strlen.o)
-    0x08008fb2   0x000000b0   Code   RO         1011    .text               mf_w.l(fadd.o)
-    0x08009062   0x00000064   Code   RO         1013    .text               mf_w.l(fmul.o)
-    0x080090c6   0x00000012   Code   RO         1015    .text               mf_w.l(fflti.o)
-    0x080090d8   0x00000032   Code   RO         1017    .text               mf_w.l(ffixi.o)
-    0x0800910a   0x00000028   Code   RO         1019    .text               mf_w.l(ffixui.o)
-    0x08009132   0x00000026   Code   RO         1021    .text               mf_w.l(f2d.o)
-    0x08009158   0x00000030   Code   RO         1023    .text               mf_w.l(cdcmple.o)
-    0x08009188   0x00000000   Code   RO         1044    .text               mc_w.l(iusefp.o)
-    0x08009188   0x0000006e   Code   RO         1045    .text               mf_w.l(fepilogue.o)
-    0x080091f6   0x00000002   PAD
-    0x080091f8   0x00000024   Code   RO         1057    .text               mc_w.l(init.o)
-    0x0800921c   0x00000056   Code   RO         1075    .text               mc_w.l(__dczerorl2.o)
-    0x08009272   0x0000000e   Code   RO         1069    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08009280   0x00000002   Code   RO         1070    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08009282   0x0000000e   Code   RO         1071    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08009290   0x00000818   Data   RO          490    .constdata          oled.o
-    0x08009aa8   0x00000021   Data   RO          725    .constdata          sim7600.o
-    0x08009ac9   0x00000003   PAD
-    0x08009acc   0x000000c7   Data   RO          704    .conststring        syn7318.o
-    0x08009b93   0x00000001   PAD
-    0x08009b94   0x00000043   Data   RO          726    .conststring        sim7600.o
-    0x08009bd7   0x00000001   PAD
-    0x08009bd8   0x00000020   Data   RO         1067    Region$$Table       anon$$obj.o
+    0x08002198   0x0000015c   Code   RO          398    .text               stm32f10x_it.o
+    0x080022f4   0x000001cc   Code   RO          426    .text               bsp_init.o
+    0x080024c0   0x000029a0   Code   RO          438    .text               card_records.o
+    0x08004e60   0x00000724   Code   RO          469    .text               usart.o
+    0x08005584   0x0000106c   Code   RO          488    .text               oled.o
+    0x080065f0   0x000004b4   Code   RO          503    .text               zigbee_bufferpool.o
+    0x08006aa4   0x000002d8   Code   RO          519    .text               wifi_bufferpool.o
+    0x08006d7c   0x000000b4   Code   RO          558    .text               systick.o
+    0x08006e30   0x000001fc   Code   RO          576    .text               exti.o
+    0x0800702c   0x00000280   Code   RO          588    .text               breathing_light.o
+    0x080072ac   0x000001e8   Code   RO          606    .text               pwm.o
+    0x08007494   0x00000360   Code   RO          618    .text               flash.o
+    0x080077f4   0x00000218   Code   RO          640    .text               spi.o
+    0x08007a0c   0x000007ee   Code   RO          652    .text               rc522.o
+    0x080081fa   0x00000002   PAD
+    0x080081fc   0x00000820   Code   RO          702    .text               syn7318.o
+    0x08008a1c   0x000006a8   Code   RO          722    .text               sim7600.o
+    0x080090c4   0x000000ac   Code   RO          741    .text               timer.o
+    0x08009170   0x00000024   Code   RO          762    .text               mc_w.l(memseta.o)
+    0x08009194   0x0000000e   Code   RO          766    .text               mc_w.l(strlen.o)
+    0x080091a2   0x000000b0   Code   RO         1029    .text               mf_w.l(fadd.o)
+    0x08009252   0x00000064   Code   RO         1031    .text               mf_w.l(fmul.o)
+    0x080092b6   0x00000012   Code   RO         1033    .text               mf_w.l(fflti.o)
+    0x080092c8   0x00000032   Code   RO         1035    .text               mf_w.l(ffixi.o)
+    0x080092fa   0x00000028   Code   RO         1037    .text               mf_w.l(ffixui.o)
+    0x08009322   0x00000026   Code   RO         1039    .text               mf_w.l(f2d.o)
+    0x08009348   0x00000030   Code   RO         1041    .text               mf_w.l(cdcmple.o)
+    0x08009378   0x00000000   Code   RO         1062    .text               mc_w.l(iusefp.o)
+    0x08009378   0x0000006e   Code   RO         1063    .text               mf_w.l(fepilogue.o)
+    0x080093e6   0x00000002   PAD
+    0x080093e8   0x00000024   Code   RO         1075    .text               mc_w.l(init.o)
+    0x0800940c   0x00000056   Code   RO         1093    .text               mc_w.l(__dczerorl2.o)
+    0x08009462   0x0000000e   Code   RO         1087    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08009470   0x00000002   Code   RO         1088    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08009472   0x0000000e   Code   RO         1089    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08009480   0x00000818   Data   RO          489    .constdata          oled.o
+    0x08009c98   0x00000021   Data   RO          724    .constdata          sim7600.o
+    0x08009cb9   0x00000003   PAD
+    0x08009cbc   0x000000c7   Data   RO          703    .conststring        syn7318.o
+    0x08009d83   0x00000001   PAD
+    0x08009d84   0x00000043   Data   RO          725    .conststring        sim7600.o
+    0x08009dc7   0x00000001   PAD
+    0x08009dc8   0x00000020   Data   RO         1085    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00003fb8, Max: 0x00010000, ABSOLUTE, COMPRESSED[0x00000140])
@@ -1383,25 +1401,24 @@ Memory Map of the image
 
     0x20000000   0x00000014   Data   RW           25    .data               system_stm32f10x.o
     0x20000014   0x00000014   Data   RW          150    .data               stm32f10x_rcc.o
-    0x20000028   0x0000000b   Data   RW          399    .data               stm32f10x_it.o
-    0x20000033   0x00000001   PAD
-    0x20000034   0x00000048   Data   RW          441    .data               card_records.o
-    0x2000007c   0x00000005   Data   RW          506    .data               zigbee_bufferpool.o
-    0x20000081   0x00000003   PAD
-    0x20000084   0x00000024   Data   RW          522    .data               wifi_bufferpool.o
-    0x200000a8   0x00000004   Data   RW          560    .data               systick.o
-    0x200000ac   0x00000098   Data   RW          590    .data               breathing_light.o
-    0x20000144   0x00000002   Data   RW          621    .data               flash.o
-    0x20000146   0x00000002   PAD
-    0x20000148   0x000000ea   Data   RW          705    .data               syn7318.o
-    0x20000232   0x00000001   Data   RW          727    .data               sim7600.o
-    0x20000233   0x00000001   PAD
-    0x20000234   0x000027e8   Zero   RW          440    .bss                card_records.o
-    0x20002a1c   0x00000083   Zero   RW          505    .bss                zigbee_bufferpool.o
-    0x20002a9f   0x00000018   Zero   RW          521    .bss                wifi_bufferpool.o
-    0x20002ab7   0x00001000   Zero   RW          620    .bss                flash.o
-    0x20003ab7   0x000000ff   Zero   RW          724    .bss                sim7600.o
-    0x20003bb6   0x00000002   PAD
+    0x20000028   0x00000048   Data   RW          440    .data               card_records.o
+    0x20000070   0x0000000c   Data   RW          505    .data               zigbee_bufferpool.o
+    0x2000007c   0x00000024   Data   RW          521    .data               wifi_bufferpool.o
+    0x200000a0   0x00000004   Data   RW          559    .data               systick.o
+    0x200000a4   0x00000097   Data   RW          589    .data               breathing_light.o
+    0x2000013b   0x00000001   PAD
+    0x2000013c   0x00000002   Data   RW          620    .data               flash.o
+    0x2000013e   0x00000002   PAD
+    0x20000140   0x000000ea   Data   RW          704    .data               syn7318.o
+    0x2000022a   0x00000001   Data   RW          726    .data               sim7600.o
+    0x2000022b   0x00000001   PAD
+    0x2000022c   0x00000004   Data   RW          742    .data               timer.o
+    0x20000230   0x000027e8   Zero   RW          439    .bss                card_records.o
+    0x20002a18   0x00000083   Zero   RW          504    .bss                zigbee_bufferpool.o
+    0x20002a9b   0x00000018   Zero   RW          520    .bss                wifi_bufferpool.o
+    0x20002ab3   0x00001000   Zero   RW          619    .bss                flash.o
+    0x20003ab3   0x000000ff   Zero   RW          723    .bss                sim7600.o
+    0x20003bb2   0x00000006   PAD
     0x20003bb8   0x00000400   Zero   RW            1    STACK               startup_stm32f10x_hd.o
 
 
@@ -1412,38 +1429,39 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       324         12          0        152          0       1821   breathing_light.o
+       640         34          0        151          0       2177   breathing_light.o
        460         50          0          0          0       1171   bsp_init.o
      10656        368          0         72      10216       6263   card_records.o
          0          0          0          0          0       4512   core_cm3.o
-       352         14          0          0          0       1392   exti.o
+       508         66          0          0          0       2012   exti.o
        864         12          0          2       4096       4269   flash.o
         40          6          0          0          0        467   main.o
        220         22          0          0          0       1853   misc.o
       4204         86       2072          0          0      12220   oled.o
        488         14          0          0          0       1689   pwm.o
       2030         14          0          0          0       7250   rc522.o
-      1620        586        100          1        255       4642   sim7600.o
+      1704        590        100          1        255       4794   sim7600.o
        536         16          0          0          0       1794   spi.o
         36          8        304          0       1024        884   startup_stm32f10x_hd.o
        284         10          0          0          0       2283   stm32f10x_exti.o
        860         38          0          0          0       5693   stm32f10x_gpio.o
-       724        118          0         11          0       3929   stm32f10x_it.o
+       348        154          0          0          0       3354   stm32f10x_it.o
        932         36          0         20          0       8884   stm32f10x_rcc.o
        780         14          0          0          0       6578   stm32f10x_spi.o
       3610         88          0          0          0      22180   stm32f10x_tim.o
       1032         22          0          0          0       8424   stm32f10x_usart.o
-      2016        532        199        234          0       5348   syn7318.o
+      2080        544        199        234          0       5348   syn7318.o
        480         38          0         20          0     259623   system_stm32f10x.o
        180         20          0          4          0      16757   systick.o
-      1872         46          0          0          0       8154   usart.o
+       172         10          0          4          0       1437   timer.o
+      1828         46          0          0          0       7802   usart.o
        728         76          0         36         24       3268   wifi_bufferpool.o
-      1080         78          0          5        131       3251   zigbee_bufferpool.o
+      1204        106          0         12        131       3513   zigbee_bufferpool.o
 
     ----------------------------------------------------------------------
-     36412       2324       2712        564      15748     404599   Object Totals
+     36908       2488       2712        560      15752     406499   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         4          0          5          7          2          0   (incl. Padding)
+         4          0          5          4          6          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1493,15 +1511,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     37216       2340       2712        564      15748     403147   Grand Totals
-     37216       2340       2712        320      15748     403147   ELF Image Totals (compressed)
-     37216       2340       2712        320          0          0   ROM Totals
+     37712       2504       2712        560      15752     405047   Grand Totals
+     37712       2504       2712        320      15752     405047   ELF Image Totals (compressed)
+     37712       2504       2712        320          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                39928 (  38.99kB)
+    Total RO  Size (Code + RO Data)                40424 (  39.48kB)
     Total RW  Size (RW Data + ZI Data)             16312 (  15.93kB)
-    Total ROM Size (Code + RO Data + RW Data)      40248 (  39.30kB)
+    Total ROM Size (Code + RO Data + RW Data)      40744 (  39.79kB)
 
 ==============================================================================
 

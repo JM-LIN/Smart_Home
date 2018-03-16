@@ -29,3 +29,6 @@
 ..\..\output\exti.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\exti.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\exti.o: ..\..\Libraries\FWlib\inc\misc.h
+..\..\output\exti.o: ..\..\Driver\USART\usart.h
+..\..\output\exti.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\exti.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h

@@ -122,7 +122,7 @@ void Voice_Control(void)
             delay_ms(2000);
             break;
         case 0x28:  // 打个电话
-            sim900a_call((char *)mynum);
+            SIM7600_Call((char *)mynum);
             SYN_TTS("正在拨号");
             delay_ms(2000);
             break;
@@ -136,12 +136,12 @@ void Voice_Control(void)
             break;
         case 0x2B:  // 发条信息
             SYN_TTS("信息发送中");
-            sim900a_sms((char *)mynum,"This is a test");
+            SIM7600_SMS((char *)mynum,"This is a test");
             delay_ms(2000);
             break;
         case 0x2C:  // 数据联网测试
             SYN_TTS("GPRS正在打开");
-            sim900a_gprs_send("TMwhat_HMthe_SMSfuck_LSare_WEyou_SSOtalking_SSTabout_HT?_ARlll_PMccc");
+            SIM7600_GPRS_Send("TMwhat_HMthe_SMSfuck_LSare_WEyou_SSOtalking_SSTabout_HT?_ARlll_PMccc");
             delay_ms(2000);
             break;
         default:
@@ -184,8 +184,8 @@ void SYN_TTS(char *Pst)
 	Frame[3] = 0x01;      //语音合成播放命令
 	Frame[4] = 0x00;      //播放编码格式为“GB2312”
 	
-    UART_Put_String(Frame,5);	
-	UART_Put_String(Pst, Length);	
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 5);	
+	Usart_SendStr_length(USART3, (uint8_t *)Pst, Length);	
 }
 
 
@@ -208,8 +208,8 @@ void SYN_MP3(char *Pst)
 	Frame[3] = 0x61;      //MP3播放命令
 	Frame[4] = 0x00;      //播放编码格式为“GB2312”
 	
-    UART_Put_String(Frame, 5);	
-	UART_Put_String(Pst, Length);	
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 5);	
+	Usart_SendStr_length(USART3, (uint8_t *)Pst, Length);	
 }
 
 
@@ -230,14 +230,14 @@ void Start_ASR(char Dict)
 	
 	ASR[3] = 0;
 	
-  UART_Put_String(Frame, 5);	
-	UART_Get_String(Back,4); 
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 5);	
+	Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4); 
 	if(Back[3] == 0x41)
 	{
-		 UART_Get_String(Back,3);  //语音识别命令回传结果
+		 Usart_ReceiveStr_length(USART3, (uint8_t *)Back,3);  //语音识别命令回传结果
 		if(Back[0] == 0xfc) 
 		{
-			 UART_Get_String(ASR,Back[2]);
+			 Usart_ReceiveStr_length(USART3, (uint8_t *)ASR,Back[2]);
 		}
 	}
 }
@@ -290,7 +290,7 @@ void Stop_ASR(void)
 	Frame[2] = 0x01;   
 	Frame[3] = 0x11;      //停止语音识别命令
 	
-  UART_Put_String(Frame, 4);
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 4);
 }
 
 
@@ -310,11 +310,11 @@ void Start_WakeUp(char Wake_ID)
 	Frame[3] = 0x51;      //开始语音唤醒命令
 	Frame[4] = Wake_ID;   
 	
-  UART_Put_String(Frame, 5);	
-	UART_Get_String(Back,4); 
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 5);	
+	Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4); 
 	if(Back[3] == 0x41)  
 	{
-		 UART_Get_String(Back,4);  //语音识别命令回传结果
+		 Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4);  //语音识别命令回传结果
 		if(Back[3] == 0x21)
 		{
 			 SYN_MP3("D:\\Mp3\\Wifi_我在这.mp3");
@@ -347,7 +347,7 @@ void Three_One(char Dict, char Wake_ID, char Sound, char *Pst)
 	{
 		Frame[1] = 0x00;
 		Frame[2] = 0x04;
-	  UART_Put_String(Frame, 7);	
+        Usart_SendStr_length(USART3, (uint8_t *)Frame, 7);	
 	}
 	else                 //有提示音
 	{
@@ -359,15 +359,15 @@ void Three_One(char Dict, char Wake_ID, char Sound, char *Pst)
 		{
 			Frame[8 + i] = Pst[i];
 		}
-	  UART_Put_String(Frame, Length + 8);	
+        Usart_SendStr_length(USART3, (uint8_t *)Frame, Length + 8);	
 	}
-	UART_Get_String(Back,4); 
+	Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4); 
 	if(Back[3] == 0x41)
 	{
-		UART_Get_String(Back,3);  //语音识别命令回传结果
+		Usart_ReceiveStr_length(USART3, (uint8_t *)Back,3);  //语音识别命令回传结果
 		if(Back[0] == 0xfc)
 		{
-			 UART_Get_String(ASR,Back[2]);
+			 Usart_ReceiveStr_length(USART3, (uint8_t *)ASR,Back[2]);
 		}
 	}
 }
@@ -386,11 +386,11 @@ void Status_Query(void)
 	Frame[2] = 0x01;   
 	Frame[3] = 0x21;   //状态查询命令
 	
-  UART_Put_String(Frame, 4);	
-	UART_Get_String(Back,4); 
+    Usart_SendStr_length(USART3, (uint8_t *)Frame, 4);	
+	Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4); 
 	if(Back[3] == 0x41)  
 	{
-		 UART_Get_String(S,4);  //模块当前工作状态的回传结果
+		 Usart_ReceiveStr_length(USART3, (uint8_t *)S,4);  //模块当前工作状态的回传结果
 	}
 }
 
@@ -415,8 +415,8 @@ void SYN_Buffer_Save(char *Pst, unsigned char Block)
 	Frame[3] = 0x31;      //语音合成缓存存储指令
 	Frame[4] = Block;      //语音合成缓存存储块选取，取值0--15
 	
-  UART_Put_String(Frame,5);			//发送
-	UART_Put_String(Pst, Length);	
+    Usart_SendStr_length(USART3, (uint8_t *)Frame,5);			//发送
+	Usart_SendStr_length(USART3, (uint8_t *)Pst, Length);	
 }
 
 /************************SYN语音合成缓存播放************************/
@@ -434,7 +434,7 @@ void SYN_Buffer_TTS(unsigned char Times)
 	Frame[3] = 0x32;      //语音合成缓存存储播放指令
 	Frame[4] = ((Times<<4)|0x00);      //高4位是播放次数 低四位是编码格式
 	
-  UART_Put_String(Frame,5);			//发送
+    Usart_SendStr_length(USART3, (uint8_t *)Frame,5);			//发送
 }
 
 /************************SYN播放控制命令***************************/
@@ -456,7 +456,7 @@ void SYN_Play_Control(unsigned char command)
 	Frame[2] = 0x01;
 	Frame[3] = command;      //播放命令
 	
-	UART_Put_String(Frame,4);			//发送
+	Usart_SendStr_length(USART3, (uint8_t *)Frame,4);			//发送
 }
 
 /**********************SYN播放音量设置命令*************************/
@@ -476,7 +476,7 @@ void SYN_VOL_Control(unsigned char Vol)
 	Frame[3] = 0x05;      //设置音量命令
 	Frame[4] = Vol;				//音量设置0x00--0x09
 	
-	UART_Put_String(Frame,5);			//发送
+	Usart_SendStr_length(USART3, (uint8_t *)Frame,5);			//发送
 }
 
 /*************************************关于停止的功能（待测试）******************************************/
@@ -494,7 +494,7 @@ void Stop_WakeUp(void)
 	Frame[2] = 0x01;
 	Frame[3] = 0x52;      //停止语言唤醒命令
 	
-  UART_Put_String(Frame,4);			//发送
+    Usart_SendStr_length(USART3, (uint8_t *)Frame,4);			//发送
 }
 
 /**************************停止三合一识别***************************/
@@ -510,6 +510,6 @@ void Stop_Three_One(void)
 	Frame[2] = 0x01;
 	Frame[3] = 0x16;      //停止三合一命令
 	
-  UART_Put_String(Frame,4);			//发送
+    Usart_SendStr_length(USART3, (uint8_t *)Frame,4);			//发送
 }
 

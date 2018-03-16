@@ -19,16 +19,16 @@
 
 
 /* LED亮度等级 PWM表 */
-uint8_t OpenWave[] = {0,1,2,3,4,5,5,6,7,8,9,9,
-	10,11,12,13,13,14,15,16,17,17,18,19,20,21,21,22,23,24,25,25,26,27,28,28,29,30,31,32,32,33,34,35,36,36,37,
-	38,39,40,40,41,42,43,44,44,45,46,47,48,48,49,50,51,52,52,53,54,55,56,56,57,58,59,60,60,61,62,63,64,64,65,
-	66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,
-	100,106,112,118,124,125,131,137,143,149,150,151,157,163,170,176,182,188,194,200,206,212,218,224,230,236,
-	242,248,254,255};
+uint8_t OpenWave[] = {0,1,2,3,4,5,5,6,7,8,9,9,                                                                  // 12
+	10,11,12,13,13,14,15,16,17,17,18,19,20,21,21,22,23,24,25,25,26,27,28,28,29,30,31,32,32,33,34,35,36,36,37,   // 35
+	38,39,40,40,41,42,43,44,44,45,46,47,48,48,49,50,51,52,52,53,54,55,56,56,57,58,59,60,60,61,62,63,64,64,65,   // 35
+	66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,      // 34
+	100,106,112,118,124,125,131,137,143,149,150,151,157,163,170,176,182,188,194,200,206,212,218,224,230,236,    // 26
+	242,248,254,255};                                                                                           // 4
 
 
-volatile unsigned int Pwm_led_status = OPEN;				// 呼吸灯状态
-    
+volatile uint8_t     Pwm_led_status      = OPEN;				// 呼吸灯状态
+         uint8_t     Brightness_Level    = 60;			    // 呼吸灯亮度等级  0~145    
     
  /**
   * @brief  配置TIM1复用输出PWM时用到的I/O
@@ -158,6 +158,61 @@ void Breathing_Light_Init(void)
 	TIM1_Mode_Config();	
 }
 
+void Breathing_Light_IROHandler_Routine(void)
+{   
+    static uint16_t pwm_index = 0;									// 用于PWM查表
+	static uint8_t period_cnt = 0;									// 用于计算周期数
+	
+	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)							// TIM_IT_Update
+ 	{			
+		switch(Pwm_led_status)
+        {
+			case OPEN :
+				period_cnt++;					
+				if(period_cnt >= 20)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{									
+					if(pwm_index < Brightness_Level)	
+					{
+						TIM1->CCR1 = OpenWave[pwm_index];						// 根据PWM表修改定时器的比较寄存器值
+						TIM1->CCR2 = OpenWave[pwm_index];
+						TIM1->CCR3 = OpenWave[pwm_index];
+						pwm_index++;											// 标志PWM表的下一个元素
+					}																	
+					else if(pwm_index >= Brightness_Level)
+					{
+						TIM1->CCR1 = OpenWave[Brightness_Level];
+						TIM1->CCR2 = OpenWave[Brightness_Level];
+						TIM1->CCR3 = OpenWave[Brightness_Level];
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+
+			case CLOSE :
+				period_cnt++;					
+				if(period_cnt >= 12)											// 输出的周期数大于20，输出下一种脉冲宽的PWM波
+				{							
+					TIM1->CCR1 = OpenWave[pwm_index];							// 根据PWM表修改定时器的比较寄存器值
+					TIM1->CCR2 = OpenWave[pwm_index];
+					TIM1->CCR3 = OpenWave[pwm_index];
+					if(pwm_index > 0)								
+						pwm_index--;											// 标志PWM表的下一个元素
+					else
+					{
+						TIM1->CCR1 = 0;
+						TIM1->CCR2 = 0;
+						TIM1->CCR3 = 0;
+					}   
+					period_cnt=0;												// 重置周期计数标志
+				}
+				break;
+
+			default:
+				break;
+		}
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);									//必须要清除中断标志位
+	}
+}
 
 /*********************************************END OF FILE**********************/
 

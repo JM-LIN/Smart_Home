@@ -17,6 +17,8 @@ volatile unsigned char ZigBee_flowflag                          = 0;            
 volatile unsigned char ZigBee_cancelflag                        = 0;            // 取消标记
 volatile unsigned char ZigBee_wLoc                              = 0;		    // 当前写入位置
 volatile unsigned char Socket_Status;   
+							
+
 
 
 /************************************************************************
@@ -41,6 +43,35 @@ void ZigBee_BPReadData(unsigned char *data)
     
 	for(i=0; i<ZigBee_flowsize; i++)            // 复制数据
 		data[i] = ZigBee_buffer[i];
+}
+
+void ZigBee_IRQHandler_Routine(void)															// 用于ZigBee通信
+{													
+	volatile char data;		
+    static volatile int ZigBee_flag = 0;
+								
+	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)								// 读数据寄存器非空
+	{							
+		data = USART_ReceiveData(USART2); 												// 接收串口得到的数据
+									
+		if( data == 0x23 )																// 结束符'#'
+		{											
+			ZigBee_flag = 0;																			
+			ZigBee_wLoc = 0;															// 复位写入位置				
+		}																														
+		if (ZigBee_flag)    															// 若前面识别到了"@",则现在开始识别接收的数据
+		{														
+			ZigBee_BPWriteData(data);													// 写入数据
+//			USART_SendData(UART5, data);											
+		}											
+	    if (data == 0x40 )   															// 从"@"后面开始接收数据
+		{							
+			ZigBee_flag = 1; 							
+			ZigBee_wLoc = 0;															// 复位写入位置	
+			memset((void *)ZigBee_buffer,'\0',sizeof(ZigBee_buffer));
+		}			
+	}	 	
+	USART_ClearFlag(USART2,USART_FLAG_TC);												// 清除中断标志.	 
 }
 
 // 检查是否已经溢出
@@ -85,7 +116,7 @@ void ZigBee_BufferPool_Init(void)
 
 static void ZigBee_Data_Display_Init(void)
 {
-	memset(APP_buffer,'0',sizeof(APP_buffer));
+	memset((void *)APP_buffer,'0',sizeof(APP_buffer));
 	
 	// 温湿度
 	APP_buffer[26] = 'T';

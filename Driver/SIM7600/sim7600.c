@@ -1,5 +1,9 @@
 #include "sim7600.h"
 
+
+/************************************************************************
+* Global Variable Declare Section   
+************************************************************************/
 //中断缓存串口数据
 #define     UART_BUFF_SIZE      255
 volatile    uint8_t uart_p = 0;
@@ -10,18 +14,21 @@ const char ip[]=    "207.246.97.145";									//  IP地址 207.246.97.145
 const char port[]=  "33333";											//  端口 33333
 
 
+extern volatile unsigned char APP_buffer[];		                        // 用于存储APP显示信息
+
+
 void SIM7600_Init(void)
 {   
     SIM7600_Reset_Init();
     
-	sim900a_init();	                        //初始化并检测模块响应是否正常
+	SIM7600_Config();	                        //初始化并检测模块响应是否正常
 	SIM900A_DELAY(2000);
 
     // 拨号
-// 	sim900a_call((char *)num);
+// 	SIM7600_Call((char *)num);
 	
 	server_connect((char *)ip,(char *)port);
-	sim900a_gprs_send("TMThis_HMis_SMSa_LSstarting_WEus_SSOtest_SST!_HTtest_ARby_PMJM.Lin");
+	SIM7600_GPRS_Send("TMThis_HMis_SMSa_LSstarting_WEus_SSOtest_SST!_HTtest_ARby_PMJM.Lin");
 
     // 发送短信
 // 	sim900a_sms((char *)num,"Hello World JM.Lin");
@@ -29,15 +36,15 @@ void SIM7600_Init(void)
     
 }
 
-void SIM7600_IRQHandler(void)
+void SIM7600_IRQHandler_Routine(void)
 {
     if(uart_p<UART_BUFF_SIZE)       // 判断是否缓存是否溢出
     {
-        char ch;
+//        char ch;
         if(USART_GetITStatus(SIM7600_Usart_Port, USART_IT_RXNE) != RESET)
         {
             uart_buff[uart_p] = USART_ReceiveData(SIM7600_Usart_Port);
-            ch = uart_buff[uart_p];
+//            ch = uart_buff[uart_p];
 //            USART_SendData(PC_Usart_Port, ch);      // 转发给 PC串口
             uart_p++;     
         }
@@ -60,23 +67,28 @@ static void SIM7600_Reset_Init(void)											// 蜂鸣器
     SIM7600_RST_LOW_LEVEL();    
 }
 
-//获取接收到的数据和长度
-char *get_rebuff(uint8_t *len)
+void SIM7600_Data_Send(void)
 {
-    *len = uart_p;
-    return (char *)&uart_buff;
-}
-
-void clean_rebuff(void)
-{
-    uint16_t i=UART_BUFF_SIZE+1;
-    uart_p = 0;
-	while(i)
-		uart_buff[--i]=0;
+	char *redata;
+	SIM900A_CLEAN_RX();
+	SIM7600_Usart( (unsigned char*)"AT+CIPSEND=0,\r");
+  
+    redata=SIM7600_Waitask(0);
+	PC_Usart((unsigned char*)"%s\r\n",redata);
+	
+	SIM900A_CLEAN_RX();
+    SIM7600_Usart( (unsigned char*)"%s",APP_buffer);
+	while((SIM7600_Usart_Port->SR&0X40)==0);//等待上一次数据发送完成  
+	SIM7600_Usart_Port->DR=(u32)0x1A;		//发送十六进制数：0X1A,信息结束符号
+	
+	redata=SIM7600_Waitask(0);	
+	SIM900A_DELAY(1000);
+	bufcheck();
+	return;
 }
 
 //0表示成功，1表示失败
-uint8_t sim900a_cmd(char *cmd, char *reply,uint32_t waittime )
+uint8_t SIM7600_CMD(char *cmd, char *reply,uint32_t waittime )
 {    
     SIM900A_CLEAN_RX();                 //清空了接收缓冲区数据
 
@@ -89,12 +101,12 @@ uint8_t sim900a_cmd(char *cmd, char *reply,uint32_t waittime )
     
     SIM900A_DELAY(waittime);                 //延时
 
-    return sim900a_cmd_check(reply);    //对接收数据进行处理
+    return SIM7600_CMD_Check(reply);    //对接收数据进行处理
 }
 
 
 //0表示成功，1表示失败
-uint8_t sim900a_cmd_check(char *reply)
+uint8_t SIM7600_CMD_Check(char *reply)
 {
     uint8_t len;
     uint8_t n;
@@ -130,7 +142,7 @@ uint8_t sim900a_cmd_check(char *reply)
     return SIM900A_FALSE;       //跳出循环表示比较完毕后都没有相同的数据，因此跳出
 }
 
-char * sim900a_waitask(uint8_t waitask_hook(void))      //等待有数据应答
+char * SIM7600_Waitask(uint8_t waitask_hook(void))      //等待有数据应答
 {
     uint8_t len=0;
     char *redata;
@@ -153,22 +165,22 @@ char * sim900a_waitask(uint8_t waitask_hook(void))      //等待有数据应答
 
 
 //检测模块是否正常
-void sim900a_init(void)
+void SIM7600_Config(void)
 {
     PC_Usart((unsigned char*)"fuck \r\n");
-	while(sim900a_cmd("AT\r","OK",100) != SIM900A_TRUE)
+	while(SIM7600_CMD("AT\r","OK",100) != SIM900A_TRUE)
 	{
 		PC_Usart((unsigned char*)"AT_ERROR\r\n");
 	}
 	PC_Usart((unsigned char*)"AT_SUC\r\n");
 	
-	while(sim900a_cmd("AT+CPIN?\r","READY",400) != SIM900A_TRUE)
+	while(SIM7600_CMD("AT+CPIN?\r","READY",400) != SIM900A_TRUE)
 	{
 		PC_Usart((unsigned char*)"CPIN_ERROR\r\n");
 	}
 	PC_Usart((unsigned char*)"CPIN_SUC\r\n");
 	
-	while(sim900a_cmd("AT+CREG?\r","0,1",400) != SIM900A_TRUE)
+	while(SIM7600_CMD("AT+CREG?\r","0,1",400) != SIM900A_TRUE)
 	{
 		PC_Usart((unsigned char*)"CREG_ERROR\r\n");
 	}
@@ -178,14 +190,14 @@ void sim900a_init(void)
 /*---------------------------------------------------------------------*/
 
 //发起拨打电话
-void sim900a_call(char *num)
+void SIM7600_Call(char *num)
 {
     SIM900A_CLEAN_RX();                 //清空了接收缓冲区数据
     SIM7600_Usart( (unsigned char*)"ATD%s;\r",num);
 }
 
 //发送短信
-void sim900a_sms(char *num,char *smstext)
+void SIM7600_SMS(char *num,char *smstext)
 {
 	SIM900A_CLEAN_RX();                 //清空了接收缓冲区数据
 	
@@ -210,13 +222,13 @@ void sim900a_sms(char *num,char *smstext)
 	SIM7600_Usart_Port->DR=(u32)0x1A;		//发送十六进制数：0X1A,信息结束符号
 }
 
-void sim900a_gprs_send(char * str)
+void SIM7600_GPRS_Send(char * str)
 {
 	char *redata;
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+CIPSEND=0,\r");
   
-    redata=sim900a_waitask(0);
+    redata=SIM7600_Waitask(0);
 	PC_Usart((unsigned char*)"%s\r\n",redata);
 	
 	SIM900A_CLEAN_RX();
@@ -224,7 +236,7 @@ void sim900a_gprs_send(char * str)
 	while((SIM7600_Usart_Port->SR&0X40)==0);//等待上一次数据发送完成  
 	SIM7600_Usart_Port->DR=(u32)0x1A;		//发送十六进制数：0X1A,信息结束符号
 	
-	redata=sim900a_waitask(0);	
+	redata=SIM7600_Waitask(0);	
 	SIM900A_DELAY(1000);
 	bufcheck();
 	return;
@@ -241,20 +253,12 @@ void server_connect(char *ipaddr,char *port)
 	PC_Usart((unsigned char*)"connect_suc\r\n");
 }
 
-void bufcheck()
-{
-	char *redata;
-    uint8_t len;  
-    redata = SIM900A_RX(len);   //接收数据
- 	PC_Usart((unsigned char*)"%s\r\n",redata);
-}
-
 char server_connect_tcp(char *ipaddr,char *port)
 {
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+CGREG?\r");    
 	SIM900A_DELAY(200);
-	if(sim900a_cmd_check("0,1"))
+	if(SIM7600_CMD_Check("0,1"))
 	{
 		PC_Usart((unsigned char*)"CGREG_ERROR\r\n");
 		return 1;
@@ -263,7 +267,7 @@ char server_connect_tcp(char *ipaddr,char *port)
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+CGSOCKCONT=1,\"IP\",\"cmnet\"\r");    
 	SIM900A_DELAY(200);
-	if(sim900a_cmd_check("OK"))
+	if(SIM7600_CMD_Check("OK"))
 	{
 		PC_Usart((unsigned char*)"CGSOCKCONT_ERROR\r\n");
 		return 2;
@@ -272,7 +276,7 @@ char server_connect_tcp(char *ipaddr,char *port)
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+CSOCKSETPN=1\r");    
 	SIM900A_DELAY(600);
-	if(sim900a_cmd_check("OK"))
+	if(SIM7600_CMD_Check("OK"))
 	{
 		PC_Usart((unsigned char*)"CSOCKSETPN_ERROR\r\n");
 		return 3;
@@ -282,14 +286,14 @@ char server_connect_tcp(char *ipaddr,char *port)
 	SIM7600_Usart( (unsigned char*)"AT+NETOPEN\r");    
 	SIM900A_DELAY(1000);
 		bufcheck();
-	if(sim900a_cmd_check("+NETOPEN: 0"))
+	if(SIM7600_CMD_Check("+NETOPEN: 0"))
 	{
 		bufcheck();
 		SIM900A_CLEAN_RX();
 		SIM7600_Usart( (unsigned char*)"AT+NETCLOSE\r"); 
 		SIM900A_DELAY(1000);
 		bufcheck();
-		if(sim900a_cmd_check("+NETCLOSE: 0"))
+		if(SIM7600_CMD_Check("+NETCLOSE: 0"))
 		{
 			bufcheck();
 		}
@@ -299,7 +303,7 @@ char server_connect_tcp(char *ipaddr,char *port)
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+IPADDR\r");    
 	SIM900A_DELAY(500);
-	if(sim900a_cmd_check("OK"))
+	if(SIM7600_CMD_Check("OK"))
 	{
 		bufcheck();
 		return 5;
@@ -308,12 +312,36 @@ char server_connect_tcp(char *ipaddr,char *port)
 	SIM900A_CLEAN_RX();
 	SIM7600_Usart( (unsigned char*)"AT+CIPOPEN=0,\"TCP\",\"%s\",%s\r",ipaddr,port);  
 	SIM900A_DELAY(1000);
-	if(sim900a_cmd_check("+CIPOPEN: 0,0"))
+	if(SIM7600_CMD_Check("+CIPOPEN: 0,0"))
 	{
 		PC_Usart((unsigned char*)"CIPOPEN_ERROR\r\n");
 		return 6;
 	}
 	return 0;
+}
+
+
+static void bufcheck()
+{
+	char *redata;
+    uint8_t len;  
+    redata = SIM900A_RX(len);   //接收数据
+ 	PC_Usart((unsigned char*)"%s\r\n",redata);
+}
+
+
+static char *get_rebuff(uint8_t *len)       //获取接收到的数据和长度
+{
+    *len = uart_p;
+    return (char *)&uart_buff;
+}
+
+static void clean_rebuff(void)
+{
+    uint16_t i=UART_BUFF_SIZE+1;
+    uart_p = 0;
+	while(i)
+		uart_buff[--i]=0;
 }
 
 /*---------------------------------------------------------------------*/

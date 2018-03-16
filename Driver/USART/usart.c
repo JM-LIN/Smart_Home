@@ -299,91 +299,91 @@ static char *itoa( int value, char *string, int radix )
     /* This implementation only works for decimal numbers. */
     if (radix == 10)
     {
-			if (!value)
-			{
-					*ptr++ = 0x30;
-					*ptr = 0;
-					return string;
-			}
+        if (!value)
+        {
+                *ptr++ = 0x30;
+                *ptr = 0;
+                return string;
+        }
 
-			/* if this is a negative value insert the minus sign. */
-			if (value < 0)
-			{
-					*ptr++ = '-';
+        /* if this is a negative value insert the minus sign. */
+        if (value < 0)
+        {
+                *ptr++ = '-';
 
-					/* Make the value positive. */
-					value *= -1;
-			}
+                /* Make the value positive. */
+                value *= -1;
+        }
 
-			for (i = 10000; i > 0; i /= 10)
-			{
-					d = value / i;
+        for (i = 10000; i > 0; i /= 10)
+        {
+                d = value / i;
 
-					if (d || flag)
-					{
-							*ptr++ = (char)(d + 0x30);
-							value -= (d * i);
-							flag = 1;
-					}
-			}
+                if (d || flag)
+                {
+                        *ptr++ = (char)(d + 0x30);
+                        value -= (d * i);
+                        flag = 1;
+                }
+        }
 
-			/* Null terminate the string. */
-			*ptr = 0;
+        /* Null terminate the string. */
+        *ptr = 0;
 
-			return string;
-		}
-		// hex
-		else if(radix==16)
-		{
-			if (!value)
-			{
-					*ptr++ = 0x30;
-					*ptr++ = 0x30;
-					*ptr = 0;
-					return string;
-			}
-			
-			if(value<10)
-			{
-					*ptr++ = 0x30;
-					*ptr++ = '0' + value;
-					*ptr = 0;
-					return string;
-			}
-			
-			i=0;
-			while(value!=0)
-			{
-				i++;
-				
-				d = value % 16;
-				value /= 16;
-				if(d<10)
-					*ptr++ = '0' + d;
-				
-				if(d>=10 && d<=15)
-					*ptr++ = 'A' + d - 10;				
-			}
-			
-			// 反转字符串
-			for(j=i/2-1; j>=0; j--)
-			{
-				d = string[j];
-				string[j] = string[i-j-1];
-				string[i-j-1] = d;
-			}
-			
-			/* Null terminate the string. */
-			*ptr = 0;
-			return string;			
-		}
-		else
-		{
-			/* Null terminate the string. */
-			*ptr = 0;
+        return string;
+    }
+    // hex
+    else if(radix==16)
+    {
+        if (!value)
+        {
+                *ptr++ = 0x30;
+                *ptr++ = 0x30;
+                *ptr = 0;
+                return string;
+        }
+        
+        if(value<10)
+        {
+                *ptr++ = 0x30;
+                *ptr++ = '0' + value;
+                *ptr = 0;
+                return string;
+        }
+        
+        i=0;
+        while(value!=0)
+        {
+            i++;
+            
+            d = value % 16;
+            value /= 16;
+            if(d<10)
+                *ptr++ = '0' + d;
+            
+            if(d>=10 && d<=15)
+                *ptr++ = 'A' + d - 10;				
+        }
+        
+        // 反转字符串
+        for(j=i/2-1; j>=0; j--)
+        {
+            d = string[j];
+            string[j] = string[i-j-1];
+            string[i-j-1] = d;
+        }
+        
+        /* Null terminate the string. */
+        *ptr = 0;
+        return string;			
+    }
+    else
+    {
+        /* Null terminate the string. */
+        *ptr = 0;
 
-			return string;
-		}			
+        return string;
+    }			
 } /* NCL_Itoa */
 
 /*
@@ -493,78 +493,38 @@ int GetKey (void)
     return ((int)(USART1->DR & 0x1FF));
 }
 
-/**************************************************************
-*函数名：UART_Put_Char----串口发送一个字节函数
-*参  数：Data----待发送的字节数据
-*简  例：UART_Put_Char('a');
-*        Delay(1000);
-**************************************************************/
-void UART_Put_Char(uint16_t Data)
-{
-	USART_SendData(USART3, Data);
-	while(USART_GetFlagStatus(USART3,USART_FLAG_TC) != SET); //等待数据发送完成
-}
-
-
-/**************************************************************
-*函数名：UART_Get_char----串口接收一个字节函数
-*参  数：无
-*简  例：uint16_t Receive_Data;
-*        Receive_Data = UART_Get_char();
-*	       UART_Put_Char(Receive_Data);  //把接收到的数据输出出来
-**************************************************************/
-uint16_t UART_Get_char(void)
-{
-	uint16_t Data;
-	while(USART_GetFlagStatus(USART3,USART_FLAG_RXNE) != SET); //等待接收寄存器满
-	Data = USART_ReceiveData(USART3);
-	return Data;
-}
-
-
-/**************************************************************
-*函数名：UART_Put_String----串口发送字符串函数
-*参  数：Pst：存放字符串的数组名
-*        Length：字符串长度
-*简  例：char Send[5] = {'a','b','c','d','e'};
-*        UART_Put_String(Send,5);
-**************************************************************/
-void UART_Put_String(char *Pst,uint16_t Length)
-{
-	uint16_t i;
-	for(i = 0; i < Length; i++)
-	{
-	  UART_Put_Char(Pst[i]);
-	}
-}
-
-
-/**************************************************************
-*函数名：UART_Get_String----串口接收字符串函数
-*参  数：Pst：存放接收到的字符串的数组名
-*        Length：字符串长度
-*简  例：unsigned char Receive[5] = {0};
-*        UART_Get_String(Receive,5);
-*	       UART_Put_String(Receive,5);//输出接收到的字符串 
-**************************************************************/
-void UART_Get_String(unsigned char *Pst,uint16_t Length)
-{
-	uint16_t i;
-	for(i = 0; i < Length; i++)
-	{
-	  Pst[i] = UART_Get_char();
-	}
-}
-
 /*****************  发送一个字符 **********************/
 static void Usart_SendByte( USART_TypeDef * pUSARTx, uint8_t ch )
 {
-	/* 发送一个字节数据到USART1 */
+	/* 发送一个字节数据到USARTx */
 	USART_SendData(pUSARTx,ch);
 		
 	/* 等待发送完毕 */
 	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);	
 }
+
+/*****************  接收一个字符 **********************/
+uint8_t USART_Receive_Byte(USART_TypeDef* pUSARTx)
+{
+	uint8_t ucTemp = 0;
+    
+	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_RXNE) == RESET); // 等待接收标志位为1
+	ucTemp = USART_ReceiveData(pUSARTx);
+
+	return ucTemp;
+}
+
+/*****************  指定接收的发送字符串 **********************/
+void Usart_ReceiveStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
+{
+	uint32_t k=0;
+    do 
+    {
+        *(str + k) = USART_Receive_Byte( pUSARTx );
+        k++;
+    } while(k < strlen);
+}
+
 /*****************  指定长度的发送字符串 **********************/
 void Usart_SendStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t strlen )
 {
@@ -586,4 +546,7 @@ void Usart_SendString( USART_TypeDef * pUSARTx, uint8_t *str)
         k++;
     } while(*(str + k)!='\0');
 }
+
+
+
 /******************* (C) COPYRIGHT 2012 WildFire Team *****END OF FILE************/
