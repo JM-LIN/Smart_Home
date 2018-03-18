@@ -36,7 +36,7 @@ int main(void)
     {
         Swiping_Card();
         FPM_Running();
-		Daily_Task_for_Voice();
+//		Daily_Task_for_Voice();
 //        Voice_Control();
     }
     

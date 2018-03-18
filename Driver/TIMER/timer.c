@@ -61,16 +61,15 @@ void TIM6_IRQHandler_Routine (void)
 	if ( TIM_GetITStatus( TIM6, TIM_IT_Update) != RESET ) 
 	{	
 		time6_num++;
-        syn7318_num++;
+//        syn7318_num++;
         
         
-        if(time6_num == 10000)      // 定时10s上传服务器数据信息
+        if(time6_num >= 10000)      // 定时10s上传服务器数据信息
         {
-            SIM7600_Data_Send();
+//            SIM7600_Data_Send();
             time6_num = 0;
         }
-        else
-            FPM_flag = 0;
+
 		
         TIM_ClearITPendingBit(TIM6 , TIM_FLAG_Update);  		 
 	}		 	
