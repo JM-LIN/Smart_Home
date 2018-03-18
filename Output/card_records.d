@@ -31,9 +31,9 @@
 ..\..\output\card_records.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\card_records.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\card_records.o: ..\..\Driver\FLASH\flash.h
-..\..\output\card_records.o: ..\..\Driver\LED\led.h
-..\..\output\card_records.o: ..\..\Driver\RTC\rtc.h
+..\..\output\card_records.o: ..\..\Driver\GPIO\GPIO.h
 ..\..\output\card_records.o: ..\..\Driver\SysTick\Systick.h
+..\..\output\card_records.o: ..\..\Driver\RTC\rtc.h
 ..\..\output\card_records.o: ..\..\Driver\OLED\OLED.h
 ..\..\output\card_records.o: ..\..\Driver\USART\usart.h
 ..\..\output\card_records.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h

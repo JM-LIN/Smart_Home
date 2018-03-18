@@ -31,4 +31,5 @@
 ..\..\output\zigbee_bufferpool.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\zigbee_bufferpool.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\zigbee_bufferpool.o: ..\..\Driver\OLED\OLED.h
-..\..\output\zigbee_bufferpool.o: ..\..\Driver\LED\led.h
+..\..\output\zigbee_bufferpool.o: ..\..\Driver\GPIO\GPIO.h
+..\..\output\zigbee_bufferpool.o: ..\..\Driver\SysTick\Systick.h

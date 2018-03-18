@@ -21,7 +21,7 @@
 "..\..\output\stm32f10x_it.o"
 "..\..\output\bsp_init.o"
 "..\..\output\card_records.o"
-"..\..\output\led.o"
+"..\..\output\gpio.o"
 "..\..\output\usart.o"
 "..\..\output\oled.o"
 "..\..\output\zigbee_bufferpool.o"

@@ -33,3 +33,11 @@
 ..\..\output\fpmxx_modules.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\fpmxx_modules.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\..\output\fpmxx_modules.o: ..\..\Driver\SysTick\Systick.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\OLED\OLED.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\PWM\Breathing_Light.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\fpmxx_modules.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\fpmxx_modules.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\GPIO\GPIO.h
+..\..\output\fpmxx_modules.o: ..\..\Driver\FingerPrint\fpmxx_modules.h

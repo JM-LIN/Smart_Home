@@ -37,4 +37,7 @@
 ..\..\output\syn7318.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\syn7318.o: ..\..\Driver\USART\usart.h
 ..\..\output\syn7318.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\syn7318.o: ..\..\Driver\GPIO\GPIO.h
+..\..\output\syn7318.o: ..\..\Driver\FingerPrint\fpmxx_modules.h
 ..\..\output\syn7318.o: ..\..\Driver\OLED\OLED.h
+..\..\output\syn7318.o: ..\..\Driver\SYN7318\SYN7318.h

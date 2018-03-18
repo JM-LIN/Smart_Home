@@ -369,7 +369,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\LED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM;..\..\Driver\FLASH;..\..\Driver\RC522;..\..\Driver\SPI;..\..\Driver\RTC;..\..\Driver\SYN7318;..\..\Driver\SIM7600</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\Driver\USART;..\..\Driver\OLED;..\..\Driver\WIFI;..\..\Driver\SysTick;..\..\Driver\KEY;..\..\Driver\PWM;..\..\Driver\FLASH;..\..\Driver\RC522;..\..\Driver\SPI;..\..\Driver\RTC;..\..\Driver\SYN7318;..\..\Driver\SIM7600;..\..\Driver\TIMER;..\..\Driver\FingerPrint;..\..\Driver\GPIO</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -563,6 +563,11 @@
               <FilePath>..\..\User\bsp_init.c</FilePath>
             </File>
             <File>
+              <FileName>bsp_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\bsp_init.h</FilePath>
+            </File>
+            <File>
               <FileName>card_records.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\card_records.c</FilePath>
@@ -573,9 +578,9 @@
           <GroupName>DRIVER</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
+              <FileName>GPIO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\Driver\LED\led.c</FilePath>
+              <FilePath>..\..\Driver\GPIO\GPIO.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
@@ -656,6 +661,16 @@
               <FileName>sim7600.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Driver\SIM7600\sim7600.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\TIMER\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fpmxx_modules.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Driver\FingerPrint\fpmxx_modules.c</FilePath>
             </File>
           </Files>
         </Group>

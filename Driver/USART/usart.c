@@ -13,7 +13,7 @@ void USART_Configuration(void)						//串口1、2、3初始化
 	USART1_NVIC_Configuration();
 	USART2_NVIC_Configuration();
 //	USART3_NVIC_Configuration();
-    UART4_NVIC_Configuration();
+//    UART4_NVIC_Configuration();
     UART5_NVIC_Configuration();
 }
   
@@ -138,7 +138,7 @@ void USART3_Config(void)
  * @param  无
  * @retval 无
  */
-void UART4_Config(void)
+static void UART4_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;      
 	USART_InitTypeDef USART_InitStructure;
@@ -176,7 +176,7 @@ void UART4_Config(void)
  * @param  无
  * @retval 无
  */
-void UART5_Config(void)
+static void UART5_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;      
 	USART_InitTypeDef USART_InitStructure;
@@ -520,7 +520,7 @@ void Usart_ReceiveStr_length( USART_TypeDef * pUSARTx, uint8_t *str,uint32_t str
 void Usart_Send_Byte( USART_TypeDef * pUSARTx, uint8_t ch )
 {
 	/* 发送一个字节数据到USARTx */
-	USART_SendData(pUSARTx,ch);
+	USART_SendData(pUSARTx, ch);
 		
 	/* 等待发送完毕 */
 	while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET);	

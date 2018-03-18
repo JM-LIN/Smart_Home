@@ -31,14 +31,13 @@
 int main(void)
 {	
 	BSP_Init();
-    TIM_Cmd(TIM4, ENABLE);
-
-    TIM_SetCompare2(TIM4, 500);
+    
     while(1)
     {
         Swiping_Card();
-        Voice_Control();
         FPM_Running();
+		Daily_Task_for_Voice();
+//        Voice_Control();
     }
     
     return 0;

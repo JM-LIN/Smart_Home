@@ -24,21 +24,63 @@ unsigned char  FP_Save_Finger[9]={0x01,0x00,0x06,0x06,0x01,0x00,0x00,0x00,0x19};
 //volatile unsigned char FP_Delete_Model[10]={0x01,0x00,0x07,0x0C,0x0,0x0,0x0,0x1,0x0,0x0}; //删除模板
 //volatile unsigned char FINGER_NUM;
 
+extern uint8_t FPM_flag;
+
+void Daily_Task_for_FPM(void)
+{
+	if(FPM_flag == 1)
+		FPM_Running();
+	else
+		return;
+}
 
 void FPM_Running(void)
 {
-    int id;
-    id=FPM_Search();						//指纹查询函数
+    int id;	
+	
+	LCD_P6x8Str(61,1,(unsigned char*)"Door: ");
+	if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8) == RESET)			// 有人靠近红外热释时，启动指纹
+	{
+		LCD_P6x8Str(97,1,(unsigned char*)"check");
+		delay_ms(2000);											// 3s延时检测
+		if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_8) == RESET)
+		{
+			
+			SYN_TTS("请验证指纹");
+			delay_ms(1500);
+			
+			id = FPM_Search();						//指纹查询函数
+			
+			if(id==-1)
+			{
+				LCD_P6x8Str(97,1,(unsigned char*)"fail ");
+				SYN_TTS("指纹读取失败");
+				delay_ms(1500);
+				LED1_ON();
+				LED2_OFF();
+			}    
+			else 
+			{
+				LCD_P6x8Str(97,1,(unsigned char*)"pass ");
+				LED1_OFF();
+				LED2_ON();
+				SYN_TTS("欢迎回来");
+				delay_ms(2000);
+				PC_Usart((unsigned char *)"指纹ID: %d",id);        //用来测试时通过串口打印指纹id
+			}
+		}
+		else
+		{
+			LCD_P6x8Str(97,1,(unsigned char*)"wait ");
+		}
+	}
+	else
+	{
+		LCD_P6x8Str(97,1,(unsigned char*)"wait ");
+	}
+	
     
-    if(id==-1)
-    {
-        
-    }    
-    else 
-    {
-        
-        PC_Usart((unsigned char *)"%d",id);        //用来测试时通过串口打印指纹id
-    }
+    
 }
 
 /////////////////////////////////////////////

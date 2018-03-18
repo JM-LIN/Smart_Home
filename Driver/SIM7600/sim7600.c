@@ -167,7 +167,6 @@ char * SIM7600_Waitask(uint8_t waitask_hook(void))      //等待有数据应答
 //检测模块是否正常
 void SIM7600_Config(void)
 {
-    PC_Usart((unsigned char*)"fuck \r\n");
 	while(SIM7600_CMD("AT\r","OK",100) != SIM900A_TRUE)
 	{
 		PC_Usart((unsigned char*)"AT_ERROR\r\n");

@@ -13,21 +13,33 @@ char D_MP3_3[] = {"D:\\Mp3\\Prompt_嘀.mp3"};
 char D_MP3_4[] = {"D:\\Mp3\\Prompt_我在呢.mp3"};
 char TF_MP3_1[] = {"E:\\1-歌曲\\一条大鱼不见了.mp3"};  
 
-char Test[] = {"雷猴"};
 
 char *Dict0[] = {"音量加","音量减","最大音量","最小音量","打开提示音","关闭提示音","请开灯","请关灯",
                 "调暗一点","调亮一点","最小亮度","最大亮度"};           //00词典
 
 char ** DICT[10] = {Dict0}; //可以添加其他词典
 
+extern uint8_t syn7318_flag;
+extern volatile uint32_t syn7318_num;
+
+void Daily_Task_for_Voice(void)
+{
+	if(syn7318_num >= 1000)
+	{
+		Voice_Control();
+		syn7318_num = 0;
+	}
+	else
+		return;
+}
 
 void Voice_Control(void)
 {
     const char num[]=   "15768088230";   
     const char mynum[]= "13232963434";
+	const char num1[]=  "13420105995";		// 显林
     
     static uint16_t fan_speed = 0;
-    
     
     USART3_Config();	//去掉发现不好用
     
@@ -93,10 +105,12 @@ void Voice_Control(void)
             break;
         case 0x21:  // 太干燥了
             SYN_TTS("打开加湿器");
+            Humidi_ON();
             delay_ms(2000);
             break;
         case 0x22:  // 关闭加湿器
             SYN_TTS("关闭加湿器");
+            Humidi_OFF();
             delay_ms(2000);
             break;
         
@@ -115,11 +129,22 @@ void Voice_Control(void)
             break;
         case 0x26:  // 模块重启
             SYN_TTS("正在为你重启");
+            
             delay_ms(2500);
             break;
         case 0x27:  // 添加指纹
             SYN_TTS("请把手指放正");
-            delay_ms(2000);
+            delay_ms(1500);
+            if(!FPMXX_Input())
+            {   
+                SYN_TTS("指纹录取成功");
+                delay_ms(2000);
+            }  
+			else 
+			{
+				SYN_TTS("指纹录取失败");
+                delay_ms(2000);
+			}
             break;
         case 0x28:  // 打个电话
             SIM7600_Call((char *)mynum);
@@ -141,7 +166,7 @@ void Voice_Control(void)
             break;
         case 0x2C:  // 数据联网测试
             SYN_TTS("GPRS正在打开");
-            SIM7600_GPRS_Send("TMwhat_HMthe_SMSfuck_LSare_WEyou_SSOtalking_SSTabout_HT?_ARlll_PMccc");
+            SIM7600_GPRS_Send("TMwhat_HMthe_SMSfuck_LSare_WEyou_SSOtalking_SSTabout_HT?_ARASS_PMHole");
             delay_ms(2000);
             break;
         default:
@@ -362,7 +387,7 @@ void Three_One(char Dict, char Wake_ID, char Sound, char *Pst)
         Usart_SendStr_length(USART3, (uint8_t *)Frame, Length + 8);	
 	}
 	Usart_ReceiveStr_length(USART3, (uint8_t *)Back,4); 
-	if(Back[3] == 0x41)
+	if(Back[3] == 0x41)         // 模块接收成功
 	{
 		Usart_ReceiveStr_length(USART3, (uint8_t *)Back,3);  //语音识别命令回传结果
 		if(Back[0] == 0xfc)

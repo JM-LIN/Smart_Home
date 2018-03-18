@@ -29,7 +29,7 @@
 ..\..\output\flash.o: ..\..\Libraries\FWlib\inc\stm32f10x_usart.h
 ..\..\output\flash.o: ..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h
 ..\..\output\flash.o: ..\..\Libraries\FWlib\inc\misc.h
-..\..\output\flash.o: ..\..\Driver\LED\led.h
+..\..\output\flash.o: ..\..\Driver\GPIO\GPIO.h
 ..\..\output\flash.o: ..\..\Driver\SysTick\Systick.h
 ..\..\output\flash.o: ..\..\Driver\SPI\spi.h
 ..\..\output\flash.o: ..\..\Driver\USART\usart.h

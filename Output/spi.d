@@ -31,4 +31,4 @@
 ..\..\output\spi.o: ..\..\Libraries\FWlib\inc\misc.h
 ..\..\output\spi.o: ..\..\Driver\SysTick\Systick.h
 ..\..\output\spi.o: ..\..\Driver\FLASH\flash.h
-..\..\output\spi.o: ..\..\Driver\LED\led.h
+..\..\output\spi.o: ..\..\Driver\GPIO\GPIO.h

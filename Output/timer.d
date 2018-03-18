@@ -36,3 +36,9 @@
 ..\..\output\timer.o: ..\..\Driver\SysTick\SysTick.h
 ..\..\output\timer.o: ..\..\Driver\USART\usart.h
 ..\..\output\timer.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\timer.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\timer.o: ..\..\Driver\PWM\Breathing_Light.h
+..\..\output\timer.o: ..\..\Driver\GPIO\GPIO.h
+..\..\output\timer.o: ..\..\Driver\FingerPrint\fpmxx_modules.h
+..\..\output\timer.o: ..\..\Driver\OLED\OLED.h
+..\..\output\timer.o: ..\..\Driver\SYN7318\SYN7318.h

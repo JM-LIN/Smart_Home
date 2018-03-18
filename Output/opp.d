@@ -39,7 +39,7 @@
 ..\..\output\opp.o: ..\..\Driver\OLED\OLED.h
 ..\..\output\opp.o: ..\..\Driver\RC522\rc522.h
 ..\..\output\opp.o: ..\..\Driver\FLASH\flash.h
-..\..\output\opp.o: ..\..\Driver\LED\led.h
+..\..\output\opp.o: ..\..\Driver\GPIO\GPIO.h
 ..\..\output\opp.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\time.h
 ..\..\output\opp.o: ..\..\Driver\USART\WIFI_BufferPool.h
 ..\..\output\opp.o: ..\..\User\main.h
@@ -48,10 +48,12 @@
 ..\..\output\opp.o: ..\..\Driver\USART\ZigBee_BufferPool.h
 ..\..\output\opp.o: ..\..\Driver\KEY\exti.h
 ..\..\output\opp.o: ..\..\Driver\PWM\PWM.h
-..\..\output\opp.o: ..\..\Driver\PWM\Breathing_Light.h
-..\..\output\opp.o: ..\..\Driver\SYN7318\SYN7318.h
-..\..\output\opp.o: ..\..\Driver\SIM7600\sim7600.h
+..\..\output\opp.o: ..\..\Driver\TIMER\timer.h
+..\..\output\opp.o: ..\..\Driver\SIM7600\SIM7600.h
 ..\..\output\opp.o: E:\SoftWare\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\opp.o: ..\..\Driver\SYN7318\SYN7318.h
+..\..\output\opp.o: ..\..\Driver\PWM\Breathing_Light.h
 ..\..\output\opp.o: ..\..\Driver\FingerPrint\fpmxx_modules.h
+..\..\output\opp.o: ..\..\Driver\SYN7318\SYN7318.h
 ..\..\output\opp.o: ..\..\User\card_records.h
 ..\..\output\opp.o: ..\..\Driver\RTC\rtc.h

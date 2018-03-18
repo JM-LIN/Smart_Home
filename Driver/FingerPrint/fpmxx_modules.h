@@ -5,6 +5,8 @@
 #include "stm32f10x.h"
 #include "usart.h"
 #include "Systick.h"
+#include "OLED.h"
+#include "SYN7318.h"
 
 //void Finger_Test(void);
 
@@ -19,5 +21,5 @@ int     FPM_Search              (void);
 u16     FPM_Read_pad            (void);
 void    FPMXX_Send_Cmd          (unsigned char length,unsigned char *address,unsigned char returnLength); 
 void    FPM_Running             (void);
-
+void 	Daily_Task_for_FPM		(void);
 #endif

@@ -5,6 +5,8 @@
 #include "Systick.h"
 #include "Breathing_Light.h"
 #include "sim7600.h"
+#include "GPIO.h"
+#include "fpmxx_modules.h"
 
 #define     Stop_Play                       0x02//停止播放
 #define     Pause_Play                      0x03//暂停播放
@@ -24,7 +26,7 @@ extern char Test[] ;
 extern char Test1[] ;
 
 
-
+void Daily_Task_for_Voice(void);
 void SYN7318_Reset_Init(void);
 void Voice_Control(void);		
 void SYN_TTS(char *Pst); //语音合成播放函数

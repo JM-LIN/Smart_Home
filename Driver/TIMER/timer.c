@@ -1,6 +1,9 @@
 #include "timer.h"
 
-volatile u32 time6_num;
+volatile uint32_t time6_num = 0;
+volatile uint32_t syn7318_num = 0;
+uint8_t syn7318_flag = 0;
+uint8_t FPM_flag = 0;
 
 // TIMx,x[6,7]中断优先级配置
 static void TIM6_NVIC_Configuration(void)
@@ -51,7 +54,6 @@ void TIM6_Configuration(void)
     TIM_Cmd(TIM6, ENABLE);			                            // 使能计数器															   
 		
     TIM6_NVIC_Configuration();
-    RCC_APB1PeriphClockCmd (RCC_APB1Periph_TIM6, DISABLE);      // 暂时关闭TIMx,x[6,7]的时钟，等待使用
 }
 
 void TIM6_IRQHandler_Routine (void)
@@ -59,9 +61,17 @@ void TIM6_IRQHandler_Routine (void)
 	if ( TIM_GetITStatus( TIM6, TIM_IT_Update) != RESET ) 
 	{	
 		time6_num++;
-        if(time6_num == 10000)      // 定时10s上传服务器数据信息
-            SIM7600_Data_Send();
+        syn7318_num++;
         
-		TIM_ClearITPendingBit(TIM6 , TIM_FLAG_Update);  		 
+        
+        if(time6_num == 10000)      // 定时10s上传服务器数据信息
+        {
+            SIM7600_Data_Send();
+            time6_num = 0;
+        }
+        else
+            FPM_flag = 0;
+		
+        TIM_ClearITPendingBit(TIM6 , TIM_FLAG_Update);  		 
 	}		 	
 }
